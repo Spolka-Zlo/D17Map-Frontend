@@ -3,10 +3,16 @@
 @tailwind utilities;
 
 body {
-  background-color: #003f52;
+  @apply bg-mapGrey;
 }
 
 h1 {
   font-size: 3em;
   font-weight: bolder;
+  @apply text-primary;
+}
+h2 {
+  font-size: 2em;
+  font-weight: bolder;
+  @apply text-primary;
 }

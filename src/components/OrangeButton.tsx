@@ -1,22 +1,30 @@
-import { ButtonInterface } from "@/types-interfaces/ButtonInterface";
+import { ButtonHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
+
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  text: string;
+  textClassName?: string;
+}
 
 export function OrangeButton({
   text,
   className,
   textClassName,
+  type = "button",
   onClick,
-}: ButtonInterface) {
+  ...rest
+}: ButtonProps) {
   return (
     <button
       className={twMerge(
-        "px-4 py-2 text-black border-2 border-black bg-secondary rounded-lg shadow-lg hover:shadow-xl hover:bg-mapGrey",
+        "px-4 py-2 bg-secondary text-black hover:text-secondary rounded-lg shadow-blueShadow hover:shadow-buttonHoverShadow hover:bg-primary",
         className
       )}
-      type="button"
+      type={type}
       onClick={onClick}
+      {...rest}
     >
-      <span className={twMerge("text-lg font-bold", textClassName)}>
+      <span className={twMerge("text-lg font-extrabold", textClassName)}>
         {text}
       </span>
     </button>
