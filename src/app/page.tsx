@@ -1,7 +1,5 @@
 "use client";
 import { OrangeButton } from "@/components/OrangeButton";
-import Image from "next/image";
-import { oswald } from "./layout";
 import { ListElement } from "@/components/ListElement";
 import { ResizeViewElement } from "@/components/ResizeViewElement";
 import { useState } from "react";

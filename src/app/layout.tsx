@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Oswald } from "next/font/google";
 import "./globals.css";
 
-export const oswald = Oswald({
+const oswald = Oswald({
   subsets: ["latin"],
   weight: "600",
 });
