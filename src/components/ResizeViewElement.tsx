@@ -13,6 +13,14 @@ export function ResizeViewElement({
   setValue,
   className,
 }: ResizeViewElementProps) {
+  const handleIncrement = () => {
+    setValue((prev) => (prev < 100 ? prev + 1 : 0));
+  };
+
+  const handleDecrement = () => {
+    setValue((prev) => (prev > 0 ? prev - 1 : 100));
+  };
+
   return (
     <div
       className={twMerge(
@@ -20,16 +28,10 @@ export function ResizeViewElement({
         className
       )}
     >
-      <button
-        className="py-2 text-4xl"
-        onClick={() => setValue((prev) => (prev < 100 ? prev + 1 : 0))}
-      >
+      <button className="py-2 text-4xl" onClick={handleIncrement}>
         +
       </button>
-      <button
-        className="py-2 text-4xl"
-        onClick={() => setValue((prev) => (prev > 0 ? prev - 1 : 100))}
-      >
+      <button className="py-2 text-4xl" onClick={handleDecrement}>
         -
       </button>
       <span className="text-center py-4">{value}%</span>

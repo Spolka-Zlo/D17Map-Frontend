@@ -7,12 +7,14 @@ body {
 }
 
 h1 {
-  font-size: 3em;
-  font-weight: bolder;
+  @apply text-6xl;
+  @apply font-bold;
+  @apply py-4;
   @apply text-primary;
 }
 h2 {
-  font-size: 2em;
-  font-weight: bolder;
+  @apply text-4xl;
+  @apply font-bold;
+  @apply py-4;
   @apply text-primary;
 }
