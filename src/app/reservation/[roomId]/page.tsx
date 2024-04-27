@@ -1,18 +1,16 @@
-import Head from 'next/head'
-
-type RoomReservationParams = {
-    roomId: number
+import type { Metadata } from 'next'
+ 
+export const metadata: Metadata = {
+  title: 'Room Reservation Page',
 }
 
-export default function RoomReservation({ params }: { params: RoomReservationParams }) {
+export default function RoomReservation({params}:  {  
+    params: {roomId: number}  
+  }){
+    const { roomId } = params
     return (
-        <div>
-            <Head>
-                <title>Room reservation for room</title>
-            </Head>
-            <main className="flex min-h-screen flex-col items-center justify-between p-24">
-                Room reservation page for room {params.roomId}
-            </main>
+        <div className="flex min-h-screen flex-col items-center justify-between p-24">
+            Room reservation page for room {roomId}
         </div>
     )
 }
