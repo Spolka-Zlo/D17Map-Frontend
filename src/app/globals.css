@@ -7,8 +7,8 @@ body {
 }
 
 h1 {
-  @apply text-6xl, font-bold, py-4, text-primary;
+  @apply text-6xl font-bold py-4 text-primary;
 }
 h2 {
-  @apply text-4xl, font-bold, py-4, text-primary;
+  @apply text-4xl font-bold py-4 text-primary;
 }
