@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Oswald } from "next/font/google";
 import "./globals.css";
+import { Navbar } from "./_navbar-components/Navbar";
 
 const oswald = Oswald({
   subsets: ["latin"],
@@ -19,7 +20,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={oswald.className}>{children}</body>
+      <body className={oswald.className}>
+        <Navbar
+          links={[
+            { name: "HOME", url: "/" },
+            { name: "CALENDAR", url: "/calendar" },
+            {
+              name: "MAP",
+              url: "/map",
+            },
+            {
+              name: "RESERVATIONS",
+              url: "/reservations",
+            },
+          ]}
+        />
+        {children}
+      </body>
     </html>
   );
 }

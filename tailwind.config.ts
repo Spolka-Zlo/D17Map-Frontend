@@ -25,6 +25,15 @@ const config: Config = {
       buttonHoverShadow: "0px 0px 4px 2px rgba(246, 162, 0, 0.5)",
       listHoverShadow: "0px 0px 4px 2px rgba(255, 255, 255, 0.5)",
     },
+    screens: {
+      sm: "640px",
+      md: "768px",
+      ml: "860px",
+      lg: "1024px",
+      xl: "1280px",
+      maxML: { max: "860px" },
+      maxLG: { max: "1024px" },
+    },
   },
   plugins: [],
 };

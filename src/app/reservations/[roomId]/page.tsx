@@ -10,9 +10,5 @@ export default function RoomReservation({
   params: { roomId: number };
 }) {
   const { roomId } = params;
-  return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-24">
-      Room reservation page for room {roomId}
-    </div>
-  );
+  return <main>Room reservation page for room {roomId}</main>;
 }
