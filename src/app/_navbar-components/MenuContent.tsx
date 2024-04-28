@@ -3,6 +3,7 @@ import Link from "next/link";
 import { NavigationItems } from "./Navbar";
 import { twMerge } from "tailwind-merge";
 import { useEffect } from "react";
+import { OrangeButton } from "@/components/OrangeButton";
 
 type MenuContentProps = {
   links: NavigationItems["links"];
@@ -30,6 +31,7 @@ export function MenuContent({ links, open, toggleOpen }: MenuContentProps) {
           {link.name}
         </Link>
       ))}
+      <OrangeButton text="Logout" onClick={() => {}} />
     </div>
   );
 }
