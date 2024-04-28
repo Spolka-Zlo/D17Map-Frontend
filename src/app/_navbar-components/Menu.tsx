@@ -10,19 +10,14 @@ export function Menu({ links }: NavigationItems) {
   const toggleOpen = () => {
     setOpen((prev) => !prev);
   };
-  useEffect(() => {
-    const closeMenu = () => {
-      setOpen(false);
-    };
-    window.addEventListener("resize", closeMenu);
-    return () => window.removeEventListener("resize", closeMenu);
-  }, []);
+  useCloseOnResize(setOpen);
+
   return (
     <>
       <div className="z-20 maxML:hidden flex p-3 justify-center w-full items-center gap-5">
-        {links.map((link) => (
-          <Link key={link.url} href={link.url} className="text-2xl">
-            {link.name}
+        {links.map(({ name, url }) => (
+          <Link key={url} href={url} className="text-2xl">
+            {name}
           </Link>
         ))}
       </div>
@@ -32,4 +27,14 @@ export function Menu({ links }: NavigationItems) {
       <MenuContent links={links} open={open} toggleOpen={toggleOpen} />
     </>
   );
+}
+
+function useCloseOnResize(setOpen: (o: boolean) => void) {
+  useEffect(() => {
+    const closeMenu = () => {
+      setOpen(false);
+    };
+    window.addEventListener("resize", closeMenu);
+    return () => window.removeEventListener("resize", closeMenu);
+  }, [setOpen]);
 }

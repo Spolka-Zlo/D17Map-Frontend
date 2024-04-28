@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { NavigationItems } from "./Navbar";
 import { twMerge } from "tailwind-merge";
-import { useEffect } from "react";
 import { OrangeButton } from "@/components/OrangeButton";
 
 type MenuContentProps = {
@@ -21,14 +20,9 @@ export function MenuContent({ links, open, toggleOpen }: MenuContentProps) {
           : "h-0 transition-[height] duration-1000 -mt-40"
       )}
     >
-      {links.map((link) => (
-        <Link
-          key={link.url}
-          href={link.url}
-          onClick={toggleOpen}
-          className="text-2xl"
-        >
-          {link.name}
+      {links.map(({ name, url }) => (
+        <Link key={url} href={url} onClick={toggleOpen} className="text-2xl">
+          {name}
         </Link>
       ))}
       <OrangeButton text="Logout" onClick={() => {}} />
