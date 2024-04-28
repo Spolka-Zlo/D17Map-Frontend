@@ -9,11 +9,11 @@ export default function Home() {
   const [value, setValue] = useState(0);
   const [selected, setSelected] = useState("Option 1");
   return (
-    <main className="p-24">
+    <main>
       <div className="flex flex-col w-full items-center justify-between">
         <h1>To jest nagłówek</h1>
         <h2>To jest podnagłówek</h2>
-        <div className=" flex flex-col justify-center gap-3">
+        <div className="flex flex-col justify-center gap-3">
           <ListElement text="Event number one" onClick={() => {}} />
           <OrangeButton text="Click Me" onClick={() => {}} />
           <ResizeViewElement value={value} setValue={setValue} />

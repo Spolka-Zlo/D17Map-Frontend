@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 body {
-  @apply bg-mapGrey;
+  @apply flex flex-col bg-mapGrey w-screen h-screen;
+}
+
+main {
+  @apply flex flex-col items-center justify-between p-24 overflow-auto;
 }
 
 h1 {
