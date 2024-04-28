@@ -13,7 +13,7 @@ export const Burger = ({
       onClick={toggleOpen}
       className={twMerge(
         "z-30 flex  h-8 w-8 flex-col justify-around border-none bg-transparent p-0 focus:outline-none",
-        open && "absolute left-12 top-10",
+        open && "absolute right-12 top-10",
         className
       )}
     >
