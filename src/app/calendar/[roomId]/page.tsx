@@ -1,3 +1,9 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Room Reservation Page",
+};
+
 export default function RoomReservation({
   params,
 }: {
