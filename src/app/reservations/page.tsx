@@ -6,6 +6,7 @@ export type Reservation = {
   date: string;
   startTime: string;
   endTime: string;
+  room: string;
 };
 
 export default function Reservations() {
@@ -16,6 +17,7 @@ export default function Reservations() {
       date: "2022-01-01",
       startTime: "12:00",
       endTime: "13:00",
+      room: "4.21",
     },
     {
       id: 2,
@@ -23,6 +25,7 @@ export default function Reservations() {
       date: "2022-01-02",
       startTime: "14:00",
       endTime: "15:00",
+      room: "3.31",
     },
   ];
   return (

@@ -3,6 +3,8 @@
 import { ListElement } from "@/components/ListElement";
 import { Reservation } from "../page";
 import Link from "next/link";
+import { useState } from "react";
+import ReservationManager from "./ReservationManager";
 
 type ReservationsListProps = {
   reservations: Reservation[];
@@ -11,17 +13,25 @@ type ReservationsListProps = {
 export default function ReservationsList({
   reservations,
 }: ReservationsListProps) {
+  const [reservation, setReservation] = useState<Reservation | null>(null);
   return (
-    <ul className="flex flex-col gap-5 pt-12">
-      {reservations.map((reservation) => (
-        <Link key={reservation.id} href={`/reservations/${reservation.id}`}>
+    <div>
+      <ul className="flex flex-col gap-5 pt-12">
+        {reservations.map((reservation) => (
           <ListElement
             key={reservation.id}
             text={`${reservation.name} - ${reservation.date} ${reservation.startTime}-${reservation.endTime}`}
             textClassName="text-secondary"
+            onClick={() => setReservation(reservation)}
           />
-        </Link>
-      ))}
-    </ul>
+        ))}
+      </ul>
+      {reservation && (
+        <ReservationManager
+          reservation={reservation}
+          setReservation={setReservation}
+        />
+      )}
+    </div>
   );
 }
