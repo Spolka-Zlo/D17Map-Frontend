@@ -27,7 +27,6 @@ export default function ReservationManager({
         <h2>{reservation.name}</h2>
         <div>
           <h3>Sala: {reservation.room}</h3>
-          {/* <Dropdown label="Zmień salę" options={["3.31", "4.21"]} /> */}
         </div>
         <p>This is the content of the popup.</p>
         <button onClick={() => setReservation(null)}>Close</button>
