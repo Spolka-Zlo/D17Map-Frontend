@@ -2,7 +2,6 @@
 
 import { ListElement } from "@/components/ListElement";
 import { Reservation } from "../page";
-import Link from "next/link";
 import { useState } from "react";
 import ReservationManager from "./ReservationManager";
 
