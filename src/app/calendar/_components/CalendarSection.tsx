@@ -4,11 +4,7 @@ import { useState } from "react";
 import { CalendarTimeManager } from "./CalendarTimeManager";
 import { CalendarDaySection } from "./CalendarDaySection";
 
-enum ReservationType {
-  Lecture = "Lecture",
-  Consultation = "Consultation",
-  Exam = "Exam",
-}
+type ReservationType = "Lecture" | "Consultation" | "Exam";
 
 type Reservation = {
   title: string;
@@ -28,9 +24,8 @@ export function CalendarSection() {
         <Calendar
           mode="single"
           selected={selectedDate}
-          onDayClick={(day: Date) => {
-            console.log("compare", day.getDay === selectedDate?.getDay);
-            setIsOpen((prev) =>
+          onDayClick={(day) => {
+            setIsOpen(
               !selectedDate || selectedDate.getDay === day.getDay
                 ? !isOpen
                 : true
