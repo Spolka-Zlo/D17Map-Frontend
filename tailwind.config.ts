@@ -20,6 +20,7 @@ const config: Config = {
       mapGrey: "#A3BAC3",
       mapLightGrey: "#D0DCE1",
       white: "#FFFFFF",
+      mapRed: "#4a0309",
     },
     boxShadow: {
       blueShadow: "0px 0px 4px 2px rgba(0, 63, 82, 0.5)",
