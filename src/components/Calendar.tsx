@@ -16,12 +16,12 @@ export function Calendar({
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={twMerge(
-        "p-8 bg-white w-full rounded-lg text-primary z-10",
+        "p-8 bg-white min-w-fit w-full rounded-lg text-primary z-10",
         className
       )}
       classNames={{
         months:
-          " flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+          "flex flex-col justify-center items-center sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
         caption: "flex justify-center pt-1 relative items-center",
         caption_label: "text-md font-bold",
