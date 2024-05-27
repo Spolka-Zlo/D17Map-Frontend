@@ -38,7 +38,7 @@ export default function Reservation() {
       reservationType: "Exam",
     },
   ];
-  const availableRooms = ["2.41", "1.38", "3.33", "4.22"];
+  const availableRooms = ["2.41", "1.38", "3.33", "4.22", "3.11", "2.22"];
 
   return (
     <main>

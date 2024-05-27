@@ -4,6 +4,7 @@ import { useState } from "react";
 import { CalendarTimeManager } from "./CalendarTimeManager";
 import { CalendarDaySection } from "./CalendarDaySection";
 import { Reservation } from "@/app/calendar/page";
+import { CalendarFilterByRooms } from "./CalendarFilterByRooms";
 
 type CalendarSectionProps = {
   reservations: Reservation[];
@@ -16,11 +17,11 @@ export function CalendarSection({
 }: CalendarSectionProps) {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState("room");
+  const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
 
   return (
     <section className="flex w-full justify-between gap-10">
-      <div className="grid grid-cols-2 maxMD:grid-cols-1 maxMD:grid-rows-2 rounded-lg w-full h-fit grow-0">
+      <div className="rounded-lg w-fit h-fit grow-0">
         <Calendar
           mode="single"
           selected={selectedDate}
@@ -32,23 +33,27 @@ export function CalendarSection({
           className="z-10 rounded-lg"
         />
 
-        <CalendarTimeManager
+        {/* <CalendarTimeManager
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           selectedRoom={selectedRoom}
           setSelectedRoom={setSelectedRoom}
           availableRooms={availableRooms}
-        />
+        /> */}
       </div>
+      <CalendarFilterByRooms
+        availableRooms={availableRooms}
+        selectedRooms={selectedRooms}
+        setSelectedRooms={setSelectedRooms}
+      />
 
       <CalendarDaySection
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         reservations={reservations.filter(
-          (reservation) =>
-            reservation.date.toDateString === selectedDate.toDateString
+          (reservation) => reservation.date.getDay() === selectedDate.getDay()
         )}
-        room={selectedRoom}
+        room={selectedRooms[0]}
       />
     </section>
   );
