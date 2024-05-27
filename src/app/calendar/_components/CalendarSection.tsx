@@ -16,7 +16,7 @@ export function CalendarSection({
 }: CalendarSectionProps) {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState("1.38");
+  const [selectedRoom, setSelectedRoom] = useState("room");
 
   return (
     <section className="flex w-full justify-between gap-10">
@@ -25,11 +25,7 @@ export function CalendarSection({
           mode="single"
           selected={selectedDate}
           onDayClick={(day) => {
-            setIsOpen(
-              !selectedDate || selectedDate.getDay === day.getDay
-                ? !isOpen
-                : true
-            );
+            setIsOpen(selectedDate.getDay() === day.getDay() ? !isOpen : true);
             setSelectedDate(day);
           }}
           disabled={{ before: new Date() }}
