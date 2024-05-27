@@ -20,7 +20,7 @@ export function CalendarSection({
 
   return (
     <section className="flex w-full justify-between gap-10">
-      <div className="grid grid-cols-2 maxSM:grid-cols-1 maxSM:grid-rows-2 rounded-lg w-full h-fit grow-0">
+      <div className="grid grid-cols-2 maxMD:grid-cols-1 maxMD:grid-rows-2 rounded-lg w-full h-fit grow-0">
         <Calendar
           mode="single"
           selected={selectedDate}

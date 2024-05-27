@@ -17,7 +17,7 @@ export function CalendarDaySection({
   room,
 }: CalendarDaySectionProps) {
   return (
-    <div className="bg-white w-full grow pl-10">
+    <div className="w-full bg-white/25 max-w-[450px] rounded-lg grow p-2">
       <CalendarTimeTable reservations={reservations} room={room} />
     </div>
   );
