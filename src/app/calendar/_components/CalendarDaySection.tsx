@@ -6,7 +6,7 @@ type CalendarDaySectionProps = {
   isOpen?: boolean;
   setIsOpen?: Dispatch<SetStateAction<boolean>>;
   reservations: Reservation[];
-  room: string;
+  rooms: string[];
 };
 
 //isOpen and setIsOpen prepared for future use
@@ -14,11 +14,11 @@ export function CalendarDaySection({
   isOpen = true,
   setIsOpen,
   reservations,
-  room,
+  rooms,
 }: CalendarDaySectionProps) {
   return (
     <div className="w-full bg-white/25 max-w-[450px] rounded-lg grow p-2">
-      <CalendarTimeTable reservations={reservations} room={room} />
+      <CalendarTimeTable reservations={reservations} rooms={rooms} />
     </div>
   );
 }

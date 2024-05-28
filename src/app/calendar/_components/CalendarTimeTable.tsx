@@ -3,25 +3,25 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 
 type CalendarTimeTableProps = {
-  room: string;
+  rooms: string[];
   startTime?: string;
   endTime?: string;
   reservations: Reservation[];
 };
 
 export function CalendarTimeTable({
-  room,
+  rooms,
   startTime,
   endTime,
   reservations,
 }: CalendarTimeTableProps) {
-  if (!room && !startTime && !endTime) {
+  if (!rooms && !startTime && !endTime) {
     return null;
   }
 
-  function fillTimeTableForRoom(reservations: Reservation[], room: string) {
-    reservations = reservations.filter(
-      (reservation) => reservation.room === room
+  function fillTimeTableForRoom(reservations: Reservation[], rooms: string[]) {
+    reservations = reservations.filter((reservation) =>
+      rooms.includes(reservation.room)
     );
     const timeTable = Array.from({ length: 15 * 4 }, (_, i) => ({
       time: `${Math.floor(i / 4) + 7}:${i % 4 === 0 ? "00" : (i % 4) * 15}`,
@@ -55,7 +55,7 @@ export function CalendarTimeTable({
         <div className="p-2 col-start-2 col-end-5">
           <div className="text-center pb-8 border-b-4">Reservations</div>
           <div className="pt-4">
-            {fillTimeTableForRoom(reservations, room).map((reservation, i) => (
+            {fillTimeTableForRoom(reservations, rooms).map((reservation, i) => (
               <div
                 key={reservation.time}
                 className={twMerge(

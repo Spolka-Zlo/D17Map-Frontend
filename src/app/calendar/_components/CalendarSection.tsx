@@ -53,7 +53,7 @@ export function CalendarSection({
         reservations={reservations.filter(
           (reservation) => reservation.date.getDay() === selectedDate.getDay()
         )}
-        room={selectedRooms[0]}
+        rooms={selectedRooms}
       />
     </section>
   );

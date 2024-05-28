@@ -26,7 +26,7 @@ export function MultipleChoiceDropdown({
       </div>
 
       {isOpen && (
-        <ul className="fixed w-44 rounded-lg">
+        <ul className="w-44 rounded-lg">
           {options.map((option) => (
             <li
               key={option}
