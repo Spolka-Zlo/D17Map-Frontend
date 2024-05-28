@@ -9,15 +9,16 @@ import { CalendarFilterByRooms } from "./CalendarFilterByRooms";
 type CalendarSectionProps = {
   reservations: Reservation[];
   availableRooms: string[];
+  equipment: string[];
 };
 
 export function CalendarSection({
   reservations,
   availableRooms,
+  equipment,
 }: CalendarSectionProps) {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
 
   return (
     <section className="flex w-full justify-between gap-10">
@@ -41,19 +42,14 @@ export function CalendarSection({
           availableRooms={availableRooms}
         /> */}
       </div>
-      <CalendarFilterByRooms
-        availableRooms={availableRooms}
-        selectedRooms={selectedRooms}
-        setSelectedRooms={setSelectedRooms}
-      />
-
       <CalendarDaySection
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         reservations={reservations.filter(
           (reservation) => reservation.date.getDay() === selectedDate.getDay()
         )}
-        rooms={selectedRooms}
+        availableRooms={availableRooms}
+        equipment={equipment}
       />
     </section>
   );

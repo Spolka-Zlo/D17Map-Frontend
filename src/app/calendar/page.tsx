@@ -39,12 +39,13 @@ export default function Reservation() {
     },
   ];
   const availableRooms = ["2.41", "1.38", "3.33", "4.22", "3.11", "2.22"];
-
+  const equipment = ["Computers", "Routers", "Terminals"];
   return (
     <main>
       <CalendarSection
         reservations={reservations}
         availableRooms={availableRooms}
+        equipment={equipment}
       />
     </main>
   );

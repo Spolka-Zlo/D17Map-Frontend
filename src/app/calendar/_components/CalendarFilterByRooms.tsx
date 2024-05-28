@@ -13,7 +13,8 @@ export function CalendarFilterByRooms({
   setSelectedRooms,
 }: CalendarFilterByRoomsProps) {
   return (
-    <div>
+    <div className="flex justify-center content-center items-end gap-4">
+      <h2>Wybór po salach:</h2>
       <MultipleChoiceDropdown
         options={availableRooms}
         selected={selectedRooms}
