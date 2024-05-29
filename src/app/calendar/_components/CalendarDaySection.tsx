@@ -40,7 +40,7 @@ export function CalendarDaySection({
         </div>
       </div>
       <div className="w-full bg-white/25 max-w-[450px] rounded-lg p-2">
-        <CalendarTimeTable reservations={reservations} rooms={availableRooms} />
+        <CalendarTimeTable reservations={reservations} rooms={selectedRooms} />
       </div>
     </div>
   );
