@@ -57,12 +57,24 @@ export function CalendarTimeTable({
           <div className="pt-4">
             {fillTimeTableForRoom(reservations, rooms).map((reservation, i) => (
               <div
+                id={reservation.time}
                 key={reservation.time}
                 className={twMerge(
-                  "text-center h-3 border-t-2 border-dotted border-primary",
+                  "text-center h-3 border-t-2 border-dotted border-primary cursor-pointer",
                   i % 4 === 0 && "border-solid",
                   reservation.reservationInTime && "bg-secondary border-none"
                 )}
+                onClick={(event) => {
+                  const target = event.target as HTMLElement;
+                  if (reservation.reservationInTime) {
+                    console.log(
+                      `Reservation ${reservation.reservationInTime.title} is at ${reservation.time}`
+                    );
+                  } else {
+                    console.log(`No reservation at ${reservation.time}`);
+                    target.classList.toggle("bg-secondary/50");
+                  }
+                }}
               ></div>
             ))}
           </div>

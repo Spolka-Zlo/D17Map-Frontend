@@ -33,14 +33,6 @@ export function CalendarSection({
           disabled={{ before: new Date() }}
           className="z-10 rounded-lg"
         />
-
-        {/* <CalendarTimeManager
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          selectedRoom={selectedRoom}
-          setSelectedRoom={setSelectedRoom}
-          availableRooms={availableRooms}
-        /> */}
       </div>
       <CalendarDaySection
         isOpen={isOpen}

@@ -22,11 +22,11 @@ export function MultipleChoiceDropdown({
         onClick={() => setIsOpen(!isOpen)}
         className="truncate p-2 mb-2 bg-primary text-secondary rounded-lg focus:ring-2 focus:ring-secondary focus:ring-opacity-50 cursor-pointer"
       >
-        {selected.join(", ") || "Select rooms"}
+        {selected.join(", ") || "Select"}
       </div>
 
       {isOpen && (
-        <ul className="w-44 absolute rounded-lg">
+        <ul className="w-44 absolute rounded-lg z-30">
           {options.map((option) => (
             <li
               key={option}
