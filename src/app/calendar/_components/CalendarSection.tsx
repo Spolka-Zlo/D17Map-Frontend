@@ -1,10 +1,12 @@
 "use client";
 import { Calendar } from "@/components/Calendar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CalendarTimeManager } from "./CalendarTimeManager";
 import { CalendarDaySection } from "./CalendarDaySection";
 import { Reservation } from "@/app/calendar/page";
 import { CalendarFilterByRooms } from "./CalendarFilterByRooms";
+import { ZodSchema } from "zod";
+import { z } from "zod";
 
 type CalendarSectionProps = {
   reservations: Reservation[];
@@ -45,4 +47,26 @@ export function CalendarSection({
       />
     </section>
   );
+}
+
+function useFetch<T>(url: string, schema: ZodSchema<T>) {
+  const [data, setData] = useState<T | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(url);
+        const json = await res.json();
+        setData(schema.parse(json));
+        setLoading(false);
+      } catch (error) {
+        setError(JSON.stringify(error));
+        setLoading(false);
+      }
+    };
+    fetchData();
+  });
+  return { data, error, loading };
 }

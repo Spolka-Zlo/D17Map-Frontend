@@ -1,17 +1,31 @@
 import { CalendarSection } from "./_components/CalendarSection";
+import { z } from "zod";
 
-export type ReservationType = "Lecture" | "Consultation" | "Exam";
+const reservationsSchema = z.object({
+  title: z.string(),
+  startTime: z.string(),
+  endTime: z.string(),
+  room: z.string(),
+  date: z.date(),
+  reservationType: z.union([
+    z.literal("Lecture"),
+    z.literal("Consultation"),
+    z.literal("Exam"),
+  ]),
+});
 
-export type Reservation = {
-  title: string;
-  startTime: string;
-  endTime: string;
-  room: string;
-  date: Date;
-  reservationType: ReservationType;
-};
+export type Reservation = z.infer<typeof reservationsSchema>;
+export type ReservationType = Reservation["reservationType"];
 
-export default function Reservation() {
+const roomsSchema = z.array(z.string());
+
+async function fetchRooms() {
+  const response = await fetch("https://api.example.com/rooms");
+  const rooms = await response.json();
+  return roomsSchema.parse(rooms);
+}
+
+export default async function Reservation() {
   const reservations: Reservation[] = [
     {
       title: "Lecture",
@@ -38,13 +52,13 @@ export default function Reservation() {
       reservationType: "Exam",
     },
   ];
-  const availableRooms = ["2.41", "1.38", "3.33", "4.22", "3.11", "2.22"];
+  const availableRooms = await fetchRooms();
   const equipment = ["Computers", "Routers", "Terminals"];
   return (
     <main>
       <CalendarSection
         reservations={reservations}
-        availableRooms={availableRooms}
+        availableRooms={["2.41", "1.38", "3.33", "4.22", "3.11", "2.22"]}
         equipment={equipment}
       />
     </main>
