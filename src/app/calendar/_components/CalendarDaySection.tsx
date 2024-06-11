@@ -4,6 +4,7 @@ import { CalendarTimeTable } from "./CalendarTimeTable";
 import { Reservation } from "@/app/calendar/page";
 import { CalendarFilterByRooms } from "./CalendarFilterByRooms";
 import { CalendarFilterByTimeRnage } from "./CalendarFilterByTimeRnage";
+import { CalendarReservationForm } from "./CalendarReservationForm";
 
 type CalendarDaySectionProps = {
   isOpen?: boolean;
@@ -24,6 +25,8 @@ export function CalendarDaySection({
   const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [formOpen, setFormOpen] = useState(false);
+  const [selectedRoom, setSelectedRoom] = useState<string>("");
   const colors = ["bg-secondary", "bg-primary", "bg-mapGrey"] as const;
   const roomsToColors = selectedRooms.reduce(
     (acc, room, i) => ({ ...acc, [room]: colors[i] }),
@@ -36,6 +39,13 @@ export function CalendarDaySection({
           <CalendarFilterByTimeRnage
             reservations={reservations}
             equipment={equipment}
+            startTime={startTime}
+            setStartTime={setStartTime}
+            endTime={endTime}
+            setEndTime={setEndTime}
+            room={selectedRoom}
+            setRoom={setSelectedRoom}
+            setFormOpen={setFormOpen}
           />
         </div>
       </div>
@@ -67,6 +77,20 @@ export function CalendarDaySection({
           setEndTime={setEndTime}
         />
       </div>
+      {formOpen && (
+        <CalendarReservationForm
+          room={selectedRoom}
+          setRoom={setSelectedRoom}
+          availableRooms={availableRooms}
+          date={new Date()}
+          open={formOpen}
+          setOpen={setFormOpen}
+          startTime={startTime}
+          setStartTime={setStartTime}
+          endTime={endTime}
+          setEndTime={setEndTime}
+        />
+      )}
     </div>
   );
 }

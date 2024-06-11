@@ -127,8 +127,6 @@ export function CalendarTimeTable({
     return timeTable;
   }
 
-  console.log(selectedCells);
-
   return (
     <div className="relative">
       <div className="grid grid-col-4 grid-rows-1 w-full">
