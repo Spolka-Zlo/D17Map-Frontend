@@ -30,6 +30,14 @@ export default function Reservation() {
       reservationType: "Consultation",
     },
     {
+      title: "Lecture",
+      startTime: "12:15",
+      endTime: "16:45",
+      room: "4.22",
+      date: new Date(),
+      reservationType: "Lecture",
+    },
+    {
       title: "Exam",
       startTime: "16:00",
       endTime: "18:00",
