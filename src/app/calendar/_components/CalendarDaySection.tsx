@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { CalendarTimeTable } from "./CalendarTimeTable";
 import { Reservation } from "@/app/calendar/page";
 import { CalendarFilterByRooms } from "./CalendarFilterByRooms";
-import { CalendarFilterByTimeRnage } from "./CalendarFilterByTimeRnage";
+import { CalendarFilterByTimeRange } from "./CalendarFilterByTimeRange";
 import { CalendarReservationForm } from "./CalendarReservationForm";
 
 type CalendarDaySectionProps = {
@@ -36,7 +36,7 @@ export function CalendarDaySection({
     <div className="flex gap-4 w-full grow">
       <div className="flex flex-col gap-4">
         <div className="w-full h-fit bg-white/25 max-w-[450px] rounded-lg p-2">
-          <CalendarFilterByTimeRnage
+          <CalendarFilterByTimeRange
             reservations={reservations}
             equipment={equipment}
             startTime={startTime}

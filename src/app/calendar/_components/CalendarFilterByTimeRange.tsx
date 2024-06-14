@@ -3,7 +3,7 @@ import { Reservation } from "@/app/calendar/page";
 import { MultipleChoiceDropdown } from "@/components/MultipleChoiceDropdown";
 import { OrangeButton } from "@/components/OrangeButton";
 
-type CalendarFilterByTimeRnageProps = {
+type CalendarFilterByTimeRangeProps = {
   reservations: Reservation[];
   equipment: string[];
   startTime: string;
@@ -15,7 +15,7 @@ type CalendarFilterByTimeRnageProps = {
   setFormOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-export function CalendarFilterByTimeRnage({
+export function CalendarFilterByTimeRange({
   reservations,
   equipment,
   startTime,
@@ -25,7 +25,7 @@ export function CalendarFilterByTimeRnage({
   room,
   setRoom,
   setFormOpen,
-}: CalendarFilterByTimeRnageProps) {
+}: CalendarFilterByTimeRangeProps) {
   const [selectedEquipment, setSelectedEquipment] = useState<string[]>([]);
   const [numberOfPeople, setNumberOfPeople] = useState(0);
 
