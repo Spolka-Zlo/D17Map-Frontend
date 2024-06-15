@@ -18,21 +18,21 @@ export function MapFloor({ url, activeRooms }: MapFloorProps) {
     console.log("Active rooms", activeRooms);
     Object.entries(nodes).forEach(([key, node]) => {
       const mesh = meshRefs.current[key];
-      if (activeRooms.includes(key)) {
-        const newMaterial = (
-          mesh.material as THREE.MeshStandardMaterial
-        ).clone();
+      const newPosition = new THREE.Vector3().copy(mesh.position);
+      const newMaterial = (mesh.material as THREE.MeshStandardMaterial).clone();
+      if (clickedRoom === key) {
+        newPosition.z -= 0.3;
         newMaterial.color.set(0xf6a200);
-        mesh.material = newMaterial;
+      } else if (activeRooms.includes(key)) {
+        newMaterial.color.set(0x6fd8ed);
+        newPosition.z = node.position.z;
+      } else {
+        newMaterial.color.set(0xffffff);
+        newPosition.z = node.position.z;
       }
+      mesh.material = newMaterial;
+      mesh.position.copy(newPosition);
     });
-    if (clickedRoom) {
-      const newPosition = new THREE.Vector3().copy(
-        meshRefs.current[clickedRoom].position
-      );
-      newPosition.z -= 0.5;
-      meshRefs.current[clickedRoom].position.copy(newPosition);
-    }
   }, [activeRooms, nodes, clickedRoom]);
 
   return (
@@ -41,7 +41,6 @@ export function MapFloor({ url, activeRooms }: MapFloorProps) {
       rotation={new THREE.Euler(-Math.PI / 20, -Math.PI, -Math.PI / 20)}
     >
       {Object.entries(nodes).map(([key, node]) => {
-        // console.log("Node", node, key);
         return (
           <mesh
             key={key}
@@ -54,19 +53,12 @@ export function MapFloor({ url, activeRooms }: MapFloorProps) {
             rotation={node.rotation}
             scale={node.scale}
             onClick={(e) => {
-              e.stopPropagation(); // Prevent event from bubbling up to parent elements
-              const clickedMesh = e.object as Mesh;
-              console.log("clicked", clickedMesh);
-
-              // Clone the material and set a new color
-              const newMaterial = (
-                clickedMesh.material as THREE.MeshStandardMaterial
-              ).clone();
-              newMaterial.color.set(0xf6a200);
-
-              // Apply the new material to the clicked mesh
-              clickedMesh.material = newMaterial;
-              setClickedRoom(key);
+              e.stopPropagation();
+              if (clickedRoom === key) {
+                setClickedRoom(null);
+              } else {
+                setClickedRoom(key);
+              }
             }}
           />
         );
