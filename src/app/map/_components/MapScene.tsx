@@ -10,14 +10,25 @@ type MapModelProps = {
 
 export function MapScene({ fileUrl }: MapModelProps) {
   return (
-    <Canvas camera={{ position: [0, 2, 5], fov: 50 }}>
+    <Canvas camera={{ position: [1, -2, 5], fov: 100 }}>
       <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
+      <pointLight position={[10, 5, 10]} />
       <Suspense fallback={<Html>Loading...</Html>}>
-        <MapFloor url={fileUrl} />
+        <MapFloor url={fileUrl} activeRooms={["138"]} />
         <Environment preset="forest" />
       </Suspense>
-      {/* <OrbitControls /> */}
+      <OrbitControls
+        enablePan={true}
+        enableZoom={true}
+        enableRotate={true}
+        enableDamping={true}
+        dampingFactor={0.2}
+        rotateSpeed={0.3}
+        zoomSpeed={0.8}
+        panSpeed={0.8}
+        minZoom={0.1}
+        maxZoom={0.8}
+      />
     </Canvas>
   );
 }
