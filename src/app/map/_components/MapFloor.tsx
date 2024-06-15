@@ -1,6 +1,6 @@
 "use client";
 import { useGLTF } from "@react-three/drei";
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Mesh } from "three";
 import * as THREE from "three";
 
