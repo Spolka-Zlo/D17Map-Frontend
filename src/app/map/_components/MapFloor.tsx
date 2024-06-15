@@ -1,7 +1,6 @@
 "use client";
 import { useGLTF } from "@react-three/drei";
-import { Vector3 } from "@react-three/fiber";
-import { use, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Mesh } from "three";
 import * as THREE from "three";
 
@@ -27,17 +26,20 @@ export function MapFloor({ url, activeRooms }: MapFloorProps) {
         mesh.material = newMaterial;
       }
     });
-    // if (clickedRoom) {
-    //   const newPosition = new THREE.Vector3().copy(
-    //     meshRefs.current[clickedRoom].position
-    //   );
-    //   newPosition.y += 0.1;
-    //   meshRefs.current[clickedRoom].position.copy(newPosition);
-    // }
-  }, [activeRooms, nodes]);
+    if (clickedRoom) {
+      const newPosition = new THREE.Vector3().copy(
+        meshRefs.current[clickedRoom].position
+      );
+      newPosition.z -= 0.5;
+      meshRefs.current[clickedRoom].position.copy(newPosition);
+    }
+  }, [activeRooms, nodes, clickedRoom]);
 
   return (
-    <group position={[0, 1, 0]}>
+    <group
+      position={[-2, 1.5, 0]}
+      rotation={new THREE.Euler(-Math.PI / 20, -Math.PI, -Math.PI / 20)}
+    >
       {Object.entries(nodes).map(([key, node]) => {
         // console.log("Node", node, key);
         return (
