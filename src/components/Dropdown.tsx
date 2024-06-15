@@ -27,7 +27,7 @@ export function Dropdown({
       </div>
 
       {isOpen && (
-        <ul className="fixed w-44 rounded-lg">
+        <ul className="fixed w-44 max-h-40 rounded-lg overflow-auto">
           {options.map((option) => (
             <li
               key={option}

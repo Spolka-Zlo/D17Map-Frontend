@@ -7,15 +7,20 @@ import * as THREE from "three";
 type MapFloorProps = {
   url: string;
   activeRooms: string[];
+  clickedRoom: string | null;
+  setClickedRoom: Dispatch<SetStateAction<string | null>>;
 };
 
-export function MapFloor({ url, activeRooms }: MapFloorProps) {
+export function MapFloor({
+  url,
+  activeRooms,
+  clickedRoom,
+  setClickedRoom,
+}: MapFloorProps) {
   const { nodes } = useGLTF(url);
   const meshRefs = useRef<{ [key: string]: Mesh }>({});
-  const [clickedRoom, setClickedRoom] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("Active rooms", activeRooms);
     Object.entries(nodes).forEach(([key, node]) => {
       const mesh = meshRefs.current[key];
       const newPosition = new THREE.Vector3().copy(mesh.position);
@@ -37,7 +42,7 @@ export function MapFloor({ url, activeRooms }: MapFloorProps) {
 
   return (
     <group
-      position={[-2, 1.5, 0]}
+      position={[0, 0, 0]}
       rotation={new THREE.Euler(-Math.PI / 20, -Math.PI, -Math.PI / 20)}
     >
       {Object.entries(nodes).map(([key, node]) => {
