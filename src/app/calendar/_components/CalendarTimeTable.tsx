@@ -54,7 +54,6 @@ export function CalendarTimeTable({
       setStartTime(selectedCells[0]);
       setEndTime(selectedCells[selectedCells.length - 1]);
     }
-    // setSelectedCells([]);
   };
 
   const generateTimeRange = (start: string, end: string) => {

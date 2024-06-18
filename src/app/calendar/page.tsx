@@ -20,7 +20,7 @@ const reservationSchema = z.object({
 export const classRoomSchema = z.object({
   id: z.string(),
   name: z.string(),
-  peopleCapacity: z.number(),
+  capacity: z.number(),
   equipment: z.array(z.string()),
 });
 
@@ -31,7 +31,7 @@ export type ReservationType = ReservationWithoutEquipment["type"];
 export type Reservation = ReservationWithoutEquipment & {
   roomE: {
     equipment: string[];
-    peopleCapacity: number;
+    capacity: number;
   };
 };
 export type ClassRoom = z.infer<typeof classRoomSchema>;

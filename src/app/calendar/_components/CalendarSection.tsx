@@ -49,13 +49,13 @@ export function CalendarSection({
         (room) => room.name === reservation.classroom.name
       );
       if (!room) {
-        return { ...reservation, roomE: { equipment: [], peopleCapacity: 0 } };
+        return { ...reservation, roomE: { equipment: [], capacity: 0 } };
       }
       return {
         ...reservation,
         roomE: {
           equipment: room.equipment,
-          peopleCapacity: room.peopleCapacity,
+          capacity: room.capacity,
         },
       };
     });

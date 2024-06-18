@@ -45,7 +45,14 @@ export function CalendarFilterByTimeRange({
     );
     const isTimeMatch =
       reservation.endTime < startTime || reservation.startTime > endTime;
-    const isPeopleMatch = reservation.roomE?.peopleCapacity >= numberOfPeople;
+    const isPeopleMatch = reservation.roomE?.capacity >= numberOfPeople;
+    console.log(
+      isEquipmentMatch,
+      isTimeMatch,
+      isPeopleMatch,
+      numberOfPeople,
+      reservation.roomE?.capacity
+    );
     return isEquipmentMatch && isTimeMatch && isPeopleMatch;
   }
 
