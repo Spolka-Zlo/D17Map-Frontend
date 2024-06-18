@@ -39,7 +39,7 @@ export function MapScene({
         maxAzimuthAngle={Math.PI / 4}
         minPolarAngle={Math.PI / 2}
         maxPolarAngle={Math.PI / 2}
-        rotateSpeed={0.1}
+        rotateSpeed={0.4}
         zoomSpeed={0.3}
       />
     </Canvas>

@@ -1,6 +1,8 @@
 import { CalendarSection } from "./_components/CalendarSection";
 import { z } from "zod";
 
+export const dynamic = "force-dynamic";
+
 const reservationSchema = z.object({
   id: z.string(),
   type: z.union([
