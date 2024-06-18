@@ -1,16 +1,18 @@
-import { MapSection } from "./_components/MapSection";
+import { MapReservationSection } from "./_components/MapReservationSection";
 
-// let this empty map description be here for now
-export default function Map() {
+async function fetchData(url: string) {
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
+
+export default async function Map() {
+  const availableRooms = await fetchData("http://localhost:8080/classrooms");
+
+  const equipment = await fetchData("http://localhost:8080/equipments");
   return (
     <main>
-      <div className="w-full flex flex-row justify-stretch">
-        <MapSection />
-        <div>
-          <h1 className="text-2xl font-bold">Map</h1>
-          <p>Map description</p>
-        </div>
-      </div>
+      <MapReservationSection rooms={availableRooms} equipment={equipment} />
     </main>
   );
 }

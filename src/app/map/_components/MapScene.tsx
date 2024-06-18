@@ -8,12 +8,14 @@ type MapSceneProps = {
   floor: string;
   clickedRoom: string | null;
   setClickedRoom: Dispatch<SetStateAction<string | null>>;
+  activeRooms: string[];
 };
 
 export function MapScene({
   floor,
   clickedRoom,
   setClickedRoom,
+  activeRooms,
 }: MapSceneProps) {
   return (
     <Canvas camera={{ position: [-0.5, 0, 5], fov: 100 }}>
@@ -22,7 +24,9 @@ export function MapScene({
       <Suspense fallback={<Html>Loading...</Html>}>
         <MapFloor
           url={`/gltf/${floor.replace("Floor ", "")}floor.glb`}
-          activeRooms={["138", "119", "122", "110"]}
+          activeRooms={activeRooms.map(
+            (room) => room.slice(0, 1) + room.slice(2)
+          )}
           clickedRoom={clickedRoom}
           setClickedRoom={setClickedRoom}
         />

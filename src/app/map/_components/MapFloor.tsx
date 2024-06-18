@@ -29,7 +29,7 @@ export function MapFloor({
         newPosition.z -= 0.3;
         newMaterial.color.set(0xf6a200);
       } else if (activeRooms.includes(key)) {
-        newMaterial.color.set(0x6fd8ed);
+        newMaterial.color.set(0xf6c462);
         newPosition.z = node.position.z;
       } else {
         newMaterial.color.set(0xffffff);
