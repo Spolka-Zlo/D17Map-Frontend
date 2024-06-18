@@ -74,8 +74,9 @@ export function CalendarTimeTable({
 
   const indexToTime = (index: number) => {
     const hour = Math.floor(index / 4) + 7;
+    const hourString = hour < 10 ? `0${hour}` : `${hour}`;
     const minute = (index % 4) * 15;
-    return `${hour}:${minute === 0 ? "00" : minute}`;
+    return `${hourString}:${minute === 0 ? "00" : minute}`;
   };
   if (!rooms && !startTime && !endTime) {
     return null;
@@ -83,26 +84,28 @@ export function CalendarTimeTable({
 
   function fillTimeTableForRoom(reservations: Reservation[], rooms: string[]) {
     reservations = reservations.filter((reservation) =>
-      rooms.includes(reservation.room)
+      rooms.includes(reservation.classroom.name)
     );
 
     const timeTable = Array.from({ length: 15 * 4 }, (_, i) => {
       let variants = "";
+      const hour = Math.floor(i / 4) + 7;
+      const hourString = hour < 10 ? `0${hour}` : `${hour}`;
       const reservationsInTime = reservations.filter(
         (reservation) =>
           reservation.startTime <=
-            `${Math.floor(i / 4) + 7}:${i % 4 === 0 ? "00" : (i % 4) * 15}` &&
-          `${Math.floor(i / 4) + 7}:${i % 4 === 0 ? "00" : (i % 4) * 15}` <
+            `${hourString}:${i % 4 === 0 ? "00" : (i % 4) * 15}` &&
+          `${hourString}:${i % 4 === 0 ? "00" : (i % 4) * 15}` <
             reservation.endTime
       );
 
       if (reservationsInTime.length === 1) {
-        variants = roomsToColors[reservationsInTime[0].room];
+        variants = roomsToColors[reservationsInTime[0].classroom.name];
       }
       if (reservationsInTime.length === 2) {
         const roomsColors = [
-          roomsToColors[reservationsInTime[0].room],
-          roomsToColors[reservationsInTime[1].room],
+          roomsToColors[reservationsInTime[0].classroom.name],
+          roomsToColors[reservationsInTime[1].classroom.name],
         ];
         if (roomsColors.includes("bg-secondary")) {
           if (roomsColors.includes("bg-primary")) {
@@ -119,7 +122,7 @@ export function CalendarTimeTable({
       }
 
       return {
-        time: `${Math.floor(i / 4) + 7}:${i % 4 === 0 ? "00" : (i % 4) * 15}`,
+        time: `${hourString}:${i % 4 === 0 ? "00" : (i % 4) * 15}`,
         reservationInTime: reservationsInTime,
         colors: variants,
       };

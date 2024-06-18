@@ -1,7 +1,7 @@
 "use client";
 import { Dispatch, SetStateAction, useState } from "react";
 import { CalendarTimeTable } from "./CalendarTimeTable";
-import { Reservation } from "@/app/calendar/page";
+import { ClassRoom, Reservation } from "@/app/calendar/page";
 import { CalendarFilterByRooms } from "./CalendarFilterByRooms";
 import { CalendarFilterByTimeRange } from "./CalendarFilterByTimeRange";
 import { CalendarReservationForm } from "./CalendarReservationForm";
@@ -10,7 +10,7 @@ type CalendarDaySectionProps = {
   isOpen?: boolean;
   setIsOpen?: Dispatch<SetStateAction<boolean>>;
   reservations: Reservation[];
-  availableRooms: string[];
+  availableRooms: ClassRoom[];
   equipment: string[];
 };
 
@@ -51,7 +51,7 @@ export function CalendarDaySection({
       </div>
       <div className="w-full h-fit bg-white/25 max-w-[450px] rounded-lg p-2">
         <CalendarFilterByRooms
-          availableRooms={availableRooms}
+          availableRooms={availableRooms.map((room) => room.name)}
           selectedRooms={selectedRooms}
           setSelectedRooms={setSelectedRooms}
         />

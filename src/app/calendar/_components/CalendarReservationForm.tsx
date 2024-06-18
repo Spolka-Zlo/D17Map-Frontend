@@ -1,13 +1,13 @@
 "use client";
 import { Dropdown } from "@/components/Dropdown";
-import { Reservation } from "../page";
+import { ClassRoom, Reservation } from "../page";
 import { useState } from "react";
 import { OrangeButton } from "@/components/OrangeButton";
 
 type CalendarReservationFormProps = {
   room: string;
   setRoom: React.Dispatch<React.SetStateAction<string>>;
-  availableRooms?: string[];
+  availableRooms?: ClassRoom[];
   date: Date;
   startTime?: string;
   setStartTime?: React.Dispatch<React.SetStateAction<string>>;
@@ -67,7 +67,7 @@ export function CalendarReservationForm({
             setSelected={setSelectedType}
           />
           <Dropdown
-            options={availableRooms ?? []}
+            options={availableRooms?.map((room) => room.name) ?? []}
             selected={room}
             setSelected={setRoom}
           />

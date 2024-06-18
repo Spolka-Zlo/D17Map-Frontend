@@ -99,8 +99,8 @@ export function CalendarFilterByTimeRange({
         {reservations
           .filter(filterReservationsByAllFilters)
           .reduce((acc: string[], reservation) => {
-            if (!acc.includes(reservation.roomE.name)) {
-              acc.push(reservation.roomE.name);
+            if (!acc.includes(reservation.classroom.name)) {
+              return [...acc, reservation.classroom.name];
             }
             return acc;
           }, [])

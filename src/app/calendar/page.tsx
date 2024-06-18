@@ -1,66 +1,57 @@
 import { CalendarSection } from "./_components/CalendarSection";
 import { z } from "zod";
 
-const reservationsSchema = z.object({
-  title: z.string(),
-  startTime: z.string(),
-  endTime: z.string(),
-  room: z.string(),
-  date: z.date(),
-  reservationType: z.union([
+const reservationSchema = z.object({
+  id: z.string(),
+  type: z.union([
     z.literal("Lecture"),
     z.literal("Consultation"),
     z.literal("Exam"),
+    z.literal("TEST"),
   ]),
+  startTime: z.string(),
+  endTime: z.string(),
+  classroom: z.object({
+    id: z.string(),
+    name: z.string(),
+  }),
 });
 
-export type Reservation = z.infer<typeof reservationsSchema>;
-export type ReservationType = Reservation["reservationType"];
+export const classRoomSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  peopleCapacity: z.number(),
+  equipment: z.array(z.string()),
+});
 
-const roomsSchema = z.array(z.string());
+export const reservationsSchema = z.array(reservationSchema);
 
-async function fetchRooms() {
-  const response = await fetch("https://api.example.com/rooms");
-  const rooms = await response.json();
-  return roomsSchema.parse(rooms);
+export type ReservationWithoutEquipment = z.infer<typeof reservationSchema>;
+export type ReservationType = ReservationWithoutEquipment["type"];
+export type Reservation = ReservationWithoutEquipment & {
+  roomE: {
+    equipment: string[];
+    peopleCapacity: number;
+  };
+};
+export type ClassRoom = z.infer<typeof classRoomSchema>;
+
+const roomsSchema = z.array(classRoomSchema);
+const equipmentSchema = z.array(z.string());
+
+async function fetchData(url: string) {
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
 }
 
 export default async function Reservation() {
-  const reservations: Reservation[] = [
-    {
-      title: "Lecture",
-      startTime: "12:15",
-      endTime: "13:45",
-      room: "2.41",
-      date: new Date(),
-      reservationType: "Lecture",
-    },
-    {
-      title: "Consultation",
-      startTime: "14:00",
-      endTime: "15:00",
-      room: "2.41",
-      date: new Date(),
-      reservationType: "Consultation",
-    },
-    {
-      title: "Exam",
-      startTime: "16:00",
-      endTime: "18:00",
-      room: "1.38",
-      date: new Date(),
-      reservationType: "Exam",
-    },
-  ];
-  const availableRooms = await fetchRooms();
-  const equipment = ["Computers", "Routers", "Terminals"];
+  const availableRooms = await fetchData("http://localhost:8080/classrooms");
+
+  const equipment = await fetchData("http://localhost:8080/equipments");
   return (
     <main>
-      <CalendarSection
-        reservations={reservations}
-        availableRooms={["2.41", "1.38", "3.33", "4.22", "3.11", "2.22"]}
-        equipment={equipment}
-      />
+      <CalendarSection availableRooms={availableRooms} equipment={equipment} />
     </main>
   );
 }

@@ -1,26 +1,65 @@
 "use client";
 import { Calendar } from "@/components/Calendar";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { CalendarTimeManager } from "./CalendarTimeManager";
 import { CalendarDaySection } from "./CalendarDaySection";
-import { Reservation } from "@/app/calendar/page";
+import {
+  ClassRoom,
+  Reservation,
+  ReservationWithoutEquipment,
+  reservationsSchema,
+} from "@/app/calendar/page";
 import { CalendarFilterByRooms } from "./CalendarFilterByRooms";
 import { ZodSchema } from "zod";
 import { z } from "zod";
 
 type CalendarSectionProps = {
-  reservations: Reservation[];
-  availableRooms: string[];
+  availableRooms: ClassRoom[];
   equipment: string[];
 };
 
 export function CalendarSection({
-  reservations,
   availableRooms,
   equipment,
 }: CalendarSectionProps) {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [isOpen, setIsOpen] = useState(false);
+
+  const {
+    data: reservations,
+    error,
+    loading,
+  } = useFetch(
+    `http://localhost:8080/reservations?day=2024-06-18`,
+    reservationsSchema
+  );
+  useEffect(() => {
+    if (!reservations || !availableRooms) {
+      return;
+    }
+    mergeReservationsWithEquipment(reservations, availableRooms);
+  }, [reservations, availableRooms]);
+
+  function mergeReservationsWithEquipment(
+    reservations: ReservationWithoutEquipment[],
+    rooms: ClassRoom[]
+  ): Reservation[] {
+    return reservations.map((reservation) => {
+      const room = rooms.find(
+        (room) => room.name === reservation.classroom.name
+      );
+      if (!room) {
+        return { ...reservation, roomE: { equipment: [], peopleCapacity: 0 } };
+      }
+      return {
+        ...reservation,
+        roomE: {
+          equipment: room.equipment,
+          peopleCapacity: room.peopleCapacity,
+        },
+      };
+    });
+  }
 
   return (
     <section className="flex w-full justify-between gap-10">
@@ -39,9 +78,11 @@ export function CalendarSection({
       <CalendarDaySection
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        reservations={reservations.filter(
-          (reservation) => reservation.date.getDay() === selectedDate.getDay()
-        )}
+        reservations={
+          reservations
+            ? mergeReservationsWithEquipment(reservations, availableRooms)
+            : []
+        }
         availableRooms={availableRooms}
         equipment={equipment}
       />
@@ -59,7 +100,7 @@ function useFetch<T>(url: string, schema: ZodSchema<T>) {
       try {
         const res = await fetch(url);
         const json = await res.json();
-        setData(schema.parse(json));
+        setData(json);
         setLoading(false);
       } catch (error) {
         setError(JSON.stringify(error));
@@ -67,6 +108,6 @@ function useFetch<T>(url: string, schema: ZodSchema<T>) {
       }
     };
     fetchData();
-  });
+  }, [url]);
   return { data, error, loading };
 }
