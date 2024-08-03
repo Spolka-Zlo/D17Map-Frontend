@@ -33,6 +33,10 @@ export default function RootLayout({
               name: "RESERVATIONS",
               url: "/reservations",
             },
+            {
+              name: "SPEHERE",
+              url: "/sphere",
+            },
           ]}
         />
         {children}
