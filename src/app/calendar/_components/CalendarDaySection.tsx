@@ -5,6 +5,7 @@ import { ClassRoom, Reservation } from "@/app/calendar/page";
 import { CalendarFilterByRooms } from "./CalendarFilterByRooms";
 import { CalendarFilterByTimeRange } from "./CalendarFilterByTimeRange";
 import { CalendarReservationForm } from "./CalendarReservationForm";
+import { OrangeButton } from "@/components/OrangeButton";
 
 type CalendarDaySectionProps = {
   isOpen?: boolean;
@@ -32,6 +33,8 @@ export function CalendarDaySection({
     (acc, room, i) => ({ ...acc, [room]: colors[i] }),
     {} as Record<string, (typeof colors)[number]>
   );
+  console.log(availableRooms);
+
   return (
     <div className="flex gap-4 w-full grow">
       <div className="flex flex-col gap-4">

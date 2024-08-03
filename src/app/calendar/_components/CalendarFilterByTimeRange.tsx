@@ -123,6 +123,11 @@ export function CalendarFilterByTimeRange({
             </li>
           ))}
       </ul>
+      <OrangeButton
+        onClick={() => setFormOpen(true)}
+        text={"1.38"}
+        className=" w-24"
+      />
     </div>
   );
 }
