@@ -25,6 +25,7 @@ export default function RootLayout({
           links={[
             { name: "HOME", url: "/" },
             { name: "CALENDAR", url: "/calendar" },
+            { name: "EVENTS", url: "/events" },
             {
               name: "MAP",
               url: "/map",
