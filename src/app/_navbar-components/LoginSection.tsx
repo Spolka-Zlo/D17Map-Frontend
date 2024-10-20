@@ -1,13 +1,20 @@
-"use client";
-import { OrangeButton } from "@/components/OrangeButton";
+import { getToken } from "@/auth/getToken";
+import { OrangeLinkButton } from "@/components/OrangeLinkButton";
 
-export default function LoginSection() {
+export async function LoginSection() {
+  const token = await getToken();
+  const isLoggedIn = !!token;
   return (
     <div className="flex maxML:hidden justify-center items-center gap-4 w-full h-full">
-      <OrangeButton text="Logout" className="w-28" onClick={() => {}} />
-      <span className="text-2xl font-extrabold text-secondary maxLG:hidden">
-        Welcome Iza!
-      </span>
+      {!isLoggedIn ? (
+        <OrangeLinkButton text="Login" className="w-28" href="/login" />
+      ) : (
+        isLoggedIn && (
+          <span className="text-2xl font-extrabold text-secondary maxLG:hidden">
+            Welcome!
+          </span>
+        )
+      )}
     </div>
   );
 }
