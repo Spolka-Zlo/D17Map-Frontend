@@ -2,22 +2,22 @@ import { getToken } from "@/auth/getToken";
 import { AddEquipmentForm } from "./_components/AddEquipmentForm";
 
 export default async function Classrooms() {
-  const classRooms = await getClassrooms();
+  const equipments = await getEquipments();
   return (
     <div>
-      <h1>Classrooms</h1>
+      <h1>equipments</h1>
       <AddEquipmentForm />
 
       <ul>
-        {classRooms.map((classRoom) => (
-          <li key={classRoom.id}>{classRoom.name}</li>
+        {equipments.map((equipment) => (
+          <li key={equipment.id}>{equipment.name}</li>
         ))}
       </ul>
     </div>
   );
 }
 
-async function getClassrooms() {
+async function getEquipments() {
   const token = await getToken();
 
   if (!token) {
