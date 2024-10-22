@@ -1,7 +1,7 @@
 "use client";
 import { Dispatch, SetStateAction, useState } from "react";
 import { CalendarTimeTable } from "./CalendarTimeTable";
-import { Reservation } from "@/app/calendar/page";
+import { Reservation } from "@/app/calendar2/page";
 import { CalendarFilterByRooms } from "./CalendarFilterByRooms";
 import { CalendarFilterByTimeRange } from "./CalendarFilterByTimeRange";
 import { CalendarReservationForm } from "./CalendarReservationForm";

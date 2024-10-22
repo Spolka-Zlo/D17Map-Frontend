@@ -1,4 +1,4 @@
-import { Reservation } from "@/app/calendar/page";
+import { Reservation } from "@/app/calendar2/page";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 

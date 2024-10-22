@@ -3,7 +3,7 @@ import { Calendar } from "@/components/Calendar";
 import { useState } from "react";
 import { CalendarTimeManager } from "./CalendarTimeManager";
 import { CalendarDaySection } from "./CalendarDaySection";
-import { Reservation } from "@/app/calendar/page";
+import { Reservation } from "@/app/calendar2/page";
 import { CalendarFilterByRooms } from "./CalendarFilterByRooms";
 
 type CalendarSectionProps = {

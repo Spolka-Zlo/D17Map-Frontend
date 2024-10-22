@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { Reservation } from "@/app/calendar/page";
+import { Reservation } from "@/app/calendar2/page";
 import { MultipleChoiceDropdown } from "@/components/MultipleChoiceDropdown";
 import { OrangeButton } from "@/components/OrangeButton";
 
