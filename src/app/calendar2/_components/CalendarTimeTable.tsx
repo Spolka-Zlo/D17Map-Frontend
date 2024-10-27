@@ -127,11 +127,9 @@ export function CalendarTimeTable({
     return timeTable;
   }
 
-  const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
   return (
     <div className="relative">
-      <div className="grid grid-col-9 grid-rows-1 w-full">
+      <div className="grid grid-col-4 grid-rows-1 w-full">
         <div className="border-r-4 p-2 border-black">
           <div className="text-center pb-8 border-b-4 border-black">Time</div>
           <div className="pt-4">
@@ -145,41 +143,28 @@ export function CalendarTimeTable({
             ))}
           </div>
         </div>
-        {/* <div className="p-2 col-start-2 col-end-9"> */}
-        {weekDays.map((day, i) => (
-          <div
-            key={day}
-            className="p-2"
-            style={{
-              gridColumn: i + 2,
-              gridRow: 1,
-            }}
-          >
-            <div className="text-center pb-8 border-b-4 border-black">
-              {day}
-            </div>
-            <div className="pt-4">
-              {fillTimeTableForRoom(reservations, rooms).map(
-                (reservation, i) => (
-                  <div
-                    id={reservation.time}
-                    key={reservation.time}
-                    className={twMerge(
-                      "text-center border-t-2 h-3 w-full border-dotted border-primary cursor-pointer",
-                      i % 4 === 0 && "border-solid",
-                      reservation.colors,
-                      selectedCells.includes(reservation.time) && "bg-blue-200"
-                    )}
-                    onMouseDown={() => handleCellMouseDown(reservation.time)}
-                    onMouseEnter={() => handleCellMouseEnter(reservation.time)}
-                    onMouseUp={handleCellMouseUp}
-                  ></div>
-                )
-              )}
-            </div>
+        <div className="p-2 col-start-2 col-end-5">
+          <div className="text-center pb-8 border-b-4 border-black">
+            Reservations
           </div>
-        ))}
-        {/* </div> */}
+          <div className="pt-4">
+            {fillTimeTableForRoom(reservations, rooms).map((reservation, i) => (
+              <div
+                id={reservation.time}
+                key={reservation.time}
+                className={twMerge(
+                  "text-center h-3 border-t-2 border-dotted border-primary cursor-pointer",
+                  i % 4 === 0 && "border-solid",
+                  reservation.colors,
+                  selectedCells.includes(reservation.time) && "bg-blue-200"
+                )}
+                onMouseDown={() => handleCellMouseDown(reservation.time)}
+                onMouseEnter={() => handleCellMouseEnter(reservation.time)}
+                onMouseUp={handleCellMouseUp}
+              ></div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
