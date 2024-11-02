@@ -1,90 +1,109 @@
+import { CalendarReservationsSection } from "./_components/CalendarReservationsSection";
 import { CalendarSection } from "./_components/CalendarSection";
+import { z } from "zod";
 
 export type ReservationType = "Lecture" | "Consultation" | "Exam";
 
-export type Reservation = {
-  title: string;
-  startTime: string;
-  endTime: string;
-  room: string;
-  date: Date;
-  reservationType: ReservationType;
-  roomE: {
-    id: number;
-    name: string;
-    equipment: string[];
-    peopleCapacity: number;
-  };
-};
+const toTimestamp = (date: string) => new Date(date).getTime();
+const reservationSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string(),
+  date: z.string(),
+  startTime: z.string().transform(toTimestamp),
+  endTime: z.string().transform(toTimestamp),
+  classRoom: z.object({
+    id: z.string(),
+    name: z.string(),
+    capacity: z.number(),
+  }),
+  type: z.enum(["Lecture", "Consultation", "Exam"]),
+  numberOfParticipants: z.number(),
+});
 
-export default function Reservation() {
-  const reservations: Reservation[] = [
+const reservationTypeSchema = z.enum(["Lecture", "Consultation", "Exam"]);
+
+export type Reservation = z.infer<typeof reservationSchema>;
+
+export default function Reservation({
+  searchParams,
+}: {
+  searchParams: { date: string };
+}) {
+  console.log(searchParams.date);
+  const lastMonday = new Date();
+  lastMonday.setDate(lastMonday.getDate() - ((lastMonday.getDay() + 6) % 7));
+  const mondayDate = new Date(
+    Number(searchParams.date) ?? lastMonday.getTime(),
+  );
+
+  console.log(mondayDate);
+
+  const weekReservations = [
     {
+      id: "1",
       title: "Lecture",
-      startTime: "12:15",
-      endTime: "13:45",
-      room: "2.41",
-      date: new Date(),
-      reservationType: "Lecture",
-      roomE: {
-        id: 1,
+      description: "Lecture about React",
+      date: "2024-11-01",
+      startTime: new Date(2024, 11, 1, 12, 45).getTime(),
+      endTime: new Date(2024, 11, 1, 14, 30).getTime(),
+      classRoom: {
+        id: "1",
         name: "2.41",
-        equipment: ["Computers", "Routers", "Terminals"],
-        peopleCapacity: 30,
+        capacity: 150,
       },
+      type: "Lecture",
+      numberOfParticipants: 100,
     },
     {
-      title: "Consultation",
-      startTime: "14:00",
-      endTime: "15:00",
-      room: "2.41",
-      date: new Date(),
-      reservationType: "Consultation",
-      roomE: {
-        id: 1,
-        name: "2.41",
-        equipment: ["Computers", "Routers", "Terminals"],
-        peopleCapacity: 30,
-      },
-    },
-    {
-      title: "Lecture",
-      startTime: "12:15",
-      endTime: "16:45",
-      room: "4.22",
-      date: new Date(),
-      reservationType: "Lecture",
-      roomE: {
-        id: 2,
-        name: "4.22",
-        equipment: ["Computers", "Terminals"],
-        peopleCapacity: 30,
-      },
-    },
-    {
+      id: "2",
       title: "Exam",
-      startTime: "16:00",
-      endTime: "18:00",
-      room: "1.38",
-      date: new Date(),
-      reservationType: "Exam",
-      roomE: {
-        id: 3,
+      description: "Exam about React",
+      date: "2024-10-28",
+      startTime: new Date(2024, 10, 28, 10, 15).getTime(),
+      endTime: new Date(2024, 10, 28, 12, 30).getTime(),
+      classRoom: {
+        id: "2",
         name: "1.38",
-        equipment: [],
-        peopleCapacity: 30,
+        capacity: 250,
       },
+      type: "Exam",
+      numberOfParticipants: 180,
     },
-  ];
+    {
+      id: "3",
+      title: "Consultation",
+      description: "Consultation about React",
+      date: "2024-10-30",
+      startTime: new Date(2024, 10, 30, 14, 45).getTime(),
+      endTime: new Date(2024, 10, 30, 16, 30).getTime(),
+      classRoom: {
+        id: "3",
+        name: "3.33",
+        capacity: 20,
+      },
+      type: "Consultation",
+      numberOfParticipants: 15,
+    },
+  ] satisfies Reservation[];
   const availableRooms = ["2.41", "1.38", "3.33", "4.22", "3.11", "2.22"];
   const equipment = ["Computers", "Routers", "Terminals"];
+
   return (
     <main>
-      <CalendarSection
-        reservations={reservations}
-        availableRooms={availableRooms}
-        equipment={equipment}
-      />
+      <div className="flex justify-stretch gap-10">
+        <CalendarSection
+          reservations={weekReservations}
+          availableRooms={availableRooms}
+          equipment={equipment}
+          mondayDate={mondayDate.getTime()}
+        />
+        <div className="border-l-4 border-black"></div>
+        <CalendarReservationsSection
+          weekUserReservations={weekReservations}
+          mondayDate={mondayDate.getTime()}
+        />
+      </div>
     </main>
   );
 }

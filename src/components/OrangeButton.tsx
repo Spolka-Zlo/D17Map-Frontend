@@ -17,7 +17,7 @@ export function OrangeButton({
   return (
     <button
       className={twMerge(
-        "px-4 py-2 bg-secondary text-black hover:text-secondary rounded-lg shadow-blueShadow hover:shadow-buttonHoverShadow hover:bg-primary",
+        "px-4 py-2 text-accent border-accent border-2 hover:text-primary rounded-md hover:shadow-buttonHoverShadow hover:bg-secondary",
         className
       )}
       type={type}

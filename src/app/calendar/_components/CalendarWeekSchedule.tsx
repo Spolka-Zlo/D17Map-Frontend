@@ -3,17 +3,16 @@ import { CalendarTimeTable } from "./CalendarTimeTable";
 
 export function CalendarWeekSchedule({
   weekReservations,
+  mondayDate,
 }: {
   weekReservations: Reservation[];
+  mondayDate: number;
 }) {
   return (
-    <div className="w-full bg-white/25 max-w-[1000px] rounded-lg p-2">
+    <div className="w-full">
       <CalendarTimeTable
         reservations={weekReservations}
-        rooms={[]}
-        roomsToColors={{}}
-        startTime={""}
-        endTime={""}
+        mondayDate={mondayDate}
       />
     </div>
   );

@@ -13,8 +13,8 @@ export function Navbar({ links }: NavigationItems) {
   return (
     <nav className="z-0 flex justify-between items-center gap-3 p-1 bg-primary text-white">
       <div className="flex justify-center items-center gap-3 pr-3 w-full min-w-72">
-        <Image src="/img/logo.png" alt="Logo" width={120} height={120} />
-        <h1 className="text-white text-4xl">D17 MAP</h1>
+        <Image src="/img/logo.png" alt="Logo" width={80} height={80} />
+        <h1 className="text-white text-3xl">D17 MAP</h1>
       </div>
       <Menu links={links} />
       <LoginSection />

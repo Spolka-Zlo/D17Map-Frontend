@@ -22,8 +22,11 @@ const config: Config = {
           "linear-gradient(90deg, #a3bac3 50%, #f6a200 50%, #f6a200 100%)",
       },
       colors: {
-        primary: "#002B38",
-        secondary: "#F6A200",
+        // primary: "#002B38",
+        primary: "#000000",
+        // secondary: "#F6A200",
+        secondary: "#D0DCE1",
+        accent: "#F6A200",
         mapGrey: "#A3BAC3",
         mapLightGrey: "#D0DCE1",
         white: "#FFFFFF",
