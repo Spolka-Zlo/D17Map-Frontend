@@ -3,6 +3,7 @@ import { Dropdown } from "@/components/Dropdown";
 import { Reservation } from "../page";
 import { useState } from "react";
 import { OrangeButton } from "@/components/OrangeButton";
+import { twMerge } from "tailwind-merge";
 
 type CalendarReservationFormProps = {
   room: string;
@@ -36,35 +37,41 @@ export function CalendarReservationForm({
   }
 
   return (
-    <div className={`fixed inset-0 bg-black bg-opacity-50 z-50`}>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg">
-        <h3 className="text-primary text-xl pb-5">
+    <div className={`fixed inset-0 z-50 bg-black bg-opacity-50`}>
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-md bg-white p-8">
+        <h3 className="pb-5 text-xl text-primary">
           Rezerwacja sali {room} na dzień {date.toDateString()}
         </h3>
-        <form className="flex flex-col gap-4 justify-center items-center content-center">
+        <form className="flex flex-col content-center items-center justify-center gap-6 pt-6">
           <input
-            className="text-center border-primary/50 border-4 rounded-lg p-1"
+            className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
             type="text"
             placeholder="Tytuł rezerwacji"
           />
-          <div className="flex gap-3 justify-center">
+          <div className="flex justify-center gap-3">
             <input
-              className="border-primary/50 border-4 rounded-lg p-1"
+              className="rounded-md border-b-2 border-l-2 border-primary p-1"
               type="time"
               value={startTime}
               onChange={(e) => console.log(e.target.value)}
             />
             <input
-              className="border-primary/50 border-4 rounded-lg p-1"
+              className="rounded-md border-b-2 border-l-2 border-primary p-1"
               type="time"
               value={endTime}
               onChange={(e) => console.log(e.target.value)}
             />
           </div>
+          <input
+            className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
+            type="number"
+            placeholder="Uczestnicy"
+          />
           <Dropdown
             options={["Lecture", "Consultation", "Exam"]}
             selected={selectedType}
             setSelected={setSelectedType}
+            className="z-10"
           />
           <Dropdown
             options={availableRooms ?? []}

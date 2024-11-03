@@ -6,12 +6,14 @@ type FilterSectionProps = {
   allFilters: string[];
   filters: string[];
   setFilters: Dispatch<SetStateAction<string[]>>;
+  openCloseReservationModal: Dispatch<SetStateAction<boolean>>;
 };
 
 export function FilterSection({
   allFilters,
   filters,
   setFilters,
+  openCloseReservationModal,
 }: FilterSectionProps) {
   return (
     <div className="flex w-full content-center items-center justify-between rounded-md bg-white/25 p-5">
@@ -26,7 +28,10 @@ export function FilterSection({
           />
         ))}
       </div>
-      <button className="h-11 w-11 rounded-md border-b-2 border-l-2 border-primary bg-accent text-center text-4xl text-primary">
+      <button
+        onClick={() => openCloseReservationModal(true)}
+        className="h-11 w-11 rounded-md border-b-2 border-l-2 border-primary bg-accent text-center text-4xl text-primary"
+      >
         +
       </button>
     </div>

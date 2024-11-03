@@ -1,10 +1,11 @@
+import { CalendarPageContent } from "./_components/CalendarPageContent";
 import { CalendarReservationsSection } from "./_components/CalendarReservationsSection";
 import { CalendarSection } from "./_components/CalendarSection";
 import { z } from "zod";
+import { toTimestamp } from "@/utils/DateUtils";
 
 export type ReservationType = "Lecture" | "Consultation" | "Exam";
 
-const toTimestamp = (date: string) => new Date(date).getTime();
 const reservationSchema = z.object({
   id: z.string(),
   title: z.string(),
@@ -31,13 +32,11 @@ export default function Reservation({
   searchParams: { date: string };
 }) {
   console.log(searchParams.date);
-  const lastMonday = new Date();
+  const lastMonday = new Date(2024, 10, 2);
   lastMonday.setDate(lastMonday.getDate() - ((lastMonday.getDay() + 6) % 7));
-  const mondayDate = new Date(
-    Number(searchParams.date) ?? lastMonday.getTime(),
-  );
+  const mondayDate = new Date(lastMonday.getTime());
 
-  console.log(mondayDate);
+  console.log(mondayDate, lastMonday.getTime());
 
   const weekReservations = [
     {
@@ -45,8 +44,8 @@ export default function Reservation({
       title: "Lecture",
       description: "Lecture about React",
       date: "2024-11-01",
-      startTime: new Date(2024, 11, 1, 12, 45).getTime(),
-      endTime: new Date(2024, 11, 1, 14, 30).getTime(),
+      startTime: new Date(2024, 10, 1, 12, 45).getTime(),
+      endTime: new Date(2024, 10, 1, 14, 30).getTime(),
       classRoom: {
         id: "1",
         name: "2.41",
@@ -60,8 +59,8 @@ export default function Reservation({
       title: "Exam",
       description: "Exam about React",
       date: "2024-10-28",
-      startTime: new Date(2024, 10, 28, 10, 15).getTime(),
-      endTime: new Date(2024, 10, 28, 12, 30).getTime(),
+      startTime: new Date(2024, 9, 28, 10, 15).getTime(),
+      endTime: new Date(2024, 9, 28, 12, 30).getTime(),
       classRoom: {
         id: "2",
         name: "1.38",
@@ -75,8 +74,8 @@ export default function Reservation({
       title: "Consultation",
       description: "Consultation about React",
       date: "2024-10-30",
-      startTime: new Date(2024, 10, 30, 14, 45).getTime(),
-      endTime: new Date(2024, 10, 30, 16, 30).getTime(),
+      startTime: new Date(2024, 9, 30, 14, 45).getTime(),
+      endTime: new Date(2024, 9, 30, 16, 30).getTime(),
       classRoom: {
         id: "3",
         name: "3.33",
@@ -91,19 +90,9 @@ export default function Reservation({
 
   return (
     <main>
-      <div className="flex justify-stretch gap-10">
-        <CalendarSection
-          reservations={weekReservations}
-          availableRooms={availableRooms}
-          equipment={equipment}
-          mondayDate={mondayDate.getTime()}
-        />
-        <div className="border-l-4 border-black"></div>
-        <CalendarReservationsSection
-          weekUserReservations={weekReservations}
-          mondayDate={mondayDate.getTime()}
-        />
-      </div>
+      <CalendarPageContent
+        {...{ weekReservations, availableRooms, equipment, mondayDate }}
+      />
     </main>
   );
 }

@@ -2,18 +2,31 @@ import { Reservation } from "../page";
 
 export function UserReservationItem({
   reservation,
-  onClick,
+  cancelReservation,
+  editReservation,
 }: {
   reservation: Reservation;
-  onClick: () => void;
+  cancelReservation: () => void;
+  editReservation: () => void;
 }) {
   return (
-    <div
-      className="flex w-full cursor-pointer flex-col items-center justify-between gap-3 rounded-md border-2 border-black bg-primary p-2 text-center text-white hover:bg-accent/50 hover:text-primary"
-      onClick={onClick}
-    >
+    <div className="relative flex w-full flex-col items-center justify-between gap-3 rounded-md border-2 border-black bg-primary p-2 text-center text-white">
       <div className="">
         <div>{reservation.title}</div>
+        <div className="absolute right-2 top-2 z-10 flex justify-between gap-1">
+          <button
+            className="text-md h-6 w-6 cursor-pointer rounded-md p-0 text-white"
+            onClick={editReservation}
+          >
+            &#x1F589;
+          </button>
+          <button
+            className="text-md h-6 w-6 cursor-pointer rounded-md p-0 text-white"
+            onClick={cancelReservation}
+          >
+            &#x1F5D1;
+          </button>
+        </div>
       </div>
       <div className="flex items-center justify-between gap-5">
         <div className="text-center">

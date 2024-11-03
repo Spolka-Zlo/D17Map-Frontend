@@ -4,13 +4,14 @@ import { Reservation } from "@/app/calendar/page";
 import { CalendarWeekSchedule } from "./CalendarWeekSchedule";
 import Link from "next/link";
 import { FilterSection } from "./FilterSection";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 type CalendarSectionProps = {
   reservations: Reservation[];
   availableRooms: string[];
   equipment: string[];
   mondayDate: number;
+  openCloseReservationModal: Dispatch<SetStateAction<boolean>>;
 };
 
 export function CalendarSection({
@@ -18,6 +19,7 @@ export function CalendarSection({
   availableRooms,
   equipment,
   mondayDate,
+  openCloseReservationModal,
 }: CalendarSectionProps) {
   console.log("monday", mondayDate);
   const [filters, setFilters] = useState(["Events", "Lectures"]);
@@ -28,6 +30,7 @@ export function CalendarSection({
         allFilters={allFilters}
         filters={filters}
         setFilters={setFilters}
+        openCloseReservationModal={openCloseReservationModal}
       />
       <div className="flex w-full flex-col justify-between gap-5 rounded-md bg-white/25 p-5">
         <div className="flex w-full justify-center gap-8 px-2">
