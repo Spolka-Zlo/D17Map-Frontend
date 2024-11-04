@@ -4,7 +4,6 @@ import { twMerge } from "tailwind-merge";
 
 type CalendarTimeTableProps = {
   reservations: Reservation[];
-  mondayDate: number;
 };
 
 type weekdaysMapType = {
@@ -22,12 +21,7 @@ type ReservationWithTimestamp = {
   timestamp: number;
 };
 
-export function CalendarTimeTable({
-  reservations,
-  mondayDate,
-}: CalendarTimeTableProps) {
-  const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
+export function CalendarTimeTable({ reservations }: CalendarTimeTableProps) {
   function getWeekDay(date: string) {
     return new Date(date).toLocaleDateString("en-US", { weekday: "short" });
   }
@@ -46,7 +40,6 @@ export function CalendarTimeTable({
       const day = getWeekDay(reservation.date) as keyof weekdaysMapType;
       weekdaysMap[day].push(reservation);
     });
-    // console.log(weekdaysMap);
     return weekdaysMap;
   }
 
@@ -55,10 +48,10 @@ export function CalendarTimeTable({
       return [];
     }
     day.setHours(0, 0, 0, 0);
-    const startTime = day.getTime() + startHour * 3600 * 1000; // Start of the time range (e.g., 7:00)
-    const timestamps = new Array((endHour - startHour) * 4) // Number of 15-min intervals in the range
+    const startTime = day.getTime() + startHour * 3600 * 1000;
+    const timestamps = new Array((endHour - startHour) * 4)
       .fill(0)
-      .map((_, i) => startTime + i * 1000 * 60 * 15); // Each 15-min increment
+      .map((_, i) => startTime + i * 1000 * 60 * 15);
     return timestamps;
   }
 
@@ -109,11 +102,7 @@ export function CalendarTimeTable({
   };
 
   const timestampsMap = mapWeekdaysToTimestamps(weekdaysMap(reservations));
-  const timestamps = generateTimestamps(7, 22); // Only needed if used elsewhere in your code
 
-  console.log(timestampsMap);
-  console.log(timestamps);
-  // console.log(timestampsMap);
   return (
     <div className="relative">
       <div className="grid-col-9 grid w-full grid-rows-1">

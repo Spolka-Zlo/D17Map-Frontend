@@ -25,7 +25,6 @@ export function CalendarPageContent({
       <CalendarSection
         reservations={weekReservations}
         availableRooms={availableRooms}
-        equipment={equipment}
         mondayDate={mondayDate.getTime()}
         openCloseReservationModal={openCloseReservationModal}
       />

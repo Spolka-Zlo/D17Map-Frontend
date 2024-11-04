@@ -13,6 +13,7 @@ type FilterSectionProps = {
   availableRooms: string[];
 };
 
+//setFilters prepared for the future use
 export function FilterSection({
   allFilters,
   filters,

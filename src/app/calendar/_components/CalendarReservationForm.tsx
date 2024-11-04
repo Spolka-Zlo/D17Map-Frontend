@@ -1,10 +1,8 @@
 "use client";
 import { Dropdown } from "@/components/Dropdown";
-import { Classroom, Reservation } from "../page";
+import { Classroom } from "../page";
 import { useState } from "react";
 import { OrangeButton } from "@/components/OrangeButton";
-import { twMerge } from "tailwind-merge";
-
 type CalendarReservationFormProps = {
   room: string;
   setRoom: React.Dispatch<React.SetStateAction<string>>;

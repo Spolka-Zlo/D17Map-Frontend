@@ -9,7 +9,6 @@ import { Dispatch, SetStateAction, useState } from "react";
 type CalendarSectionProps = {
   reservations: Reservation[];
   availableRooms: string[];
-  equipment: string[];
   mondayDate: number;
   openCloseReservationModal: Dispatch<SetStateAction<boolean>>;
 };
@@ -17,11 +16,9 @@ type CalendarSectionProps = {
 export function CalendarSection({
   reservations,
   availableRooms,
-  equipment,
   mondayDate,
   openCloseReservationModal,
 }: CalendarSectionProps) {
-  console.log("monday", mondayDate);
   const [filters, setFilters] = useState(["Events", "Lectures"]);
   const [selectedRoom, setSelectedRoom] = useState(availableRooms[0]);
   const allFilters = ["Events", "Lectures", "Exams", "Consultations"];
@@ -47,10 +44,7 @@ export function CalendarSection({
             &#x2B9E;
           </Link>
         </div>
-        <CalendarWeekSchedule
-          weekReservations={reservations}
-          mondayDate={mondayDate}
-        />
+        <CalendarWeekSchedule weekReservations={reservations} />
       </div>
     </section>
   );

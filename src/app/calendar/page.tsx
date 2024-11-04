@@ -1,10 +1,10 @@
 import { CalendarPageContent } from "./_components/CalendarPageContent";
-import { CalendarReservationsSection } from "./_components/CalendarReservationsSection";
-import { CalendarSection } from "./_components/CalendarSection";
 import { z } from "zod";
 import { toTimestamp } from "@/utils/DateUtils";
 
-export type ReservationType = "Lecture" | "Consultation" | "Exam";
+const reservationTypeSchema = z.enum(["Lecture", "Consultation", "Exam"]);
+
+export type ReservationType = z.infer<typeof reservationTypeSchema>;
 
 const reservationSchema = z.object({
   id: z.string(),
@@ -18,7 +18,7 @@ const reservationSchema = z.object({
     name: z.string(),
     capacity: z.number(),
   }),
-  type: z.enum(["Lecture", "Consultation", "Exam"]),
+  type: reservationTypeSchema,
   numberOfParticipants: z.number(),
 });
 
@@ -35,23 +35,19 @@ const equipmentSchema = z.object({
   name: z.string(),
 });
 
-const reservationTypeSchema = z.enum(["Lecture", "Consultation", "Exam"]);
-
 export type Reservation = z.infer<typeof reservationSchema>;
 export type Classroom = z.infer<typeof classroomSchema>;
 export type Equipment = z.infer<typeof equipmentSchema>;
 
+//searchParams prepared for the future
 export default function Reservation({
   searchParams,
 }: {
   searchParams: { date: string };
 }) {
-  console.log(searchParams.date);
   const lastMonday = new Date(2024, 10, 2);
   lastMonday.setDate(lastMonday.getDate() - ((lastMonday.getDay() + 6) % 7));
   const mondayDate = new Date(lastMonday.getTime());
-
-  console.log(mondayDate, lastMonday.getTime());
 
   const weekReservations = [
     {
