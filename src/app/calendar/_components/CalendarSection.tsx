@@ -23,6 +23,7 @@ export function CalendarSection({
 }: CalendarSectionProps) {
   console.log("monday", mondayDate);
   const [filters, setFilters] = useState(["Events", "Lectures"]);
+  const [selectedRoom, setSelectedRoom] = useState(availableRooms[0]);
   const allFilters = ["Events", "Lectures", "Exams", "Consultations"];
   return (
     <section className="flex w-[62vw] flex-col gap-5">
@@ -31,6 +32,9 @@ export function CalendarSection({
         filters={filters}
         setFilters={setFilters}
         openCloseReservationModal={openCloseReservationModal}
+        selectedRoom={selectedRoom}
+        setSelectedRoom={setSelectedRoom}
+        availableRooms={availableRooms}
       />
       <div className="flex w-full flex-col justify-between gap-5 rounded-md bg-white/25 p-5">
         <div className="flex w-full justify-center gap-8 px-2">

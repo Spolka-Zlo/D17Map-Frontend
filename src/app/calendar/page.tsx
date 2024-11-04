@@ -22,9 +22,24 @@ const reservationSchema = z.object({
   numberOfParticipants: z.number(),
 });
 
+const classroomSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  capacity: z.number(),
+  equipmentIds: z.array(z.string()),
+});
+
+const equipmentSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+});
+
 const reservationTypeSchema = z.enum(["Lecture", "Consultation", "Exam"]);
 
 export type Reservation = z.infer<typeof reservationSchema>;
+export type Classroom = z.infer<typeof classroomSchema>;
+export type Equipment = z.infer<typeof equipmentSchema>;
 
 export default function Reservation({
   searchParams,
@@ -87,11 +102,45 @@ export default function Reservation({
   ] satisfies Reservation[];
   const availableRooms = ["2.41", "1.38", "3.33", "4.22", "3.11", "2.22"];
   const equipment = ["Computers", "Routers", "Terminals"];
+  const classrooms = [
+    {
+      id: "1",
+      name: "2.41",
+      description: "Big classroom",
+      capacity: 150,
+      equipmentIds: ["1", "2"],
+    },
+    {
+      id: "2",
+      name: "1.38",
+      description: "Small classroom",
+      capacity: 50,
+      equipmentIds: ["1", "3"],
+    },
+    {
+      id: "3",
+      name: "3.33",
+      description: "Medium classroom",
+      capacity: 100,
+      equipmentIds: ["2", "3"],
+    },
+  ] satisfies Classroom[];
+  const equipments = [
+    { id: "1", name: "Computers" },
+    { id: "2", name: "Routers" },
+    { id: "3", name: "Terminals" },
+  ] satisfies Equipment[];
 
   return (
     <main>
       <CalendarPageContent
-        {...{ weekReservations, availableRooms, equipment, mondayDate }}
+        {...{
+          weekReservations,
+          availableRooms,
+          equipment,
+          mondayDate,
+          classrooms,
+        }}
       />
     </main>
   );

@@ -17,6 +17,11 @@ type weekdaysMapType = {
   Sun: Reservation[];
 };
 
+type ReservationWithTimestamp = {
+  reservation: Reservation | null;
+  timestamp: number;
+};
+
 export function CalendarTimeTable({
   reservations,
   mondayDate,
@@ -62,25 +67,25 @@ export function CalendarTimeTable({
     day?: Date,
   ) {
     const timestamps = generateTimestamps(7, 22, day);
-    // console.log("timestamps", timestamps);
-    // console.log(dayReservations);
-    const currentEvents = timestamps.map(
-      (timestamp) =>
-        dayReservations.find((reservation) => {
-          return (
-            reservation.startTime <= timestamp &&
-            reservation.endTime >= timestamp
-          );
-        }) || null, // Ensure null is returned if no reservation matches
-    );
-    // console.log(currentEvents);
+    const currentEvents = timestamps.map((timestamp) => {
+      return {
+        reservation:
+          dayReservations.find((reservation) => {
+            return (
+              reservation.startTime <= timestamp &&
+              reservation.endTime >= timestamp
+            );
+          }) || null,
+        timestamp: timestamp,
+      };
+    });
     return currentEvents;
   }
 
   const mapWeekdaysToTimestamps = (weekdaysMap: weekdaysMapType) => {
     const timeStampWeekdayMap: Record<
       keyof weekdaysMapType,
-      (Reservation | null)[]
+      ReservationWithTimestamp[]
     > = {
       Mon: [],
       Tue: [],
@@ -103,17 +108,11 @@ export function CalendarTimeTable({
     return timeStampWeekdayMap;
   };
 
-  function isFirstTimestampInReservation(
-    timestamp: number,
-    reservation: Reservation,
-  ) {
-    return timestamp === reservation.startTime;
-  }
-
   const timestampsMap = mapWeekdaysToTimestamps(weekdaysMap(reservations));
   const timestamps = generateTimestamps(7, 22); // Only needed if used elsewhere in your code
 
   console.log(timestampsMap);
+  console.log(timestamps);
   // console.log(timestampsMap);
   return (
     <div className="relative">
@@ -151,23 +150,22 @@ export function CalendarTimeTable({
                     className={twMerge(
                       "h-2.5 w-full cursor-pointer border-dotted border-primary text-center text-accent",
                       j % 4 === 0 && "border-solid",
-                      reservation
+                      reservation.reservation
                         ? "border-l-2 border-r-2 border-solid border-accent bg-primary"
                         : "border-t-2",
-                      reservation &&
-                        j - 1 >= 0 &&
-                        reservationTimeStamps[j - 1] === null &&
+                      reservation.reservation &&
+                        reservation.reservation.startTime ===
+                          reservation.timestamp &&
                         "border-t-2 border-solid border-accent",
-                      reservation &&
-                        j + 1 < reservationTimeStamps.length &&
-                        reservationTimeStamps[j + 1] === null &&
+                      reservation.reservation &&
+                        reservation.reservation.endTime ===
+                          reservation.timestamp &&
                         "border-b-2 border-solid border-accent",
                     )}
                   >
-                    {reservation &&
-                    j - 1 >= 0 &&
-                    reservationTimeStamps[j - 1] === null
-                      ? reservation.title
+                    {reservation.reservation &&
+                    reservation.reservation.startTime === reservation.timestamp
+                      ? reservation.reservation.title
                       : ""}
                   </div>
                 ))}
