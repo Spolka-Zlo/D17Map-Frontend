@@ -17,12 +17,14 @@ export function UserReservationItem({
           <button
             className="text-md h-6 w-6 cursor-pointer rounded-md p-0 text-accent"
             onClick={editReservation}
+            aria-label="Edit reservation"
           >
             &#x1F589;
           </button>
           <button
             className="text-md h-6 w-6 cursor-pointer rounded-md p-0 text-red-500"
             onClick={cancelReservation}
+            aria-label="Cancel reservation"
           >
             &#x1F5D1;
           </button>
@@ -30,15 +32,15 @@ export function UserReservationItem({
       </div>
       <div className="flex items-center justify-between gap-5">
         <div className="text-center">
-          {new Date(reservation.startTime)
-            .toTimeString()
-            .split(" ")[0]
-            .slice(0, 5)}
+          {new Intl.DateTimeFormat("pl", {
+            hour: "numeric",
+            minute: "numeric",
+          }).format(new Date(reservation.startTime))}
           -
-          {new Date(reservation.endTime)
-            .toTimeString()
-            .split(" ")[0]
-            .slice(0, 5)}
+          {new Intl.DateTimeFormat("pl", {
+            hour: "numeric",
+            minute: "numeric",
+          }).format(new Date(reservation.endTime))}
         </div>
         <span className="h-1 w-1 rounded-full bg-primary/50" />{" "}
         <div>{reservation.classRoom.name}</div>

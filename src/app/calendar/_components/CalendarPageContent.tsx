@@ -20,18 +20,19 @@ export function CalendarPageContent({
   classrooms,
 }: CalendarPageContentProps) {
   const [isReservationModalOpen, openCloseReservationModal] = useState(false);
+  const mondayDateTimestamp = mondayDate.getTime();
   return (
     <section className="flex justify-stretch gap-10">
       <CalendarSection
         reservations={weekReservations}
         availableRooms={availableRooms}
-        mondayDate={mondayDate.getTime()}
+        mondayDate={mondayDateTimestamp}
         openCloseReservationModal={openCloseReservationModal}
       />
       <div className="border-l-4 border-black"></div>
       <CalendarReservationsSection
         weekUserReservations={weekReservations}
-        mondayDate={mondayDate.getTime()}
+        mondayDate={mondayDateTimestamp}
         isReservationModalOpen={isReservationModalOpen}
         openCloseReservationModal={openCloseReservationModal}
         equipment={equipment}
