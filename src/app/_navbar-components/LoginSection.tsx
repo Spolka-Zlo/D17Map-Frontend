@@ -5,7 +5,7 @@ export async function LoginSection() {
   const token = await getToken();
   const isLoggedIn = !!token;
   return (
-    <div className="flex maxML:hidden justify-center items-center gap-4 w-full h-full">
+    <div className="flex h-full w-full items-center justify-center gap-4 maxML:hidden">
       {!isLoggedIn ? (
         <OrangeLinkButton text="Login" className="w-28" href="/login" />
       ) : (

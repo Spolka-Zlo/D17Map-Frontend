@@ -1,89 +1,142 @@
-import { CalendarSection } from "./_components/CalendarSection";
+import { CalendarPageContent } from "./_components/CalendarPageContent";
+import { z } from "zod";
+import { toTimestamp } from "@/utils/DateUtils";
 
-export type ReservationType = "Lecture" | "Consultation" | "Exam";
+const reservationTypeSchema = z.enum(["Lecture", "Consultation", "Exam"]);
 
-export type Reservation = {
-  title: string;
-  startTime: string;
-  endTime: string;
-  room: string;
-  date: Date;
-  reservationType: ReservationType;
-  roomE: {
-    id: number;
-    name: string;
-    equipment: string[];
-    peopleCapacity: number;
-  };
-};
+export type ReservationType = z.infer<typeof reservationTypeSchema>;
 
-export default function Reservation() {
-  const reservations: Reservation[] = [
+const reservationSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string(),
+  date: z.string(),
+  startTime: z.string().transform(toTimestamp),
+  endTime: z.string().transform(toTimestamp),
+  classRoom: z.object({
+    id: z.string(),
+    name: z.string(),
+    capacity: z.number(),
+  }),
+  type: reservationTypeSchema,
+  numberOfParticipants: z.number(),
+});
+
+const classroomSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  capacity: z.number(),
+  equipmentIds: z.array(z.string()),
+});
+
+const equipmentSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+});
+
+export type Reservation = z.infer<typeof reservationSchema>;
+export type Classroom = z.infer<typeof classroomSchema>;
+export type Equipment = z.infer<typeof equipmentSchema>;
+
+//searchParams prepared for the future
+export default function Reservation({
+  searchParams,
+}: {
+  searchParams: { date: string };
+}) {
+  const lastMonday = new Date(2024, 10, 2);
+  lastMonday.setDate(lastMonday.getDate() - ((lastMonday.getDay() + 6) % 7));
+  const mondayDate = new Date(lastMonday.getTime());
+
+  const weekReservations = [
     {
+      id: "1",
       title: "Lecture",
-      startTime: "12:15",
-      endTime: "13:45",
-      room: "2.41",
-      date: new Date(),
-      reservationType: "Lecture",
-      roomE: {
-        id: 1,
+      description: "Lecture about React",
+      date: "2024-11-01",
+      startTime: new Date(2024, 10, 1, 12, 45).getTime(),
+      endTime: new Date(2024, 10, 1, 14, 30).getTime(),
+      classRoom: {
+        id: "1",
         name: "2.41",
-        equipment: ["Computers", "Routers", "Terminals"],
-        peopleCapacity: 30,
+        capacity: 150,
       },
+      type: "Lecture",
+      numberOfParticipants: 100,
     },
     {
-      title: "Consultation",
-      startTime: "14:00",
-      endTime: "15:00",
-      room: "2.41",
-      date: new Date(),
-      reservationType: "Consultation",
-      roomE: {
-        id: 1,
-        name: "2.41",
-        equipment: ["Computers", "Routers", "Terminals"],
-        peopleCapacity: 30,
-      },
-    },
-    {
-      title: "Lecture",
-      startTime: "12:15",
-      endTime: "16:45",
-      room: "4.22",
-      date: new Date(),
-      reservationType: "Lecture",
-      roomE: {
-        id: 2,
-        name: "4.22",
-        equipment: ["Computers", "Terminals"],
-        peopleCapacity: 30,
-      },
-    },
-    {
+      id: "2",
       title: "Exam",
-      startTime: "16:00",
-      endTime: "18:00",
-      room: "1.38",
-      date: new Date(),
-      reservationType: "Exam",
-      roomE: {
-        id: 3,
+      description: "Exam about React",
+      date: "2024-10-28",
+      startTime: new Date(2024, 9, 28, 10, 15).getTime(),
+      endTime: new Date(2024, 9, 28, 12, 30).getTime(),
+      classRoom: {
+        id: "2",
         name: "1.38",
-        equipment: [],
-        peopleCapacity: 30,
+        capacity: 250,
       },
+      type: "Exam",
+      numberOfParticipants: 180,
     },
-  ];
+    {
+      id: "3",
+      title: "Consultation",
+      description: "Consultation about React",
+      date: "2024-10-30",
+      startTime: new Date(2024, 9, 30, 14, 45).getTime(),
+      endTime: new Date(2024, 9, 30, 16, 30).getTime(),
+      classRoom: {
+        id: "3",
+        name: "3.33",
+        capacity: 20,
+      },
+      type: "Consultation",
+      numberOfParticipants: 15,
+    },
+  ] satisfies Reservation[];
   const availableRooms = ["2.41", "1.38", "3.33", "4.22", "3.11", "2.22"];
   const equipment = ["Computers", "Routers", "Terminals"];
+  const classrooms = [
+    {
+      id: "1",
+      name: "2.41",
+      description: "Big classroom",
+      capacity: 150,
+      equipmentIds: ["1", "2"],
+    },
+    {
+      id: "2",
+      name: "1.38",
+      description: "Small classroom",
+      capacity: 50,
+      equipmentIds: ["1", "3"],
+    },
+    {
+      id: "3",
+      name: "3.33",
+      description: "Medium classroom",
+      capacity: 100,
+      equipmentIds: ["2", "3"],
+    },
+  ] satisfies Classroom[];
+  const equipments = [
+    { id: "1", name: "Computers" },
+    { id: "2", name: "Routers" },
+    { id: "3", name: "Terminals" },
+  ] satisfies Equipment[];
+
   return (
     <main>
-      <CalendarSection
-        reservations={reservations}
-        availableRooms={availableRooms}
-        equipment={equipment}
+      <CalendarPageContent
+        {...{
+          weekReservations,
+          availableRooms,
+          equipment,
+          mondayDate,
+          classrooms,
+        }}
       />
     </main>
   );
