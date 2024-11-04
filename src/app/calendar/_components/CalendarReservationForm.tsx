@@ -3,6 +3,7 @@ import { Dropdown } from "@/components/Dropdown";
 import { Classroom } from "../page";
 import { useState } from "react";
 import { OrangeButton } from "@/components/OrangeButton";
+import { addReservation } from "../_actions/addReservation";
 
 type CalendarReservationFormProps = {
   room: string;
@@ -33,10 +34,9 @@ export function CalendarReservationForm({
   equipment,
   classrooms,
 }: CalendarReservationFormProps) {
-  const [selectedType, setSelectedType] = useState("Lecture");
+  const [selectedType, setSelectedType] = useState("CLASS");
   const [selectedEquipment, setSelectedEquipment] = useState("None");
   function handleSubmit() {
-    setOpen(false);
     console.log("Submit");
   }
 
@@ -52,22 +52,48 @@ export function CalendarReservationForm({
         <h3 className="pb-5 text-xl text-primary">
           Rezerwacja sali {room} na dzień {date.toDateString()}
         </h3>
-        <form className="flex flex-col content-center items-center justify-center gap-6 pt-6">
+        <form
+          action={async (formData) => {
+            await addReservation(formData);
+            setOpen(false);
+          }}
+          className="flex flex-col content-center items-center justify-center gap-6 pt-6"
+        >
           <input
             className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
+            name="title"
             type="text"
             placeholder="Tytuł rezerwacji"
+            required
+          />
+          <input
+            className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
+            name="description"
+            type="text"
+            placeholder="Opis rezerwacji"
+            required
+          />
+          <input
+            className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
+            name="date"
+            type="date"
+            placeholder="Data"
+            required
           />
           <div className="flex justify-center gap-3">
             <input
+              name="startTime"
               className="rounded-md border-b-2 border-l-2 border-primary p-1"
               type="time"
               list="time"
+              required
             />
             <input
               className="rounded-md border-b-2 border-l-2 border-primary p-1"
+              name="endTime"
               type="time"
               list="time"
+              required
             />
             <datalist id="time">
               {new Array(15 * 4).fill(0).map((_, i) => {
@@ -86,12 +112,14 @@ export function CalendarReservationForm({
           </div>
           <input
             className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
+            name="numberOfParticipants"
             type="number"
-            min={1}
+            min={0}
             placeholder="Uczestnicy"
+            required
           />
           <Dropdown
-            options={["Lecture", "Consultation", "Exam"]}
+            options={["CLASS"]}
             selected={selectedType}
             setSelected={setSelectedType}
             className="z-20"
@@ -107,7 +135,14 @@ export function CalendarReservationForm({
             selected={room}
             setSelected={setRoom}
           />
-          <OrangeButton onClick={handleSubmit} text="Zarezerwuj" />
+          <input
+            type="hidden"
+            name="classroomId"
+            value={"7f000101-92f8-1911-8192-f8c91dfc0004"}
+          />
+          <input type="hidden" name="date" value={date.toISOString()} />
+          <input type="hidden" name="type" value={selectedType} />
+          <OrangeButton type="submit" text="Zarezerwuj" />
         </form>
       </div>
     </div>

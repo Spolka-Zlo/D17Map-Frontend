@@ -2,8 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-
-const LOGIN_URL = "http://localhost:8080/auth/login";
+import { LOGIN_URL } from "./constants";
 
 export async function login(username: string, password: string) {
   const response = await fetch(LOGIN_URL, {
@@ -19,8 +18,8 @@ export async function login(username: string, password: string) {
     throw new Error("Login failed");
   }
 
-  const token = await response.text();
-  if (typeof token !== "string") {
+  const { token, role } = await response.json();
+  if (typeof token !== "string" || typeof role !== "string") {
     throw new Error("Invalid data received");
   }
 
@@ -33,5 +32,11 @@ export async function login(username: string, password: string) {
     path: "/",
   });
 
-  redirect("/classrooms");
+  cookies().set("role", role, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 60 * 60 * 24, // One day
+  });
+
+  redirect("/calendar");
 }
