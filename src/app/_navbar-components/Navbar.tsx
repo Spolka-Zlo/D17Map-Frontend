@@ -1,5 +1,5 @@
 import Image from "next/image";
-import LoginSection from "./LoginSection";
+import { LoginSection } from "./LoginSection";
 import { Menu } from "./Menu";
 export type NavigationItems = {
   links: {
