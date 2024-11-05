@@ -1,4 +1,5 @@
 import { login } from "@/auth/login";
+import Link from "next/link";
 
 export default function LoginPage() {
   return (
@@ -25,6 +26,12 @@ export default function LoginPage() {
         >
           Login
         </button>
+        <Link
+          className="w-44 self-center rounded-md border-b-2 border-l-2 border-primary p-2 text-center"
+          href="/register"
+        >
+          Nowy
+        </Link>
       </form>
     </div>
   );

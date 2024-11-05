@@ -10,6 +10,7 @@ type MapSectionProps = {
 
 export function MapSection({ clickedRoom, setClickedRoom }: MapSectionProps) {
   const [floor, setFloor] = useState("Floor 1");
+  const equipments = ["ROUTERS", "COMPUTERS"];
   return (
     <div className="relative">
       <div className="h-[70vh] w-[60vw]">
@@ -25,6 +26,11 @@ export function MapSection({ clickedRoom, setClickedRoom }: MapSectionProps) {
             Piętro {floor.replace("Floor ", "")}
           </h1>
           <p>Sala {clickedRoom.slice(0, 1) + "." + clickedRoom.slice(1)}</p>
+          <ul className="flex gap-1">
+            {equipments.map((value) => (
+              <li key={value}>{value}</li>
+            ))}
+          </ul>
         </div>
       )}
       <MapMenu floor={floor} setFloor={setFloor} />

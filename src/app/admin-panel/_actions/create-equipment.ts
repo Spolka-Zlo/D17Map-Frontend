@@ -15,7 +15,7 @@ export async function createEquipment(formData: FormData) {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      id: formData.get("id"),
+      id: "hhbhb",
       name: formData.get("name"),
     }),
   });

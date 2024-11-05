@@ -68,7 +68,7 @@ export default async function ReservationPage({
 }: {
   searchParams: { date: string };
 }) {
-  const lastMonday = new Date(2024, 10, 30);
+  const lastMonday = new Date(2024, 9, 30);
   lastMonday.setDate(lastMonday.getDate() - 1);
   const mondayDate = new Date(
     Number(searchParams.date) || lastMonday.getTime(),
@@ -99,7 +99,17 @@ export default async function ReservationPage({
     z.array(equipmentSchema),
   );
 
-  const availableRooms = ["2.41", "1.38", "3.33", "4.22", "3.11", "2.22"];
+  const availableRooms = [
+    "2.41",
+    "1.38",
+    "3.33",
+    "4.22",
+    "3.11",
+    "2.22",
+    "4.27",
+    "3.31",
+    "2.19",
+  ];
   const equipment = ["Computers", "Routers", "Terminals"];
   const classrooms = [
     {

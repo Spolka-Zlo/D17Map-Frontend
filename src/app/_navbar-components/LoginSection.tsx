@@ -1,5 +1,6 @@
 import { getToken } from "@/auth/getToken";
 import { OrangeLinkButton } from "@/components/OrangeLinkButton";
+import { LogoutButton } from "./LogoutButton";
 
 export async function LoginSection() {
   const token = await getToken();
@@ -9,11 +10,7 @@ export async function LoginSection() {
       {!isLoggedIn ? (
         <OrangeLinkButton text="Login" className="w-28" href="/login" />
       ) : (
-        isLoggedIn && (
-          <span className="text-2xl font-extrabold text-secondary maxLG:hidden">
-            Welcome!
-          </span>
-        )
+        isLoggedIn && <LogoutButton />
       )}
     </div>
   );
