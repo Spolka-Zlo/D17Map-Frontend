@@ -1,11 +1,15 @@
 "use client";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { MapScene } from "./MapScene";
 import { MapMenu } from "./MapMenu";
 
-export function MapSection() {
+type MapSectionProps = {
+  clickedRoom: string | null;
+  setClickedRoom: Dispatch<SetStateAction<string | null>>;
+};
+
+export function MapSection({ clickedRoom, setClickedRoom }: MapSectionProps) {
   const [floor, setFloor] = useState("Floor 1");
-  const [clickedRoom, setClickedRoom] = useState<string | null>(null);
   return (
     <div className="relative">
       <div className="h-[70vh] w-[60vw]">
@@ -16,7 +20,7 @@ export function MapSection() {
         />
       </div>
       {clickedRoom && (
-        <div className="absolute bottom-0 right-20 bg-white/25 p-4">
+        <div className="absolute right-20 top-0 rounded-md bg-white/25 p-4">
           <h1 className="text-2xl font-bold">
             Piętro {floor.replace("Floor ", "")}
           </h1>
