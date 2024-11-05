@@ -14,14 +14,18 @@ export function Menu({ links }: NavigationItems) {
 
   return (
     <>
-      <div className="z-20 maxML:hidden flex p-3 justify-center w-full items-center gap-5">
+      <div className="z-20 flex w-full items-center justify-center gap-9 p-3 maxML:hidden">
         {links.map(({ name, url }) => (
-          <Link key={url} href={url} className="text-2xl">
+          <Link
+            key={url}
+            href={url}
+            className="rounded-md border-b-2 border-l-2 border-accent pb-2 pl-2 text-xl"
+          >
             {name}
           </Link>
         ))}
       </div>
-      <div className="ml:hidden justify-self-end flex justify-end p-3 pr-10 w-full">
+      <div className="flex w-full justify-end justify-self-end p-3 pr-10 ml:hidden">
         <Burger open={open} toggleOpen={toggleOpen} />
       </div>
       <MenuContent links={links} open={open} toggleOpen={toggleOpen} />

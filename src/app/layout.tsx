@@ -23,15 +23,11 @@ export default function RootLayout({
       <body className={oswald.className}>
         <Navbar
           links={[
-            { name: "HOME", url: "/" },
-            { name: "CALENDAR", url: "/calendar" },
+            { name: "Home", url: "/" },
+            { name: "Calendar", url: "/calendar" },
             {
-              name: "MAP",
+              name: "Map",
               url: "/map",
-            },
-            {
-              name: "RESERVATIONS",
-              url: "/reservations",
             },
             {
               name: "SPEHERE",

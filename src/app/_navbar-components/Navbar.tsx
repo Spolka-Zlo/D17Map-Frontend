@@ -1,7 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
-import { OrangeButton } from "../../components/OrangeButton";
-import LoginSection from "./LoginSection";
+import { LoginSection } from "./LoginSection";
 import { Menu } from "./Menu";
 export type NavigationItems = {
   links: {
@@ -11,10 +9,10 @@ export type NavigationItems = {
 };
 export function Navbar({ links }: NavigationItems) {
   return (
-    <nav className="z-0 flex justify-between items-center gap-3 p-1 bg-primary text-white">
-      <div className="flex justify-center items-center gap-3 pr-3 w-full min-w-72">
-        <Image src="/img/logo.png" alt="Logo" width={120} height={120} />
-        <h1 className="text-white text-4xl">D17 MAP</h1>
+    <nav className="z-0 flex items-center justify-between gap-3 bg-primary p-1 text-white">
+      <div className="flex w-full min-w-72 items-center justify-center gap-3 pr-3">
+        <Image src="/img/logo.png" alt="Logo" width={80} height={80} />
+        <h1 className="text-3xl text-white">D17 MAP</h1>
       </div>
       <Menu links={links} />
       <LoginSection />

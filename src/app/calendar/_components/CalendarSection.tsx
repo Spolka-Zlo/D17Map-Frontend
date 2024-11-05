@@ -1,48 +1,51 @@
 "use client";
-import { Calendar } from "@/components/Calendar";
-import { useState } from "react";
-import { CalendarTimeManager } from "./CalendarTimeManager";
-import { CalendarDaySection } from "./CalendarDaySection";
+
 import { Reservation } from "@/app/calendar/page";
-import { CalendarFilterByRooms } from "./CalendarFilterByRooms";
+import { CalendarWeekSchedule } from "./CalendarWeekSchedule";
+import Link from "next/link";
+import { FilterSection } from "./FilterSection";
+import { Dispatch, SetStateAction, useState } from "react";
 
 type CalendarSectionProps = {
   reservations: Reservation[];
   availableRooms: string[];
-  equipment: string[];
+  mondayDate: number;
+  openCloseReservationModal: Dispatch<SetStateAction<boolean>>;
 };
 
 export function CalendarSection({
   reservations,
   availableRooms,
-  equipment,
+  mondayDate,
+  openCloseReservationModal,
 }: CalendarSectionProps) {
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [isOpen, setIsOpen] = useState(false);
-
+  const [filters, setFilters] = useState(["Events", "Lectures"]);
+  const [selectedRoom, setSelectedRoom] = useState(availableRooms[0]);
+  const allFilters = ["Events", "Lectures", "Exams", "Consultations"];
   return (
-    <section className="flex w-full justify-between gap-10">
-      <div className="rounded-lg w-fit h-fit grow-0">
-        <Calendar
-          mode="single"
-          selected={selectedDate}
-          onDayClick={(day) => {
-            setIsOpen(selectedDate.getDay() === day.getDay() ? !isOpen : true);
-            setSelectedDate(day);
-          }}
-          disabled={{ before: new Date() }}
-          className="z-10 rounded-lg"
-        />
-      </div>
-      <CalendarDaySection
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        reservations={reservations.filter(
-          (reservation) => reservation.date.getDay() === selectedDate.getDay()
-        )}
+    <section className="flex w-[62vw] flex-col gap-5">
+      <FilterSection
+        allFilters={allFilters}
+        filters={filters}
+        setFilters={setFilters}
+        openCloseReservationModal={openCloseReservationModal}
+        selectedRoom={selectedRoom}
+        setSelectedRoom={setSelectedRoom}
         availableRooms={availableRooms}
-        equipment={equipment}
       />
+      <div className="flex w-full flex-col justify-between gap-5 rounded-md bg-white/25 p-5">
+        <div className="flex w-full justify-center gap-8 px-2">
+          <Link href={`?date=${mondayDate - 1000 * 60 * 60 * 24 * 7}`}>
+            &#x2B9C;
+          </Link>
+          {new Date(mondayDate).toLocaleDateString()} -{" "}
+          {new Date(mondayDate + 1000 * 60 * 60 * 24 * 6).toLocaleDateString()}
+          <Link href={`?date=${mondayDate + 1000 * 60 * 60 * 24 * 7}`}>
+            &#x2B9E;
+          </Link>
+        </div>
+        <CalendarWeekSchedule weekReservations={reservations} />
+      </div>
     </section>
   );
 }
