@@ -4,6 +4,7 @@ import { Classroom } from "../page";
 import { useState } from "react";
 import { OrangeButton } from "@/components/OrangeButton";
 import { addReservation } from "../_actions/addReservation";
+import { CloseButton } from "@/components/CloseButton";
 
 type CalendarReservationFormProps = {
   room: string;
@@ -49,6 +50,13 @@ export function CalendarReservationForm({
   return (
     <div className={`fixed inset-0 z-50 bg-black bg-opacity-50`}>
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-md bg-white p-8">
+        <button
+          onClick={() => setOpen(false)}
+          className="absolute right-2 top-2"
+        >
+          X
+        </button>
+
         <h3 className="pb-5 text-xl text-primary">
           Rezerwacja sali {room} na dzień {date.toDateString()}
         </h3>

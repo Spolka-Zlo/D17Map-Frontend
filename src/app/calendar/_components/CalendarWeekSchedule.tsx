@@ -1,5 +1,5 @@
 import { Reservation } from "../page";
-import { CalendarTimeTable } from "./CalendarTimeTable";
+import { CalendarTimeTable } from "./timetable/CalendarTimeTable";
 
 export function CalendarWeekSchedule({
   weekReservations,
