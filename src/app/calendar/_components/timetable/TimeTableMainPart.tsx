@@ -5,6 +5,8 @@ import { TimeTableDayContent } from "./TimeTableWeekdayColumn";
 
 type TimeTableMainPartProps = {
   reservations: Reservation[];
+  typeFilters: string[];
+  selectedRoom: string;
 };
 
 type weekdaysMapType = {
@@ -22,7 +24,11 @@ export type ReservationWithTimestamp = {
   timestamp: number;
 };
 
-export function TimeTableMainPart({ reservations }: TimeTableMainPartProps) {
+export function TimeTableMainPart({
+  reservations,
+  typeFilters,
+  selectedRoom,
+}: TimeTableMainPartProps) {
   function getWeekDay(date: string) {
     return new Date(date).toLocaleDateString("en-US", { weekday: "short" });
   }
@@ -118,6 +124,8 @@ export function TimeTableMainPart({ reservations }: TimeTableMainPartProps) {
           <TimeTableDayContent
             reservationTimeStamps={reservationTimeStamps}
             day={day}
+            typeFilters={typeFilters}
+            selectedRoom={selectedRoom}
           />
         </div>
       ))}

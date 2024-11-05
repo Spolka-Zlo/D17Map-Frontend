@@ -3,18 +3,17 @@ import { z } from "zod";
 import { toTimestamp } from "@/utils/DateUtils";
 import { fetchGet } from "@/server-endpoints/fetchServer";
 
-const reservationTypeSchema = z.enum([
-  "CLASS",
-  "EXAM",
-  "TEST",
-  "LECTURE",
-  "CONSULTATIONS",
-  "CONFERENCE",
-  "STUDENTS_CLUB_MEETING",
-  "EVENT",
-]);
+const reservationTypeSchema = z.string();
 
-export type ReservationType = z.infer<typeof reservationTypeSchema>;
+export type ReservationType =
+  | "CLASS"
+  | "EXAM"
+  | "TEST"
+  | "LECTURE"
+  | "CONSULTATIONS"
+  | "CONFERENCE"
+  | "STUDENTS_CLUB_MEETING"
+  | "EVENT";
 
 const reservationSchema = z.object({
   id: z.string(),
@@ -57,7 +56,7 @@ export type Reservation = {
     name: string;
     capacity: number;
   };
-  type: ReservationType;
+  type: string;
   numberOfParticipants: number;
 };
 export type Classroom = z.infer<typeof classroomSchema>;
@@ -88,6 +87,18 @@ export default async function ReservationPage({
     endTime: toTimestamp(reservation.date + "T" + reservation.endTime),
   }));
 
+  const reservationTypes = (
+    await fetchGet(
+      "http://localhost:8080/reservations/types",
+      z.array(reservationTypeSchema),
+    )
+  ).map((type: string) => type as ReservationType);
+
+  const equipments = await fetchGet(
+    "http://localhost:8080/equipments",
+    z.array(equipmentSchema),
+  );
+
   const availableRooms = ["2.41", "1.38", "3.33", "4.22", "3.11", "2.22"];
   const equipment = ["Computers", "Routers", "Terminals"];
   const classrooms = [
@@ -113,11 +124,11 @@ export default async function ReservationPage({
       equipmentIds: ["2", "3"],
     },
   ] satisfies Classroom[];
-  const equipments = [
-    { id: "1", name: "Computers" },
-    { id: "2", name: "Routers" },
-    { id: "3", name: "Terminals" },
-  ] satisfies Equipment[];
+  // const equipments = [
+  //   { id: "1", name: "Computers" },
+  //   { id: "2", name: "Routers" },
+  //   { id: "3", name: "Terminals" },
+  // ] satisfies Equipment[];
 
   return (
     <main>
@@ -128,6 +139,7 @@ export default async function ReservationPage({
           equipment,
           mondayDate,
           classrooms,
+          reservationTypes,
         }}
       />
     </main>

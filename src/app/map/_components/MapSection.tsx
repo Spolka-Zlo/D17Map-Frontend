@@ -16,7 +16,7 @@ export function MapSection() {
         />
       </div>
       {clickedRoom && (
-        <div className="absolute right-20 top-0 p-4 bg-white/25">
+        <div className="absolute bottom-0 right-20 bg-white/25 p-4">
           <h1 className="text-2xl font-bold">
             Piętro {floor.replace("Floor ", "")}
           </h1>

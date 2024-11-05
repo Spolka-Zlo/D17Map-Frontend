@@ -1,30 +1,56 @@
+"use client";
 import { twMerge } from "tailwind-merge";
 import { ReservationWithTimestamp } from "./TimeTableMainPart";
 import { Reservation } from "../../page";
+import { useEffect, useState } from "react";
 
 type TimeTableDayContentProps = {
   reservationTimeStamps: ReservationWithTimestamp[];
   day: string;
+  typeFilters: string[];
+  selectedRoom: string;
 };
 
 export function TimeTableDayContent({
   reservationTimeStamps,
   day,
+  typeFilters,
+  selectedRoom,
 }: TimeTableDayContentProps) {
   const roomFilters = ["2.41"];
-  const typeFilters = ["CLASS"];
 
-  const filteredReservations = reservationTimeStamps.map(
-    (reservation: ReservationWithTimestamp) => {
-      if (!reservation.reservation) {
-        return null;
-      }
-      return roomFilters.includes(reservation.reservation?.classroom.name) &&
-        typeFilters.includes(reservation.reservation?.type)
-        ? reservation
-        : null;
-    },
+  const filteredReservations = filterReservationsWithProperTypeAndRoom(
+    reservationTimeStamps,
+    typeFilters,
+    selectedRoom,
   );
+
+  function filterReservationsWithProperTypeAndRoom(
+    reservationTimeStamps: ReservationWithTimestamp[],
+    typeFilters: string[],
+    roomFilter: string,
+  ) {
+    return reservationTimeStamps.map(
+      (reservation: ReservationWithTimestamp) => {
+        if (!reservation.reservation) {
+          return {
+            reservation: null,
+            timestamp: reservation.timestamp,
+          };
+        }
+        return roomFilter === reservation.reservation?.classroom.name &&
+          typeFilters.includes(reservation.reservation?.type)
+          ? {
+              reservation: reservation.reservation,
+              timestamp: reservation.timestamp,
+            }
+          : {
+              reservation: null,
+              timestamp: reservation.timestamp,
+            };
+      },
+    );
+  }
   return (
     <div className="pt-2">
       {filteredReservations.map((reservation, j) => (

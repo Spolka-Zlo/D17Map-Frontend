@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Classroom, Reservation } from "../page";
+import { Classroom, Reservation, ReservationType } from "../page";
 import { CalendarReservationsSection } from "./CalendarReservationsSection";
 import { CalendarSection } from "./CalendarSection";
 
@@ -10,6 +10,7 @@ type CalendarPageContentProps = {
   equipment: string[];
   mondayDate: Date;
   classrooms: Classroom[];
+  reservationTypes: ReservationType[];
 };
 
 export function CalendarPageContent({
@@ -18,6 +19,7 @@ export function CalendarPageContent({
   equipment,
   mondayDate,
   classrooms,
+  reservationTypes,
 }: CalendarPageContentProps) {
   const [isReservationModalOpen, openCloseReservationModal] = useState(false);
   const mondayDateTimestamp = mondayDate.getTime();
@@ -28,6 +30,7 @@ export function CalendarPageContent({
         availableRooms={availableRooms}
         mondayDate={mondayDateTimestamp}
         openCloseReservationModal={openCloseReservationModal}
+        reservationTypes={reservationTypes}
       />
       <div className="border-l-4 border-black"></div>
       <CalendarReservationsSection
