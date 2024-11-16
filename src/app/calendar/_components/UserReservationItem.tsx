@@ -35,15 +35,15 @@ export function UserReservationItem({
           {new Intl.DateTimeFormat("pl", {
             hour: "numeric",
             minute: "numeric",
-          }).format(new Date(reservation.startTime))}
+          }).format(reservation.startTime)}
           -
           {new Intl.DateTimeFormat("pl", {
             hour: "numeric",
             minute: "numeric",
-          }).format(new Date(reservation.endTime))}
+          }).format(reservation.endTime)}
         </div>
         <span className="h-1 w-1 rounded-full bg-primary/50" />{" "}
-        <div>{reservation.classRoom.name}</div>
+        <div>{reservation.classroom.name}</div>
         <span className="h-1 w-1 rounded-full bg-primary/50" />{" "}
         <div>{reservation.date}</div>
       </div>

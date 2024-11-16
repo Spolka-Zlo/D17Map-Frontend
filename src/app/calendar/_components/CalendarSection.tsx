@@ -11,6 +11,7 @@ type CalendarSectionProps = {
   availableRooms: string[];
   mondayDate: number;
   openCloseReservationModal: Dispatch<SetStateAction<boolean>>;
+  reservationTypes: string[];
 };
 
 export function CalendarSection({
@@ -18,10 +19,11 @@ export function CalendarSection({
   availableRooms,
   mondayDate,
   openCloseReservationModal,
+  reservationTypes,
 }: CalendarSectionProps) {
-  const [filters, setFilters] = useState(["Events", "Lectures"]);
+  const [filters, setFilters] = useState(["CLASS"]);
   const [selectedRoom, setSelectedRoom] = useState(availableRooms[0]);
-  const allFilters = ["Events", "Lectures", "Exams", "Consultations"];
+  const allFilters = reservationTypes;
   return (
     <section className="flex w-[62vw] flex-col gap-5">
       <FilterSection
@@ -38,13 +40,17 @@ export function CalendarSection({
           <Link href={`?date=${mondayDate - 1000 * 60 * 60 * 24 * 7}`}>
             &#x2B9C;
           </Link>
-          {new Date(mondayDate).toLocaleDateString()} -{" "}
-          {new Date(mondayDate + 1000 * 60 * 60 * 24 * 6).toLocaleDateString()}
+          {new Date(mondayDate - 1000 * 60 * 60 * 24).toLocaleDateString()} -{" "}
+          {new Date(mondayDate + 1000 * 60 * 60 * 24 * 5).toLocaleDateString()}
           <Link href={`?date=${mondayDate + 1000 * 60 * 60 * 24 * 7}`}>
             &#x2B9E;
           </Link>
         </div>
-        <CalendarWeekSchedule weekReservations={reservations} />
+        <CalendarWeekSchedule
+          weekReservations={reservations}
+          typeFilters={filters}
+          selectedRoom={selectedRoom}
+        />
       </div>
     </section>
   );

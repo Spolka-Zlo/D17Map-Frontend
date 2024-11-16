@@ -1,6 +1,6 @@
 "use client";
 import { Dispatch, SetStateAction } from "react";
-import { Classroom, Reservation } from "../page";
+import { Classroom, Equipment, Reservation } from "../page";
 import { UserReservationItem } from "./UserReservationItem";
 import { CalendarReservationForm } from "./CalendarReservationForm";
 
@@ -9,8 +9,9 @@ type CalendarReservationsSectionProps = {
   mondayDate: number;
   isReservationModalOpen: boolean;
   openCloseReservationModal: Dispatch<SetStateAction<boolean>>;
-  equipment: string[];
+  equipments: Equipment[];
   classrooms: Classroom[];
+  reservationTypes: string[];
 };
 
 export function CalendarReservationsSection({
@@ -18,8 +19,9 @@ export function CalendarReservationsSection({
   mondayDate,
   isReservationModalOpen,
   openCloseReservationModal,
-  equipment,
+  equipments,
   classrooms,
+  reservationTypes,
 }: CalendarReservationsSectionProps) {
   return (
     <div className="flex w-[25vw] flex-col items-center justify-start px-2">
@@ -33,8 +35,9 @@ export function CalendarReservationsSection({
           date={new Date()}
           startTime="12:00"
           endTime="13:00"
-          equipment={equipment}
+          equipments={equipments}
           classrooms={classrooms}
+          reservationTypes={reservationTypes}
         />
       )}
 

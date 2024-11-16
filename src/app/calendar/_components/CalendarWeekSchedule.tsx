@@ -1,14 +1,22 @@
 import { Reservation } from "../page";
-import { CalendarTimeTable } from "./CalendarTimeTable";
+import { CalendarTimeTable } from "./timetable/CalendarTimeTable";
 
 export function CalendarWeekSchedule({
   weekReservations,
+  typeFilters,
+  selectedRoom,
 }: {
   weekReservations: Reservation[];
+  typeFilters: string[];
+  selectedRoom: string;
 }) {
   return (
     <div className="w-full">
-      <CalendarTimeTable reservations={weekReservations} />
+      <CalendarTimeTable
+        reservations={weekReservations}
+        typeFilters={typeFilters}
+        selectedRoom={selectedRoom}
+      />
     </div>
   );
 }

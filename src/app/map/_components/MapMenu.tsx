@@ -8,7 +8,7 @@ type MapMenuProps = {
 
 export function MapMenu({ floor, setFloor }: MapMenuProps) {
   return (
-    <div className="absolute left-10 bottom-10 p-4">
+    <div className="absolute bottom-0 left-10 p-4">
       <Dropdown
         selected={floor}
         setSelected={setFloor}
