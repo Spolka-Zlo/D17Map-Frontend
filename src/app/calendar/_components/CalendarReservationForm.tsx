@@ -1,10 +1,12 @@
 "use client";
 import { Dropdown } from "@/components/Dropdown";
-import { Classroom } from "../page";
+import { Classroom, Equipment } from "../page";
 import { useState } from "react";
 import { OrangeButton } from "@/components/OrangeButton";
 import { addReservation } from "../_actions/addReservation";
 import { CloseButton } from "@/components/CloseButton";
+import { CheckboxDropdown } from "@/components/CheckboxDropdown";
+import { RadioDropdown } from "@/components/RadioDropdown";
 
 type CalendarReservationFormProps = {
   room: string;
@@ -17,8 +19,9 @@ type CalendarReservationFormProps = {
   setEndTime?: React.Dispatch<React.SetStateAction<string>>;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  equipment: string[];
+  equipments: Equipment[];
   classrooms: Classroom[];
+  reservationTypes: string[];
 };
 
 export function CalendarReservationForm({
@@ -32,14 +35,16 @@ export function CalendarReservationForm({
   setEndTime,
   open,
   setOpen,
-  equipment,
+  equipments,
   classrooms,
+  reservationTypes,
 }: CalendarReservationFormProps) {
   const [selectedType, setSelectedType] = useState("CLASS");
   const [selectedEquipment, setSelectedEquipment] = useState("None");
   function handleSubmit() {
     console.log("Submit");
   }
+  const [participants, setParticipants] = useState(0);
 
   function roomsWithEquipment(equipment: string, rooms: string[]) {
     return rooms.filter(
@@ -125,29 +130,21 @@ export function CalendarReservationForm({
             min={0}
             placeholder="Uczestnicy"
             required
+            onChange={(e) => setParticipants(parseInt(e.target.value))}
           />
-          <Dropdown
-            options={["CLASS"]}
-            selected={selectedType}
-            setSelected={setSelectedType}
+          <RadioDropdown
+            options={classrooms
+              .filter((room) => room.capacity >= participants)
+              .map((room) => ({ id: room.id, name: room.name }))}
             className="z-20"
+            htmlName="classroomId"
           />
-          <Dropdown
-            options={equipment}
-            selected={selectedEquipment}
-            setSelected={setSelectedEquipment}
-            className="z-10"
+          <RadioDropdown
+            options={reservationTypes.map((type) => ({ id: type, name: type }))}
+            className="z-20"
+            htmlName="type"
           />
-          <Dropdown
-            options={availableRooms ?? []}
-            selected={room}
-            setSelected={setRoom}
-          />
-          <input
-            type="hidden"
-            name="classroomId"
-            value={"7f000101-92f8-1911-8192-f8c91dfc0004"}
-          />
+
           <input type="hidden" name="date" value={date.toISOString()} />
           <input type="hidden" name="type" value={selectedType} />
           <OrangeButton type="submit" text="Zarezerwuj" />

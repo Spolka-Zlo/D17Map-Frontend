@@ -41,7 +41,7 @@ export function CalendarSection({
             &#x2B9C;
           </Link>
           {new Date(mondayDate - 1000 * 60 * 60 * 24).toLocaleDateString()} -{" "}
-          {new Date(mondayDate + 1000 * 60 * 60 * 24 * 7).toLocaleDateString()}
+          {new Date(mondayDate + 1000 * 60 * 60 * 24 * 5).toLocaleDateString()}
           <Link href={`?date=${mondayDate + 1000 * 60 * 60 * 24 * 7}`}>
             &#x2B9E;
           </Link>

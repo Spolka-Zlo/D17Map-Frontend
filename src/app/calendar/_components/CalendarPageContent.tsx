@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
-import { Classroom, Reservation, ReservationType } from "../page";
+import { Classroom, Equipment, Reservation, ReservationType } from "../page";
 import { CalendarReservationsSection } from "./CalendarReservationsSection";
 import { CalendarSection } from "./CalendarSection";
 
 type CalendarPageContentProps = {
   weekReservations: Reservation[];
   availableRooms: string[];
-  equipment: string[];
+  equipments: Equipment[];
   mondayDate: Date;
   classrooms: Classroom[];
   reservationTypes: ReservationType[];
@@ -16,7 +16,7 @@ type CalendarPageContentProps = {
 export function CalendarPageContent({
   weekReservations,
   availableRooms,
-  equipment,
+  equipments,
   mondayDate,
   classrooms,
   reservationTypes,
@@ -38,8 +38,9 @@ export function CalendarPageContent({
         mondayDate={mondayDateTimestamp}
         isReservationModalOpen={isReservationModalOpen}
         openCloseReservationModal={openCloseReservationModal}
-        equipment={equipment}
+        equipments={equipments}
         classrooms={classrooms}
+        reservationTypes={reservationTypes}
       />
     </section>
   );

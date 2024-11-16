@@ -99,6 +99,11 @@ export default async function ReservationPage({
     z.array(equipmentSchema),
   );
 
+  const classrooms = await fetchGet(
+    "http://localhost:8080/classrooms",
+    z.array(classroomSchema),
+  );
+
   const availableRooms = [
     "2.41",
     "1.38",
@@ -111,29 +116,29 @@ export default async function ReservationPage({
     "2.19",
   ];
   const equipment = ["Computers", "Routers", "Terminals"];
-  const classrooms = [
-    {
-      id: "1",
-      name: "2.41",
-      description: "Big classroom",
-      capacity: 150,
-      equipmentIds: ["1", "2"],
-    },
-    {
-      id: "2",
-      name: "1.38",
-      description: "Small classroom",
-      capacity: 50,
-      equipmentIds: ["1", "3"],
-    },
-    {
-      id: "3",
-      name: "3.33",
-      description: "Medium classroom",
-      capacity: 100,
-      equipmentIds: ["2", "3"],
-    },
-  ] satisfies Classroom[];
+  // const classrooms = [
+  //   {
+  //     id: "1",
+  //     name: "2.41",
+  //     description: "Big classroom",
+  //     capacity: 150,
+  //     equipmentIds: ["1", "2"],
+  //   },
+  //   {
+  //     id: "2",
+  //     name: "1.38",
+  //     description: "Small classroom",
+  //     capacity: 50,
+  //     equipmentIds: ["1", "3"],
+  //   },
+  //   {
+  //     id: "3",
+  //     name: "3.33",
+  //     description: "Medium classroom",
+  //     capacity: 100,
+  //     equipmentIds: ["2", "3"],
+  //   },
+  // ] satisfies Classroom[];
   // const equipments = [
   //   { id: "1", name: "Computers" },
   //   { id: "2", name: "Routers" },
@@ -146,7 +151,7 @@ export default async function ReservationPage({
         {...{
           weekReservations,
           availableRooms,
-          equipment,
+          equipments,
           mondayDate,
           classrooms,
           reservationTypes,
