@@ -2,7 +2,7 @@ import { register } from "@/auth/register";
 
 export default function RegisterPage() {
   return (
-    <div className="absolute left-[50%] top-[50%] w-[25vw] -translate-x-2/4 -translate-y-1/2 justify-center rounded-md bg-white/25 p-10">
+    <div className="m-auto w-[25vw] justify-center rounded-md bg-white/25 p-10">
       <form
         action={async (formData) => {
           "use server";

@@ -1,8 +1,6 @@
 "use client";
 import { twMerge } from "tailwind-merge";
-import { ReservationWithTimestamp } from "./TimeTableMainPart";
-import { Reservation } from "../../page";
-import { useEffect, useState } from "react";
+import { ReservationWithTimestamp } from "./timetableUtils";
 
 type TimeTableDayContentProps = {
   reservationTimeStamps: ReservationWithTimestamp[];
@@ -17,8 +15,6 @@ export function TimeTableDayContent({
   typeFilters,
   selectedRoom,
 }: TimeTableDayContentProps) {
-  const roomFilters = ["2.41"];
-
   const filteredReservations = filterReservationsWithProperTypeAndRoom(
     reservationTimeStamps,
     typeFilters,
@@ -30,32 +26,28 @@ export function TimeTableDayContent({
     typeFilters: string[],
     roomFilter: string,
   ) {
-    return reservationTimeStamps.map(
-      (reservation: ReservationWithTimestamp) => {
-        if (!reservation.reservation) {
-          return {
-            reservation: null,
-            timestamp: reservation.timestamp,
-          };
-        }
-        return roomFilter === reservation.reservation?.classroom.name &&
+    return reservationTimeStamps.map((reservation) => {
+      if (!reservation.reservation) {
+        return {
+          reservation: null,
+          timestamp: reservation.timestamp,
+        };
+      }
+      return {
+        reservation:
+          roomFilter === reservation.reservation?.classroom.name &&
           typeFilters.includes(reservation.reservation?.type)
-          ? {
-              reservation: reservation.reservation,
-              timestamp: reservation.timestamp,
-            }
-          : {
-              reservation: null,
-              timestamp: reservation.timestamp,
-            };
-      },
-    );
+            ? reservation.reservation
+            : null,
+        timestamp: reservation.timestamp,
+      };
+    });
   }
   return (
     <div className="pt-2">
       {filteredReservations.map((reservation, j) => (
         <div
-          key={j + day}
+          key={reservation.timestamp}
           className={twMerge(
             "h-2.5 cursor-pointer border-dotted border-primary text-center text-accent",
             j % 4 === 0 && "border-solid",

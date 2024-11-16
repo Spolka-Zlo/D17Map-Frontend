@@ -5,9 +5,7 @@ import { logout } from "@/auth/logout";
 export function LogoutButton() {
   return (
     <button
-      onClick={() => {
-        logout();
-      }}
+      onClick={logout}
       className="text-2xl font-extrabold text-secondary maxLG:hidden"
     >
       Logout!

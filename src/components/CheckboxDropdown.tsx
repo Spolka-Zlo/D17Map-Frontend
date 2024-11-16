@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 type CheckboxDropdownProps = {
@@ -18,7 +18,7 @@ export function CheckboxDropdown({
   htmlName,
 }: CheckboxDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState(options[0].name);
+  const [selected, setSelected] = useState([options[0].name]);
   console.log(options);
   return (
     <div className={twMerge("relative w-44", className)}>
@@ -26,7 +26,7 @@ export function CheckboxDropdown({
         onClick={() => setIsOpen(!isOpen)}
         className="-z-10 cursor-pointer rounded-md border-b-2 border-l-2 border-accent bg-primary p-2 text-secondary focus:ring-2 focus:ring-secondary focus:ring-opacity-50"
       >
-        {selected}
+        {selected.join(", ")}
       </div>
 
       <ul
@@ -50,7 +50,7 @@ export function CheckboxDropdown({
                 name={`${htmlName}[]`}
                 value={id}
                 defaultChecked={options[0].name === name}
-                onChange={() => setSelected(name)}
+                onChange={() => setSelected((prev) => [...prev, name])}
               />
               <span>{name}</span>
             </label>

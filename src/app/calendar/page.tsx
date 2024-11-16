@@ -62,7 +62,6 @@ export type Reservation = {
 export type Classroom = z.infer<typeof classroomSchema>;
 export type Equipment = z.infer<typeof equipmentSchema>;
 
-//searchParams prepared for the future
 export default async function ReservationPage({
   searchParams,
 }: {
@@ -104,46 +103,7 @@ export default async function ReservationPage({
     z.array(classroomSchema),
   );
 
-  const availableRooms = [
-    "2.41",
-    "1.38",
-    "3.33",
-    "4.22",
-    "3.11",
-    "2.22",
-    "4.27",
-    "3.31",
-    "2.19",
-  ];
-  const equipment = ["Computers", "Routers", "Terminals"];
-  // const classrooms = [
-  //   {
-  //     id: "1",
-  //     name: "2.41",
-  //     description: "Big classroom",
-  //     capacity: 150,
-  //     equipmentIds: ["1", "2"],
-  //   },
-  //   {
-  //     id: "2",
-  //     name: "1.38",
-  //     description: "Small classroom",
-  //     capacity: 50,
-  //     equipmentIds: ["1", "3"],
-  //   },
-  //   {
-  //     id: "3",
-  //     name: "3.33",
-  //     description: "Medium classroom",
-  //     capacity: 100,
-  //     equipmentIds: ["2", "3"],
-  //   },
-  // ] satisfies Classroom[];
-  // const equipments = [
-  //   { id: "1", name: "Computers" },
-  //   { id: "2", name: "Routers" },
-  //   { id: "3", name: "Terminals" },
-  // ] satisfies Equipment[];
+  const availableRooms = classrooms.map((classroom) => classroom.name);
 
   return (
     <main>

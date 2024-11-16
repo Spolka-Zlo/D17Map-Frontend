@@ -30,7 +30,5 @@ async function getEquipments() {
     },
   });
 
-  console.log("hello", response.status);
-
   return response.json() as Promise<{ id: string; name: string }[]>;
 }

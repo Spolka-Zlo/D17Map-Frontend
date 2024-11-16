@@ -1,15 +1,17 @@
-import React from "react";
+import React, { use } from "react";
 import { twMerge } from "tailwind-merge";
 import { Reservation } from "../../page";
 import { TimeTableDayContent } from "./TimeTableWeekdayColumn";
+import { mapWeekdaysToTimestamps } from "./timetableUtils";
+import { useSearchParams } from "next/navigation";
 
-type TimeTableMainPartProps = {
+export type TimeTableMainPartProps = {
   reservations: Reservation[];
   typeFilters: string[];
   selectedRoom: string;
 };
 
-type weekdaysMapType = {
+export type weekdaysMapType = {
   Mon: Reservation[];
   Tue: Reservation[];
   Wed: Reservation[];
@@ -19,16 +21,13 @@ type weekdaysMapType = {
   Sun: Reservation[];
 };
 
-export type ReservationWithTimestamp = {
-  reservation: Reservation | null;
-  timestamp: number;
-};
-
 export function TimeTableMainPart({
   reservations,
   typeFilters,
   selectedRoom,
 }: TimeTableMainPartProps) {
+  const searchParams = useSearchParams();
+  const mondayDate = Number(searchParams.get("date"));
   function getWeekDay(date: string) {
     return new Date(date).toLocaleDateString("en-US", { weekday: "short" });
   }
@@ -50,67 +49,13 @@ export function TimeTableMainPart({
     return weekdaysMap;
   }
 
-  function generateTimestamps(startHour: number, endHour: number, day?: Date) {
-    if (!day) {
-      return [];
-    }
-    day.setHours(0, 0, 0, 0);
-    const startTime = day.getTime() + startHour * 3600 * 1000;
-    const timestamps = new Array((endHour - startHour) * 4)
-      .fill(0)
-      .map((_, i) => startTime + i * 1000 * 60 * 15);
-    return timestamps;
-  }
-
-  function mapReservationsToTimestamps(
-    dayReservations: Reservation[],
-    day?: Date,
-  ) {
-    const timestamps = generateTimestamps(7, 22, day);
-    const currentEvents = timestamps.map((timestamp) => {
-      return {
-        reservation:
-          dayReservations.find((reservation) => {
-            return (
-              reservation.startTime <= timestamp &&
-              reservation.endTime >= timestamp
-            );
-          }) || null,
-        timestamp: timestamp,
-      };
-    });
-    return currentEvents;
-  }
-
-  const mapWeekdaysToTimestamps = (weekdaysMap: weekdaysMapType) => {
-    const timeStampWeekdayMap: Record<
-      keyof weekdaysMapType,
-      ReservationWithTimestamp[]
-    > = {
-      Mon: [],
-      Tue: [],
-      Wed: [],
-      Thu: [],
-      Fri: [],
-      Sat: [],
-      Sun: [],
-    };
-
-    Object.entries(weekdaysMap).forEach(([day, reservations]) => {
-      const weekDay = day as keyof weekdaysMapType;
-      timeStampWeekdayMap[weekDay] =
-        mapReservationsToTimestamps(
-          reservations,
-          new Date(reservations[0]?.date),
-        ) ?? [];
-    });
-
-    return timeStampWeekdayMap;
-  };
-
-  const timestampsMap = mapWeekdaysToTimestamps(weekdaysMap(reservations));
+  const timestampsMap = mapWeekdaysToTimestamps(
+    weekdaysMap(reservations),
+    mondayDate,
+  );
+  console.log(timestampsMap);
   return (
-    <React.Fragment>
+    <>
       {Object.entries(timestampsMap).map(([day, reservationTimeStamps], i) => (
         <div
           key={day}
@@ -129,6 +74,6 @@ export function TimeTableMainPart({
           />
         </div>
       ))}
-    </React.Fragment>
+    </>
   );
 }

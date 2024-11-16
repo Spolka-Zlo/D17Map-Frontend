@@ -17,7 +17,6 @@ const equipmentSchema = z.object({
   name: z.string(),
 });
 
-// let this empty map description be here for now
 export default function Map() {
   const [clickedRoom, setClickedRoom] = useState<string | null>(null);
 

@@ -2,7 +2,6 @@ import { SearchBar } from "@/components/SearchBar";
 import { Dispatch, SetStateAction } from "react";
 import { FilterButton } from "./FilterButton";
 import { Dropdown } from "@/components/Dropdown";
-import classNames from "classnames";
 
 type FilterSectionProps = {
   allFilters: string[];
@@ -14,7 +13,6 @@ type FilterSectionProps = {
   availableRooms: string[];
 };
 
-//setFilters prepared for the future use
 export function FilterSection({
   allFilters,
   filters,
@@ -28,11 +26,7 @@ export function FilterSection({
     <div className="flex w-full content-center items-center justify-between gap-5 rounded-md bg-white/25 p-5">
       <SearchBar />
       <div className="border-r-4 border-primary p-2" />
-      <div
-        className={classNames(
-          "scrollbar flex flex-grow gap-5 overflow-auto p-2 pl-4",
-        )}
-      >
+      <div className="scrollbar flex flex-grow gap-5 overflow-auto p-2 pl-4">
         {allFilters.map((filter) => (
           <FilterButton
             key={filter}

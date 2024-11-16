@@ -8,7 +8,6 @@ export async function addReservation(formData: FormData) {
   if (!token) {
     throw new Error("Not authenticated");
   }
-  console.log("SDFSDF", Object.fromEntries(formData));
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
   const startTime = formData.get("startTime") as string;
