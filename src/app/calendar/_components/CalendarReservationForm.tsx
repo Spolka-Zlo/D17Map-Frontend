@@ -1,12 +1,10 @@
 "use client";
-import { Dropdown } from "@/components/Dropdown";
-import { Classroom, Equipment } from "../page";
 import { useState } from "react";
 import { OrangeButton } from "@/components/OrangeButton";
-import { addReservation } from "../_actions/addReservation";
-import { CloseButton } from "@/components/CloseButton";
-import { CheckboxDropdown } from "@/components/CheckboxDropdown";
+import { addReservation } from "../../../shared-endpoints/addReservation";
 import { RadioDropdown } from "@/components/RadioDropdown";
+import { Classroom } from "@/schemas/classroomSchemas";
+import { Equipment } from "@/schemas/equipmentSchemas";
 
 type CalendarReservationFormProps = {
   room: string;

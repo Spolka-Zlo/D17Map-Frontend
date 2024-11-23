@@ -1,7 +1,7 @@
-import { Reservation } from "@/app/calendar/page";
 import React from "react";
 import { TimeTableHoursColumn } from "./TimeTableHoursColumn";
 import { TimeTableMainPart } from "./TimeTableMainPart";
+import { Reservation } from "@/schemas/reservationSchemas";
 
 type CalendarTimeTableProps = {
   reservations: Reservation[];

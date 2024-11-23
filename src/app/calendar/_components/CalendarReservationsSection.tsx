@@ -1,8 +1,10 @@
 "use client";
 import { Dispatch, SetStateAction } from "react";
-import { Classroom, Equipment, Reservation } from "../page";
 import { UserReservationItem } from "./UserReservationItem";
 import { CalendarReservationForm } from "./CalendarReservationForm";
+import { Reservation } from "@/schemas/reservationSchemas";
+import { Equipment } from "@/schemas/equipmentSchemas";
+import { Classroom } from "@/schemas/classroomSchemas";
 
 type CalendarReservationsSectionProps = {
   weekUserReservations: Reservation[];

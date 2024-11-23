@@ -1,34 +1,37 @@
-import { getToken } from "@/auth/getToken";
-import { AddEquipmentForm } from "./_components/AddEquipmentForm";
+import { fetchGet } from "@/server-endpoints/fetchServer";
+import { getEquipmentsSchema } from "@/schemas/equipmentSchemas";
+import { getClassroomsSchema } from "@/schemas/classroomSchemas";
+import AdminPanelList from "./_components/AdminPanelList";
+import { getReservationsSchema } from "@/schemas/reservationSchemas";
+import { toTimestamp } from "@/utils/DateUtils";
 
-export default async function Classrooms() {
-  const equipments = await getEquipments();
-  return (
-    <div className="flex flex-col gap-2 p-10">
-      <h1>Equipments</h1>
-      <AddEquipmentForm />
-
-      <ul className="flex flex-col gap-4">
-        {equipments.map((equipment) => (
-          <li key={equipment.id}>{equipment.name}</li>
-        ))}
-      </ul>
-    </div>
+export default async function AdminPanel() {
+  const equipments = await fetchGet(
+    "http://localhost:8080/equipments",
+    getEquipmentsSchema,
   );
-}
+  const classrooms = await fetchGet(
+    "http://localhost:8080/classrooms",
+    getClassroomsSchema,
+  );
+  const reservations = (
+    await fetchGet(
+      "http://localhost:8080/reservations?day=2024-07-07",
+      getReservationsSchema,
+    )
+  ).map((reservation) => ({
+    ...reservation,
+    startTime: toTimestamp(reservation.date + "T" + reservation.startTime),
+    endTime: toTimestamp(reservation.date + "T" + reservation.endTime),
+  }));
 
-async function getEquipments() {
-  const token = await getToken();
-
-  if (!token) {
-    throw new Error("Not authenticated");
-  }
-
-  const response = await fetch("http://localhost:8080/equipments", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return response.json() as Promise<{ id: string; name: string }[]>;
+  return (
+    <main className="flex flex-row items-start justify-start gap-4">
+      <AdminPanelList
+        equipments={equipments}
+        classrooms={classrooms}
+        reservations={reservations}
+      />
+    </main>
+  );
 }

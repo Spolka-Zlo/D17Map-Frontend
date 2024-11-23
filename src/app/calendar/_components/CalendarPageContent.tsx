@@ -1,8 +1,10 @@
 "use client";
 import { useState } from "react";
-import { Classroom, Equipment, Reservation, ReservationType } from "../page";
 import { CalendarReservationsSection } from "./CalendarReservationsSection";
 import { CalendarSection } from "./CalendarSection";
+import { Reservation, ReservationType } from "@/schemas/reservationSchemas";
+import { Classroom } from "@/schemas/classroomSchemas";
+import { Equipment } from "@/schemas/equipmentSchemas";
 
 type CalendarPageContentProps = {
   weekReservations: Reservation[];

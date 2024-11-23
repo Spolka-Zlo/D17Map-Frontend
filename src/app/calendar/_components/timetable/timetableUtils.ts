@@ -1,4 +1,4 @@
-import { Reservation } from "../../page";
+import { Reservation } from "@/schemas/reservationSchemas";
 import { weekdaysMapType } from "./TimeTableMainPart";
 
 export type ReservationWithTimestamp = {
