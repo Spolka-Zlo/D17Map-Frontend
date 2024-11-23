@@ -10,7 +10,6 @@ export function AddClassroomForm({
   equipments: Equipment[];
   classroom?: Classroom;
 }) {
-  console.log(classroom?.equipmentIds, "lala");
   return (
     <form
       className="flex h-fit w-[20vw] flex-col gap-3 rounded-md bg-white/25 p-5"
@@ -53,7 +52,6 @@ export function AddClassroomForm({
                 "cursor-pointer",
                 classroom?.equipmentIds.includes(equipment.id) && "text-accent",
               )}
-              // checked={classroom?.equipmentIds.includes(equipment.id)}
               defaultChecked={classroom?.equipmentIds.includes(equipment.id)}
             />
             <label className="cursor-pointer" htmlFor={equipment.id}>

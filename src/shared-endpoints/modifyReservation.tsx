@@ -18,7 +18,6 @@ export async function modifyReservation(formData: FormData) {
     description,
     type,
   };
-  console.log(body);
 
   const response = await fetch(MODIFY_RESERVATION_URL + id, {
     method: "PUT",

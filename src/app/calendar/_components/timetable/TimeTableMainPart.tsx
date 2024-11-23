@@ -52,7 +52,6 @@ export function TimeTableMainPart({
     weekdaysMap(reservations),
     mondayDate,
   );
-  console.log(timestampsMap);
   return (
     <>
       {Object.entries(timestampsMap).map(([day, reservationTimeStamps], i) => (

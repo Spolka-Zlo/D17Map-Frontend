@@ -16,7 +16,6 @@ export default async function ReservationPage({
   const mondayDate = new Date(
     Number(searchParams.date) || lastMonday.getTime(),
   );
-  console.log(searchParams.date, new Date(searchParams.date));
   const queryDate = mondayDate.toISOString().split("T")[0];
 
   const weekReservations = (

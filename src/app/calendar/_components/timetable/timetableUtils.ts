@@ -26,7 +26,6 @@ export function mapReservationsToTimestamps(
   dayReservations: Reservation[],
   day?: Date,
 ) {
-  console.log("day", day);
   const timestamps = generateTimestamps(7, 22, day);
   const currentEvents = timestamps.map((timestamp) => {
     return {
@@ -40,7 +39,6 @@ export function mapReservationsToTimestamps(
       timestamp: timestamp,
     };
   });
-  console.log("curr", currentEvents);
   return currentEvents;
 }
 

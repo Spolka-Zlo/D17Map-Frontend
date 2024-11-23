@@ -19,7 +19,11 @@ export async function createEquipment(formData: FormData) {
     // return;
   }
 
-  await fetchPost("http://localhost:8080/equipments", createEquipmentSchema, {
-    name,
+  await fetch("http://localhost:8080/equipments", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name }),
   });
 }

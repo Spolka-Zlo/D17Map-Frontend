@@ -1,54 +1,27 @@
 "use client";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { OrangeButton } from "@/components/OrangeButton";
 import { addReservation } from "../../../shared-endpoints/addReservation";
 import { RadioDropdown } from "@/components/RadioDropdown";
 import { Classroom } from "@/schemas/classroomSchemas";
-import { Equipment } from "@/schemas/equipmentSchemas";
 
 type CalendarReservationFormProps = {
   room: string;
-  setRoom: React.Dispatch<React.SetStateAction<string>>;
-  availableRooms?: string[];
   date: Date;
-  startTime?: string;
-  setStartTime?: React.Dispatch<React.SetStateAction<string>>;
-  endTime?: string;
-  setEndTime?: React.Dispatch<React.SetStateAction<string>>;
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  equipments: Equipment[];
+  setOpen: Dispatch<SetStateAction<boolean>>;
   classrooms: Classroom[];
   reservationTypes: string[];
 };
 
 export function CalendarReservationForm({
   room,
-  setRoom,
-  availableRooms,
   date,
-  startTime,
-  setStartTime,
-  endTime,
-  setEndTime,
-  open,
   setOpen,
-  equipments,
   classrooms,
   reservationTypes,
 }: CalendarReservationFormProps) {
-  const [selectedType, setSelectedType] = useState("CLASS");
-  const [selectedEquipment, setSelectedEquipment] = useState("None");
-  function handleSubmit() {
-    console.log("Submit");
-  }
+  const [selectedType, _] = useState("CLASS");
   const [participants, setParticipants] = useState(0);
-
-  function roomsWithEquipment(equipment: string, rooms: string[]) {
-    return rooms.filter(
-      (room) => room.includes(equipment) || equipment === "None",
-    );
-  }
 
   return (
     <div className={`fixed inset-0 z-50 bg-black bg-opacity-50`}>
