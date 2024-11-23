@@ -19,7 +19,6 @@ export function RadioDropdown({
 }: RadioDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(options[0].name);
-  console.log(options);
   return (
     <div className={twMerge("relative w-44", className)}>
       <div

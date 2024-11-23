@@ -1,4 +1,4 @@
-import { Reservation } from "../page";
+import { Reservation } from "@/schemas/reservationSchemas";
 
 export function UserReservationItem({
   reservation,

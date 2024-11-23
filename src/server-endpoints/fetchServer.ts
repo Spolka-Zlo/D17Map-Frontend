@@ -14,7 +14,6 @@ export async function fetchGet<T>(url: string, schema: z.ZodSchema<T>) {
   });
 
   if (!response.ok) {
-    console.log("URL", url);
     throw new Error(url);
   }
 

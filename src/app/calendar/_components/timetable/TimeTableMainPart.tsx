@@ -1,9 +1,8 @@
-import React, { use } from "react";
-import { twMerge } from "tailwind-merge";
-import { Reservation } from "../../page";
+import React from "react";
 import { TimeTableDayContent } from "./TimeTableWeekdayColumn";
 import { mapWeekdaysToTimestamps } from "./timetableUtils";
 import { useSearchParams } from "next/navigation";
+import { Reservation } from "@/schemas/reservationSchemas";
 
 export type TimeTableMainPartProps = {
   reservations: Reservation[];
@@ -53,7 +52,6 @@ export function TimeTableMainPart({
     weekdaysMap(reservations),
     mondayDate,
   );
-  console.log(timestampsMap);
   return (
     <>
       {Object.entries(timestampsMap).map(([day, reservationTimeStamps], i) => (

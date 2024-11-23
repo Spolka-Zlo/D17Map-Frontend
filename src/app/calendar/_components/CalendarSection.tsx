@@ -1,10 +1,10 @@
 "use client";
 
-import { Reservation } from "@/app/calendar/page";
 import { CalendarWeekSchedule } from "./CalendarWeekSchedule";
 import Link from "next/link";
 import { FilterSection } from "./FilterSection";
 import { Dispatch, SetStateAction, useState } from "react";
+import { Reservation } from "@/schemas/reservationSchemas";
 
 type CalendarSectionProps = {
   reservations: Reservation[];

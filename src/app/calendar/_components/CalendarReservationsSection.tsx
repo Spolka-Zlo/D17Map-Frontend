@@ -1,8 +1,10 @@
 "use client";
 import { Dispatch, SetStateAction } from "react";
-import { Classroom, Equipment, Reservation } from "../page";
 import { UserReservationItem } from "./UserReservationItem";
 import { CalendarReservationForm } from "./CalendarReservationForm";
+import { Reservation } from "@/schemas/reservationSchemas";
+import { Equipment } from "@/schemas/equipmentSchemas";
+import { Classroom } from "@/schemas/classroomSchemas";
 
 type CalendarReservationsSectionProps = {
   weekUserReservations: Reservation[];
@@ -28,14 +30,9 @@ export function CalendarReservationsSection({
       <h1 className="text-center text-2xl">Your Upcoming Reservations</h1>
       {isReservationModalOpen && (
         <CalendarReservationForm
-          open={isReservationModalOpen}
           setOpen={openCloseReservationModal}
           room="Room 1"
-          setRoom={() => {}}
           date={new Date()}
-          startTime="12:00"
-          endTime="13:00"
-          equipments={equipments}
           classrooms={classrooms}
           reservationTypes={reservationTypes}
         />

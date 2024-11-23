@@ -29,7 +29,6 @@ export async function addReservation(formData: FormData) {
     classroomId,
     numberOfParticipants,
   };
-  console.log(body);
 
   const response = await fetch(ADD_RESERVATION_URL, {
     method: "POST",
