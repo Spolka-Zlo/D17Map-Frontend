@@ -7,6 +7,7 @@ import { Classroom } from "@/schemas/classroomSchemas";
 import { Reservation } from "@/schemas/reservationSchemas";
 import { modifyReservation } from "@/shared-endpoints/modifyReservation";
 import { revalidateTag } from "next/cache";
+import { toast } from "sonner";
 
 type CalendarReservationFormProps = {
   room: string;
@@ -32,8 +33,14 @@ export function CalendarReservationForm({
   const submitAction = async (formData: FormData) => {
     if (editedReservation) {
       formData.append("id", editedReservation.id);
-      await modifyReservation(formData);
-    } else await addReservation(formData);
+      await modifyReservation(formData)
+        .then(() => toast.success("Rezerwacja zmodyfikowana pomyślnie"))
+        .catch((error) => toast.error("Nie udało się zmodyfikować rezerwacji"));
+    } else {
+      await addReservation(formData)
+        .then(() => toast.success("Rezerwacja dodana pomyślnie"))
+        .catch((error) => toast.error("Nie udało się dodać rezerwacji"));
+    }
     setOpen(false);
     setEditedReservation(null);
   };

@@ -30,6 +30,7 @@ export async function modifyReservation(formData: FormData) {
   });
 
   if (!response.ok) {
+    console.log(response.status);
     throw new Error("Failed to modify reservation");
   } else {
     console.log("Reservation modified successfully");

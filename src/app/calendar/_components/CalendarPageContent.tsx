@@ -5,7 +5,6 @@ import { CalendarSection } from "./CalendarSection";
 import { Reservation, ReservationType } from "@/schemas/reservationSchemas";
 import { Classroom } from "@/schemas/classroomSchemas";
 import { Equipment } from "@/schemas/equipmentSchemas";
-import { ConfirmationModal } from "@/components/ConfirmationModal";
 
 type CalendarPageContentProps = {
   weekReservations: Reservation[];

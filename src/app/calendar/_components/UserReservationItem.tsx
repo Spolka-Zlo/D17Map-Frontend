@@ -4,6 +4,7 @@ import { Reservation } from "@/schemas/reservationSchemas";
 import { deleteReservation } from "../../../shared-endpoints/deleteReservation";
 import { useState } from "react";
 import { ConfirmationModal } from "@/components/ConfirmationModal";
+import { toast } from "sonner";
 
 export function UserReservationItem({
   reservation,
@@ -59,7 +60,13 @@ export function UserReservationItem({
           openCloseConfirmationModal(false);
         }}
         onConfirm={async () => {
-          await deleteReservation(reservation.id);
+          await deleteReservation(reservation.id)
+            .then(() => {
+              toast.success("Rezerwacja została odwołana");
+            })
+            .catch(() => {
+              toast.error("Nie udało się odwołać rezerwacji");
+            });
           openCloseConfirmationModal(false);
         }}
         message="Czy na pewno chcesz odwołać rezerwację?"
