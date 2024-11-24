@@ -14,7 +14,6 @@ export async function login(username: string, password: string) {
   });
 
   if (!response.ok) {
-    console.error(response.statusText);
     throw new Error("Login failed");
   }
 
@@ -28,14 +27,14 @@ export async function login(username: string, password: string) {
   cookies().set("token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    maxAge: 60 * 60 * 24, // One day
+    maxAge: 1000 * 60 * 60 * 24, // One day
     path: "/",
   });
 
   cookies().set("role", role, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    maxAge: 60 * 60 * 24, // One day
+    maxAge: 1000 * 60 * 60 * 24, // One day
   });
 
   redirect("/calendar");

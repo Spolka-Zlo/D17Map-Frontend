@@ -2,6 +2,7 @@
 
 import { getToken } from "@/auth/getToken";
 import { MODIFY_RESERVATION_URL } from "@/server-endpoints/reservations";
+import { revalidateTag } from "next/cache";
 
 export async function modifyReservation(formData: FormData) {
   const token = await getToken();
@@ -29,9 +30,10 @@ export async function modifyReservation(formData: FormData) {
   });
 
   if (!response.ok) {
+    console.log(response.status);
     throw new Error("Failed to modify reservation");
   } else {
     console.log("Reservation modified successfully");
-    console.log(await response.json());
+    revalidateTag("userReservations");
   }
 }

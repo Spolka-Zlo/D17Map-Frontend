@@ -10,15 +10,17 @@ type RadioDropdownProps = {
   }[];
   className?: string;
   htmlName: string;
+  defaultValue?: string;
 };
 
 export function RadioDropdown({
   options,
   className,
   htmlName,
+  defaultValue,
 }: RadioDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState(options[0].name);
+  const [selected, setSelected] = useState(defaultValue ?? options[0].name);
   return (
     <div className={twMerge("relative w-44", className)}>
       <div
@@ -48,7 +50,11 @@ export function RadioDropdown({
                 type="radio"
                 name={htmlName}
                 value={id}
-                defaultChecked={options[0].name === name}
+                defaultChecked={
+                  defaultValue
+                    ? defaultValue === name
+                    : options[0].name === name
+                }
                 onChange={() => setSelected(name)}
               />
               <span>{name}</span>

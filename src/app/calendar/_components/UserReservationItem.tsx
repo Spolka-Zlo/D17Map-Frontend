@@ -1,17 +1,23 @@
+"use client";
+
 import { Reservation } from "@/schemas/reservationSchemas";
+import { deleteReservation } from "../../../shared-endpoints/deleteReservation";
+import { useState } from "react";
+import { ConfirmationModal } from "@/components/ConfirmationModal";
+import { toast } from "sonner";
 
 export function UserReservationItem({
   reservation,
-  cancelReservation,
   editReservation,
 }: {
   reservation: Reservation;
-  cancelReservation: () => void;
   editReservation: () => void;
 }) {
+  const [isConfirmationModalOpen, openCloseConfirmationModal] = useState(false);
+
   return (
     <div className="relative flex w-full flex-col items-center justify-between gap-3 rounded-md border-2 border-black p-2 text-center text-primary">
-      <div className="">
+      <div>
         <div>{reservation.title}</div>
         <div className="absolute right-2 top-2 z-10 flex justify-between gap-1">
           <button
@@ -23,8 +29,8 @@ export function UserReservationItem({
           </button>
           <button
             className="text-md h-6 w-6 cursor-pointer rounded-md p-0 text-red-500"
-            onClick={cancelReservation}
             aria-label="Cancel reservation"
+            onClick={() => openCloseConfirmationModal(true)}
           >
             &#x1F5D1;
           </button>
@@ -48,6 +54,24 @@ export function UserReservationItem({
         <div>{reservation.date}</div>
       </div>
       <div>{reservation.description}</div>
+      <ConfirmationModal
+        isOpen={isConfirmationModalOpen}
+        onClose={() => {
+          openCloseConfirmationModal(false);
+        }}
+        onConfirm={async () => {
+          await deleteReservation(reservation.id)
+            .then(() => {
+              toast.success("Rezerwacja została odwołana");
+            })
+            .catch(() => {
+              toast.error("Nie udało się odwołać rezerwacji");
+            });
+          openCloseConfirmationModal(false);
+        }}
+        message="Czy na pewno chcesz odwołać rezerwację?"
+        title="Odwołanie rezerwacji"
+      />
     </div>
   );
 }

@@ -4,6 +4,5 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
 export async function logout() {
-  cookies().delete("token");
-  redirect("/login");
+  redirect("/logout");
 }

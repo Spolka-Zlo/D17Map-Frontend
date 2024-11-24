@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Oswald } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "./_navbar-components/Navbar";
+import { Toaster } from "sonner";
 
 const oswald = Oswald({
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
           ]}
         />
         {children}
+        <Toaster />
       </body>
     </html>
   );
