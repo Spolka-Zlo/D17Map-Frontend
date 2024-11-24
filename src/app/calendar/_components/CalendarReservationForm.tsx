@@ -98,7 +98,7 @@ export function CalendarReservationForm({
               required
               defaultValue={
                 editedReservation
-                  ? new Date(editedReservation?.startTime)
+                  ? new Date(editedReservation.startTime)
                       .toTimeString()
                       .slice(0, 5)
                   : undefined
@@ -112,7 +112,7 @@ export function CalendarReservationForm({
               required
               defaultValue={
                 editedReservation
-                  ? new Date(editedReservation?.endTime)
+                  ? new Date(editedReservation.endTime)
                       .toTimeString()
                       .slice(0, 5)
                   : undefined
