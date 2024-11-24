@@ -11,12 +11,29 @@ export default async function ReservationPage({
 }: {
   searchParams: { date: string };
 }) {
-  const lastMonday = new Date(2024, 9, 30);
-  lastMonday.setDate(lastMonday.getDate() - 1);
+  const lastMonday = new Date(2024, 10, 25, 9);
+  lastMonday.setDate(lastMonday.getDate());
   const mondayDate = new Date(
     Number(searchParams.date) || lastMonday.getTime(),
   );
   const queryDate = mondayDate.toISOString().split("T")[0];
+
+  const userUpcomingReservations = (
+    await fetchGet(
+      `http://localhost:8080/reservations/user/future`,
+      z.array(reservationSchema),
+      {
+        cache: "force-cache",
+        next: {
+          tags: ["userReservations"],
+        },
+      },
+    )
+  ).map((reservation) => ({
+    ...reservation,
+    startTime: toTimestamp(reservation.date + "T" + reservation.startTime),
+    endTime: toTimestamp(reservation.date + "T" + reservation.endTime),
+  }));
 
   const weekReservations = (
     await fetchGet(
@@ -49,14 +66,13 @@ export default async function ReservationPage({
   return (
     <main>
       <CalendarPageContent
-        {...{
-          weekReservations,
-          availableRooms,
-          equipments,
-          mondayDate,
-          classrooms,
-          reservationTypes,
-        }}
+        weekReservations={weekReservations}
+        availableRooms={availableRooms}
+        equipments={equipments}
+        mondayDate={mondayDate}
+        classrooms={classrooms}
+        reservationTypes={reservationTypes}
+        userUpcomingReservations={userUpcomingReservations}
       />
     </main>
   );

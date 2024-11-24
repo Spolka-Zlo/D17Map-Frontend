@@ -35,7 +35,7 @@ export function mapReservationsToTimestamps(
             reservation.startTime <= timestamp &&
             reservation.endTime >= timestamp
           );
-        }) || null,
+        }) ?? null,
       timestamp: timestamp,
     };
   });

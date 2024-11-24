@@ -4,6 +4,9 @@ import { OrangeButton } from "@/components/OrangeButton";
 import { addReservation } from "../../../shared-endpoints/addReservation";
 import { RadioDropdown } from "@/components/RadioDropdown";
 import { Classroom } from "@/schemas/classroomSchemas";
+import { Reservation } from "@/schemas/reservationSchemas";
+import { modifyReservation } from "@/shared-endpoints/modifyReservation";
+import { revalidateTag } from "next/cache";
 
 type CalendarReservationFormProps = {
   room: string;
@@ -11,6 +14,8 @@ type CalendarReservationFormProps = {
   setOpen: Dispatch<SetStateAction<boolean>>;
   classrooms: Classroom[];
   reservationTypes: string[];
+  editedReservation?: Reservation | null;
+  setEditedReservation: Dispatch<SetStateAction<Reservation | null>>;
 };
 
 export function CalendarReservationForm({
@@ -19,15 +24,28 @@ export function CalendarReservationForm({
   setOpen,
   classrooms,
   reservationTypes,
+  editedReservation,
+  setEditedReservation,
 }: CalendarReservationFormProps) {
-  const [selectedType, _] = useState("CLASS");
   const [participants, setParticipants] = useState(0);
+
+  const submitAction = async (formData: FormData) => {
+    if (editedReservation) {
+      formData.append("id", editedReservation.id);
+      await modifyReservation(formData);
+    } else await addReservation(formData);
+    setOpen(false);
+    setEditedReservation(null);
+  };
 
   return (
     <div className={`fixed inset-0 z-50 bg-black bg-opacity-50`}>
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-md bg-white p-8">
         <button
-          onClick={() => setOpen(false)}
+          onClick={() => {
+            setEditedReservation(null);
+            setOpen(false);
+          }}
           className="absolute right-2 top-2"
         >
           X
@@ -37,10 +55,7 @@ export function CalendarReservationForm({
           Rezerwacja sali {room} na dzień {date.toDateString()}
         </h3>
         <form
-          action={async (formData) => {
-            await addReservation(formData);
-            setOpen(false);
-          }}
+          action={submitAction}
           className="flex flex-col content-center items-center justify-center gap-6 pt-6"
         >
           <input
@@ -49,6 +64,7 @@ export function CalendarReservationForm({
             type="text"
             placeholder="Tytuł rezerwacji"
             required
+            defaultValue={editedReservation?.title}
           />
           <input
             className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
@@ -56,6 +72,7 @@ export function CalendarReservationForm({
             type="text"
             placeholder="Opis rezerwacji"
             required
+            defaultValue={editedReservation?.description}
           />
           <input
             className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
@@ -63,6 +80,7 @@ export function CalendarReservationForm({
             type="date"
             placeholder="Data"
             required
+            defaultValue={date.toISOString().slice(0, 10)}
           />
           <div className="flex justify-center gap-3">
             <input
@@ -71,6 +89,9 @@ export function CalendarReservationForm({
               type="time"
               list="time"
               required
+              defaultValue={new Date(editedReservation?.startTime ?? "07:00")
+                .toTimeString()
+                .slice(0, 5)}
             />
             <input
               className="rounded-md border-b-2 border-l-2 border-primary p-1"
@@ -78,6 +99,9 @@ export function CalendarReservationForm({
               type="time"
               list="time"
               required
+              defaultValue={new Date(editedReservation?.endTime ?? "08:00")
+                .toTimeString()
+                .slice(0, 5)}
             />
             <datalist id="time">
               {new Array(15 * 4).fill(0).map((_, i) => {
@@ -102,6 +126,7 @@ export function CalendarReservationForm({
             placeholder="Uczestnicy"
             required
             onChange={(e) => setParticipants(parseInt(e.target.value))}
+            defaultValue={editedReservation?.numberOfParticipants}
           />
           <RadioDropdown
             options={classrooms
@@ -109,15 +134,14 @@ export function CalendarReservationForm({
               .map((room) => ({ id: room.id, name: room.name }))}
             className="z-20"
             htmlName="classroomId"
+            defaultValue={editedReservation?.classroom.name}
           />
           <RadioDropdown
             options={reservationTypes.map((type) => ({ id: type, name: type }))}
             className="z-20"
             htmlName="type"
+            defaultValue={editedReservation?.type}
           />
-
-          <input type="hidden" name="date" value={date.toISOString()} />
-          <input type="hidden" name="type" value={selectedType} />
           <OrangeButton type="submit" text="Zarezerwuj" />
         </form>
       </div>

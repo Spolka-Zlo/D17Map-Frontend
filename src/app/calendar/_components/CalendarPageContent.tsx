@@ -5,6 +5,7 @@ import { CalendarSection } from "./CalendarSection";
 import { Reservation, ReservationType } from "@/schemas/reservationSchemas";
 import { Classroom } from "@/schemas/classroomSchemas";
 import { Equipment } from "@/schemas/equipmentSchemas";
+import { ConfirmationModal } from "@/components/ConfirmationModal";
 
 type CalendarPageContentProps = {
   weekReservations: Reservation[];
@@ -13,6 +14,7 @@ type CalendarPageContentProps = {
   mondayDate: Date;
   classrooms: Classroom[];
   reservationTypes: ReservationType[];
+  userUpcomingReservations: Reservation[];
 };
 
 export function CalendarPageContent({
@@ -22,6 +24,7 @@ export function CalendarPageContent({
   mondayDate,
   classrooms,
   reservationTypes,
+  userUpcomingReservations,
 }: CalendarPageContentProps) {
   const [isReservationModalOpen, openCloseReservationModal] = useState(false);
   const mondayDateTimestamp = mondayDate.getTime();
@@ -43,6 +46,7 @@ export function CalendarPageContent({
         equipments={equipments}
         classrooms={classrooms}
         reservationTypes={reservationTypes}
+        userUpcomingReservations={userUpcomingReservations}
       />
     </section>
   );

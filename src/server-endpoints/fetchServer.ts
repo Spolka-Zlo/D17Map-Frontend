@@ -1,19 +1,29 @@
 import { z } from "zod";
 import { getToken } from "../auth/getToken";
+import { redirect } from "next/dist/server/api-utils";
+import { logout } from "@/auth/logout";
 
-export async function fetchGet<T>(url: string, schema: z.ZodSchema<T>) {
+export async function fetchGet<T>(
+  url: string,
+  schema: z.ZodSchema<T>,
+  options?: RequestInit,
+) {
   const token = await getToken();
   if (!token) {
     throw new Error("Not authenticated");
   }
 
   const response = await fetch(url, {
+    ...options,
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
   if (!response.ok) {
+    if (response.status === 401 || response.status === 403) {
+      await logout();
+    }
     throw new Error(url);
   }
 

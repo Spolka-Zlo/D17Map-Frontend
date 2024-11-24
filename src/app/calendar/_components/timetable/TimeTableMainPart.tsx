@@ -28,7 +28,7 @@ export function TimeTableMainPart({
   const searchParams = useSearchParams();
   const mondayDate = Number(searchParams.get("date"));
   function getWeekDay(date: string) {
-    return new Date(date).toLocaleDateString("en-US", { weekday: "short" });
+    return new Date(date).toLocaleDateString("en-UK", { weekday: "short" });
   }
 
   function weekdaysMap(reservations: Reservation[]) {
@@ -52,6 +52,7 @@ export function TimeTableMainPart({
     weekdaysMap(reservations),
     mondayDate,
   );
+
   return (
     <>
       {Object.entries(timestampsMap).map(([day, reservationTimeStamps], i) => (

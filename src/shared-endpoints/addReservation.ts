@@ -2,6 +2,7 @@
 
 import { getToken } from "@/auth/getToken";
 import { ADD_RESERVATION_URL } from "@/server-endpoints/reservations";
+import { revalidateTag } from "next/cache";
 
 export async function addReservation(formData: FormData) {
   const token = await getToken();
@@ -43,6 +44,6 @@ export async function addReservation(formData: FormData) {
     throw new Error("Failed to add reservation");
   } else {
     console.log("Reservation added successfully");
-    console.log(await response.json());
+    revalidateTag("userReservations");
   }
 }

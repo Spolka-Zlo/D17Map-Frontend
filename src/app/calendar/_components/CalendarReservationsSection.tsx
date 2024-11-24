@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { UserReservationItem } from "./UserReservationItem";
 import { CalendarReservationForm } from "./CalendarReservationForm";
 import { Reservation } from "@/schemas/reservationSchemas";
@@ -14,6 +14,7 @@ type CalendarReservationsSectionProps = {
   equipments: Equipment[];
   classrooms: Classroom[];
   reservationTypes: string[];
+  userUpcomingReservations: Reservation[];
 };
 
 export function CalendarReservationsSection({
@@ -24,7 +25,10 @@ export function CalendarReservationsSection({
   equipments,
   classrooms,
   reservationTypes,
+  userUpcomingReservations,
 }: CalendarReservationsSectionProps) {
+  const [editedReservation, setEditedReservation] =
+    useState<Reservation | null>(null);
   return (
     <div className="flex w-[25vw] flex-col items-center justify-start px-2">
       <h1 className="text-center text-2xl">Your Upcoming Reservations</h1>
@@ -35,16 +39,20 @@ export function CalendarReservationsSection({
           date={new Date()}
           classrooms={classrooms}
           reservationTypes={reservationTypes}
+          editedReservation={editedReservation}
+          setEditedReservation={setEditedReservation}
         />
       )}
 
       <div className="flex w-full flex-col justify-center gap-8 px-2">
-        {weekUserReservations.map((reservation) => (
+        {userUpcomingReservations.map((reservation) => (
           <UserReservationItem
             key={reservation.id}
             reservation={reservation}
-            cancelReservation={() => {}}
-            editReservation={() => {}}
+            editReservation={() => {
+              openCloseReservationModal(true);
+              setEditedReservation(reservation);
+            }}
           />
         ))}
       </div>
