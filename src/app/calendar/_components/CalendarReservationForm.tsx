@@ -96,9 +96,13 @@ export function CalendarReservationForm({
               type="time"
               list="time"
               required
-              defaultValue={new Date(editedReservation?.startTime ?? "07:00")
-                .toTimeString()
-                .slice(0, 5)}
+              defaultValue={
+                editedReservation
+                  ? new Date(editedReservation?.startTime)
+                      .toTimeString()
+                      .slice(0, 5)
+                  : undefined
+              }
             />
             <input
               className="rounded-md border-b-2 border-l-2 border-primary p-1"
@@ -106,9 +110,13 @@ export function CalendarReservationForm({
               type="time"
               list="time"
               required
-              defaultValue={new Date(editedReservation?.endTime ?? "08:00")
-                .toTimeString()
-                .slice(0, 5)}
+              defaultValue={
+                editedReservation
+                  ? new Date(editedReservation?.endTime)
+                      .toTimeString()
+                      .slice(0, 5)
+                  : undefined
+              }
             />
             <datalist id="time">
               {new Array(15 * 4).fill(0).map((_, i) => {
