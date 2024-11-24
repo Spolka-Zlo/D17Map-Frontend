@@ -1,5 +1,3 @@
-import { twMerge } from "tailwind-merge";
-
 type ConfirmationModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -29,13 +27,13 @@ export function ConfirmationModal({
             onClick={onConfirm}
             className="rounded-md bg-primary px-4 py-2 text-white"
           >
-            "Potwierdź"
+            Potwierdź
           </button>
           <button
             onClick={onClose}
             className="rounded-md bg-gray-300 px-4 py-2"
           >
-            "Anuluj"
+            Anuluj
           </button>
         </div>
       </div>
