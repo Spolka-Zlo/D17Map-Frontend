@@ -6,11 +6,12 @@ import { getEquipmentsSchema } from "@/schemas/equipmentSchemas";
 import { getClassroomsSchema } from "@/schemas/classroomSchemas";
 import { reservationSchema } from "@/schemas/reservationSchemas";
 
-export default async function ReservationPage({
-  searchParams,
-}: {
-  searchParams: { date: string };
-}) {
+export default async function ReservationPage(
+  props: {
+    searchParams: Promise<{ date: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const lastMonday = new Date(2024, 9, 30);
   lastMonday.setDate(lastMonday.getDate() - 1);
   const mondayDate = new Date(

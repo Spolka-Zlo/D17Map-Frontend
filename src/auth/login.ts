@@ -25,14 +25,14 @@ export async function login(username: string, password: string) {
 
   // TODO: handle any errors with login
 
-  cookies().set("token", token, {
+  (await cookies()).set("token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     maxAge: 60 * 60 * 24, // One day
     path: "/",
   });
 
-  cookies().set("role", role, {
+  (await cookies()).set("role", role, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     maxAge: 60 * 60 * 24, // One day

@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 
 export async function getToken() {
-  const token = cookies().get("token");
+  const token = (await cookies()).get("token");
   if (!token) {
     return null;
   }
