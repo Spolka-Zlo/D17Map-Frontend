@@ -1,36 +1,57 @@
-"use client";
-import { useState } from "react";
-import ThreeSixtyViewer from "../sphere/_components/ThreeSixtyViewer";
-import { MapSection } from "./_components/MapSection";
-import { z } from "zod";
+import { fetchGet } from "@/server-endpoints/fetchServer";
+import { MapPageContent } from "./_components/MapPageContent";
+import { getEquipmentsSchema } from "@/schemas/equipmentSchemas";
+import { getClassroomsSchema } from "@/schemas/classroomSchemas";
+import { ExtraRoom } from "@/schemas/extraRoomsSchema";
 
-const classroomSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  description: z.string(),
-  capacity: z.number(),
-  equipmentIds: z.array(z.string()),
-});
+export default async function Map() {
+  const equipments = await fetchGet(
+    "http://localhost:8080/equipments",
+    getEquipmentsSchema,
+  );
 
-const equipmentSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-});
+  const classrooms = await fetchGet(
+    "http://localhost:8080/classrooms",
+    getClassroomsSchema,
+  );
 
-export default function Map() {
-  const [clickedRoom, setClickedRoom] = useState<string | null>(null);
+  const extraRooms = [
+    {
+      id: "133E",
+      name: "1.33",
+      description: "A nice students' cafeteria",
+      modelKey: "133",
+      type: "CAFETERIA",
+    },
+    {
+      id: "2",
+      name: "E.9",
+      description: "A woman toilet",
+      modelKey: "E9",
+      type: "TOILET_F",
+    },
+    {
+      id: "3",
+      name: "E.7",
+      description: "A man toilet",
+      modelKey: "E7",
+      type: "TOILET_M",
+    },
+  ] satisfies ExtraRoom[];
+
+  // TODO: fetch extra rooms when implemented in the backend
+  // const extraRooms = await fetchGet(
+  //   "http://localhost:8080/extra-rooms",
+  //   extraRoomsSchema,
+  // )
 
   return (
     <main>
-      <div className="flex h-[81vh] w-full flex-row justify-stretch">
-        <MapSection clickedRoom={clickedRoom} setClickedRoom={setClickedRoom} />
-        <div className="border-l-4 border-black"></div>
-        <div className="w-full p-10">
-          <h1 className="text-2xl font-bold">{clickedRoom}</h1>
-
-          <ThreeSixtyViewer />
-        </div>
-      </div>
+      <MapPageContent
+        equipments={equipments}
+        classrooms={classrooms}
+        extraRooms={extraRooms}
+      />
     </main>
   );
 }

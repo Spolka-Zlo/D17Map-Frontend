@@ -2,15 +2,27 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { MapScene } from "./MapScene";
 import { MapMenu } from "./MapMenu";
+import { Classroom } from "@/schemas/classroomSchemas";
+import { Equipment } from "@/schemas/equipmentSchemas";
+import { ExtraRoom } from "@/schemas/extraRoomsSchema";
+import { MapRoomInformation } from "./MapRoomInformation";
 
 type MapSectionProps = {
   clickedRoom: string | null;
   setClickedRoom: Dispatch<SetStateAction<string | null>>;
+  classrooms: Classroom[];
+  equipments: Equipment[];
+  extraRooms: ExtraRoom[];
 };
 
-export function MapSection({ clickedRoom, setClickedRoom }: MapSectionProps) {
+export function MapSection({
+  clickedRoom,
+  setClickedRoom,
+  classrooms,
+  equipments,
+  extraRooms,
+}: MapSectionProps) {
   const [floor, setFloor] = useState("Floor 1");
-  const equipments = ["ROUTERS", "COMPUTERS"];
   return (
     <div className="relative">
       <div className="h-[70vh] w-[60vw]">
@@ -20,18 +32,25 @@ export function MapSection({ clickedRoom, setClickedRoom }: MapSectionProps) {
           setClickedRoom={setClickedRoom}
         />
       </div>
-      {clickedRoom && (
-        <div className="absolute right-20 top-0 rounded-md bg-white/25 p-4">
-          <h1 className="text-2xl font-bold">
-            Piętro {floor.replace("Floor ", "")}
-          </h1>
-          <p>Sala {clickedRoom.slice(0, 1) + "." + clickedRoom.slice(1)}</p>
-          <ul className="flex gap-1">
-            {equipments.map((value) => (
-              <li key={value}>{value}</li>
-            ))}
-          </ul>
-        </div>
+      {clickedRoom &&
+      !extraRooms.map((e) => e.modelKey).includes(clickedRoom) ? (
+        <MapRoomInformation
+          classroom={classrooms.find(
+            (c) => c.name.replace(".", "") === clickedRoom,
+          )}
+          floor={floor}
+          equipments={equipments}
+        />
+      ) : (
+        clickedRoom && (
+          <MapRoomInformation
+            extraRoom={extraRooms.find(
+              (c) => c.name.replace(".", "") === clickedRoom,
+            )}
+            floor={floor}
+            equipments={equipments}
+          />
+        )
       )}
       <MapMenu floor={floor} setFloor={setFloor} />
     </div>
