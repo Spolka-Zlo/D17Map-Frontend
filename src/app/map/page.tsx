@@ -28,14 +28,28 @@ export default async function Map() {
       name: "E.9",
       description: "A woman toilet",
       modelKey: "E9",
-      type: "TOILET_F",
+      type: "TOILET",
     },
     {
       id: "3",
       name: "E.7",
       description: "A man toilet",
       modelKey: "E7",
-      type: "TOILET_M",
+      type: "TOILET",
+    },
+    {
+      id: "4",
+      name: "1.1",
+      description: "Stairs",
+      modelKey: "11",
+      type: "STAIRS",
+    },
+    {
+      id: "14",
+      name: "1.4",
+      description: "Elevators",
+      modelKey: "14",
+      type: "ELEVATOR",
     },
   ] satisfies ExtraRoom[];
 

@@ -30,6 +30,7 @@ export function MapSection({
           floor={floor}
           clickedRoom={clickedRoom}
           setClickedRoom={setClickedRoom}
+          extraRooms={extraRooms}
         />
       </div>
       {clickedRoom &&

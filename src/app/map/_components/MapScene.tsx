@@ -3,17 +3,20 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, Html } from "@react-three/drei";
 import { Dispatch, SetStateAction, Suspense } from "react";
 import { MapFloor } from "./MapFloor";
+import { ExtraRoom } from "@/schemas/extraRoomsSchema";
 
 type MapSceneProps = {
   floor: string;
   clickedRoom: string | null;
   setClickedRoom: Dispatch<SetStateAction<string | null>>;
+  extraRooms: ExtraRoom[];
 };
 
 export function MapScene({
   floor,
   clickedRoom,
   setClickedRoom,
+  extraRooms,
 }: MapSceneProps) {
   return (
     <Canvas camera={{ position: [-0.5, 0, 5], fov: 100 }}>
@@ -25,6 +28,7 @@ export function MapScene({
           activeRooms={["138", "119", "122", "110"]}
           clickedRoom={clickedRoom}
           setClickedRoom={setClickedRoom}
+          extraRooms={extraRooms}
         />
         <Environment preset="forest" />
       </Suspense>

@@ -29,6 +29,10 @@ const config: Config = {
         mapLightGrey: "#D0DCE1",
         white: "#FFFFFF",
         mapRed: "#4a0309",
+        toiletColor: "#ffde21",
+        cafeteriaColor: "#adebb3",
+        stairsColor: "#ed80e9",
+        elevatorColor: "#8e4585",
       },
       boxShadow: {
         blueShadow: "0px 0px 4px 2px rgba(0, 63, 82, 0.5)",

@@ -1,4 +1,5 @@
 "use client";
+import { ExtraRoom } from "@/schemas/extraRoomsSchema";
 import { useGLTF } from "@react-three/drei";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Mesh } from "three";
@@ -7,6 +8,7 @@ import * as THREE from "three";
 type MapFloorProps = {
   url: string;
   activeRooms: string[];
+  extraRooms: ExtraRoom[];
   clickedRoom: string | null;
   setClickedRoom: Dispatch<SetStateAction<string | null>>;
 };
@@ -14,11 +16,32 @@ type MapFloorProps = {
 export function MapFloor({
   url,
   activeRooms,
+  extraRooms,
   clickedRoom,
   setClickedRoom,
 }: MapFloorProps) {
   const { nodes } = useGLTF(url);
   const meshRefs = useRef<{ [key: string]: Mesh }>({});
+  const toiletColor = new THREE.Color(0xffde21);
+  const cafeteriaColor = new THREE.Color(0xadebb3);
+  const stairsColor = new THREE.Color(0xed80e9);
+  const elevatorColor = new THREE.Color(0x8e4585);
+
+  function isToilet(room: string, extraRooms: ExtraRoom[]) {
+    return extraRooms.find((e) => e.modelKey === room)?.type === "TOILET";
+  }
+
+  function isCafereria(room: string, extraRooms: ExtraRoom[]) {
+    return extraRooms.find((e) => e.modelKey === room)?.type === "CAFETERIA";
+  }
+
+  function isStairs(room: string, extraRooms: ExtraRoom[]) {
+    return extraRooms.find((e) => e.modelKey === room)?.type === "STAIRS";
+  }
+
+  function isElevator(room: string, extraRooms: ExtraRoom[]) {
+    return extraRooms.find((e) => e.modelKey === room)?.type === "ELEVATOR";
+  }
 
   useEffect(() => {
     Object.entries(nodes).forEach(([key, node]) => {
@@ -30,6 +53,30 @@ export function MapFloor({
         newMaterial.color.set(0xf6a200);
       } else if (activeRooms.includes(key)) {
         newMaterial.color.set(0x6fd8ed);
+        newPosition.z = node.position.z;
+      } else if (
+        extraRooms.map((e) => e.modelKey).includes(key) &&
+        isToilet(key, extraRooms)
+      ) {
+        newMaterial.color.set(toiletColor);
+        newPosition.z = node.position.z;
+      } else if (
+        extraRooms.map((e) => e.modelKey).includes(key) &&
+        isCafereria(key, extraRooms)
+      ) {
+        newMaterial.color.set(cafeteriaColor);
+        newPosition.z = node.position.z;
+      } else if (
+        extraRooms.map((e) => e.modelKey).includes(key) &&
+        isStairs(key, extraRooms)
+      ) {
+        newMaterial.color.set(stairsColor);
+        newPosition.z = node.position.z;
+      } else if (
+        extraRooms.map((e) => e.modelKey).includes(key) &&
+        isElevator(key, extraRooms)
+      ) {
+        newMaterial.color.set(elevatorColor);
         newPosition.z = node.position.z;
       } else {
         newMaterial.color.set(0xffffff);
