@@ -24,13 +24,13 @@ export function MapMenuExtraRoomFilterItem({
     >
       <span
         className={`h-4 w-4 rounded-full border-2 border-black ${
-          type === "TOILET"
+          type === "WC"
             ? "bg-toiletColor"
             : type === "CAFETERIA"
               ? "bg-cafeteriaColor"
-              : type === "STAIRS"
+              : type === "Klatki schodowe"
                 ? "bg-stairsColor"
-                : type === "ELEVATOR"
+                : type === "Windy"
                   ? "bg-elevatorColor"
                   : ""
         }`}

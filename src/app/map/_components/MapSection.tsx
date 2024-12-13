@@ -30,9 +30,34 @@ export function MapSection({
 }: MapSectionProps) {
   const [floor, setFloor] = useState(floors[0].floorName);
   const [activeRooms, setActiveRooms] = useState<string[]>([]);
+
+  const isExtraRoom = (room: string) =>
+    extraRooms.some((e) => e.modelKey === room);
+
+  const getRoomInformation = () => {
+    if (!clickedRoom) return null;
+
+    const roomData: Classroom | ExtraRoom | undefined = isExtraRoom(clickedRoom)
+      ? extraRooms.find((room) => room.name.replace(".", "") === clickedRoom)
+      : classrooms.find((room) => room.name.replace(".", "") === clickedRoom);
+
+    return (
+      <MapRoomInformation
+        classroom={
+          !isExtraRoom(clickedRoom) ? (roomData as Classroom) : undefined
+        }
+        extraRoom={
+          isExtraRoom(clickedRoom) ? (roomData as ExtraRoom) : undefined
+        }
+        floor={floor}
+        equipments={equipments}
+      />
+    );
+  };
+
   return (
     <div className="relative">
-      <SearchBar onChange={(room) => setClickedRoom(room)} />
+      <SearchBar onChange={setClickedRoom} />
       <div className="h-[70vh] w-[60vw]">
         <MapScene
           floor={floor}
@@ -41,26 +66,7 @@ export function MapSection({
           extraRooms={extraRooms}
         />
       </div>
-      {clickedRoom &&
-      !extraRooms.map((e) => e.modelKey).includes(clickedRoom) ? (
-        <MapRoomInformation
-          classroom={classrooms.find(
-            (c) => c.name.replace(".", "") === clickedRoom,
-          )}
-          floor={floor}
-          equipments={equipments}
-        />
-      ) : (
-        clickedRoom && (
-          <MapRoomInformation
-            extraRoom={extraRooms.find(
-              (c) => c.name.replace(".", "") === clickedRoom,
-            )}
-            floor={floor}
-            equipments={equipments}
-          />
-        )
-      )}
+      {getRoomInformation()}
       <MapMenu
         floor={floor}
         setFloor={setFloor}

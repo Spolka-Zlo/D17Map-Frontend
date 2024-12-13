@@ -16,10 +16,10 @@ type MapFloorProps = {
 };
 
 const ROOM_COLORS = {
-  TOILET: new THREE.Color(0xffde21),
+  WC: new THREE.Color(0xffde21),
   CAFETERIA: new THREE.Color(0xadebb3),
-  STAIRS: new THREE.Color(0xed80e9),
-  ELEVATOR: new THREE.Color(0x8e4585),
+  "Klatki schodowe": new THREE.Color(0xed80e9),
+  Windy: new THREE.Color(0x8e4585),
   DEFAULT: new THREE.Color(0xffffff),
   ACTIVE: new THREE.Color(0x6fd8ed),
   CLICKED: new THREE.Color(0xf6a200),

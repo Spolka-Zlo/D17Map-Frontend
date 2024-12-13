@@ -26,6 +26,8 @@ export default async function Map() {
     getExtraRoomsSchema,
   );
 
+  console.log("extraRooms", extraRooms);
+
   return (
     <main>
       <MapPageContent

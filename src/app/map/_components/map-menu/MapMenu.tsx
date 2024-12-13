@@ -30,7 +30,7 @@ export function MapMenu({
         />
         <div className="flex gap-5 p-2 pl-10">
           <MapMenuExtraRoomFilterItem
-            type="TOILET"
+            type="WC"
             activeRooms={activeRooms}
             setActiveRooms={setActiveRooms}
           />
@@ -40,12 +40,12 @@ export function MapMenu({
             setActiveRooms={setActiveRooms}
           />
           <MapMenuExtraRoomFilterItem
-            type="STAIRS"
+            type="Klatki schodowe"
             activeRooms={activeRooms}
             setActiveRooms={setActiveRooms}
           />
           <MapMenuExtraRoomFilterItem
-            type="ELEVATOR"
+            type="Windy"
             activeRooms={activeRooms}
             setActiveRooms={setActiveRooms}
           />

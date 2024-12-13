@@ -31,7 +31,7 @@ export function MapScene({
       <Suspense fallback={<Html>Loading...</Html>}>
         <MapFloor
           url={`/gltf/floor${floor}.glb`}
-          activeRooms={["TOILET", "CAFETERIA", "STAIRS", "ELEVATOR"]}
+          activeRooms={["WC", "CAFETERIA", "Klatki schodowe", "Windy"]}
           clickedRoom={clickedRoom}
           setClickedRoom={setClickedRoom}
           extraRooms={extraRooms}
