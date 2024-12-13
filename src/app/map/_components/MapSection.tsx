@@ -1,11 +1,13 @@
 "use client";
 import { Dispatch, SetStateAction, useState } from "react";
 import { MapScene } from "./MapScene";
-import { MapMenu } from "./MapMenu";
+import { MapMenu } from "./map-menu/MapMenu";
 import { Classroom } from "@/schemas/classroomSchemas";
 import { Equipment } from "@/schemas/equipmentSchemas";
 import { ExtraRoom } from "@/schemas/extraRoomsSchema";
 import { MapRoomInformation } from "./MapRoomInformation";
+import { SearchBar } from "@/components/SearchBar";
+import { Floor } from "@/schemas/floorsSchema";
 
 type MapSectionProps = {
   clickedRoom: string | null;
@@ -13,6 +15,8 @@ type MapSectionProps = {
   classrooms: Classroom[];
   equipments: Equipment[];
   extraRooms: ExtraRoom[];
+  extraRoomsTypes: string[];
+  floors: Floor[];
 };
 
 export function MapSection({
@@ -21,10 +25,14 @@ export function MapSection({
   classrooms,
   equipments,
   extraRooms,
+  extraRoomsTypes,
+  floors,
 }: MapSectionProps) {
-  const [floor, setFloor] = useState("Floor 1");
+  const [floor, setFloor] = useState(floors[0].floorName);
+  const [activeRooms, setActiveRooms] = useState<string[]>([]);
   return (
     <div className="relative">
+      <SearchBar onChange={(room) => setClickedRoom(room)} />
       <div className="h-[70vh] w-[60vw]">
         <MapScene
           floor={floor}
@@ -53,7 +61,14 @@ export function MapSection({
           />
         )
       )}
-      <MapMenu floor={floor} setFloor={setFloor} />
+      <MapMenu
+        floor={floor}
+        setFloor={setFloor}
+        extraRoomsTypes={extraRoomsTypes}
+        activeRooms={activeRooms}
+        setActiveRooms={setActiveRooms}
+        floors={floors}
+      />
     </div>
   );
 }

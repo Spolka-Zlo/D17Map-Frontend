@@ -29,6 +29,8 @@ export function CalendarReservationsSection({
 }: CalendarReservationsSectionProps) {
   const [editedReservation, setEditedReservation] =
     useState<Reservation | null>(null);
+
+  console.log("userUpcomingReservations", userUpcomingReservations);
   return (
     <div className="flex w-[25vw] flex-col items-center justify-start px-2">
       <h1 className="text-center text-2xl">Your Upcoming Reservations</h1>
