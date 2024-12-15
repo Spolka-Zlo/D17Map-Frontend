@@ -1,19 +1,9 @@
 "use client";
-import { ExtraRoom } from "@/schemas/extraRoomsSchema";
+import { ExtraRoom } from "@/schemas/extraRoomSchemas";
 import { useGLTF } from "@react-three/drei";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { Mesh } from "three";
 import * as THREE from "three";
-
-type MapFloorProps = {
-  url: string;
-  activeRooms: string[];
-  extraRooms: ExtraRoom[];
-  clickedRoom: string | null;
-  setClickedRoom: Dispatch<SetStateAction<string | null>>;
-  clickedRoomZoom: number[];
-  setClickedRoomZoom?: Dispatch<SetStateAction<number[]>>;
-};
 
 const ROOM_COLORS = {
   WC: new THREE.Color(0xffde21),
@@ -23,6 +13,7 @@ const ROOM_COLORS = {
   DEFAULT: new THREE.Color(0xffffff),
   ACTIVE: new THREE.Color(0x6fd8ed),
   CLICKED: new THREE.Color(0xf6a200),
+  LIGHT: new THREE.Color(0x00ff00),
 } as const;
 
 type ROOM_COLORS_TYPE = typeof ROOM_COLORS;
@@ -32,7 +23,10 @@ function getRoomTypeColor(
   extraRooms: ExtraRoom[],
   activeRooms: string[],
   isClicked: boolean,
+  isLight: boolean,
 ): ROOM_COLORS_TYPE[keyof ROOM_COLORS_TYPE] {
+  if (isLight) return ROOM_COLORS.LIGHT;
+
   if (isClicked) return ROOM_COLORS.CLICKED;
 
   if (activeRooms.includes(roomKey)) return ROOM_COLORS.ACTIVE;
@@ -45,6 +39,17 @@ function getRoomTypeColor(
   );
 }
 
+type MapFloorProps = {
+  url: string;
+  activeRooms: string[];
+  extraRooms: ExtraRoom[];
+  clickedRoom: string | null;
+  setClickedRoom: Dispatch<SetStateAction<string | null>>;
+  clickedRoomZoom: number[];
+  setClickedRoomZoom?: Dispatch<SetStateAction<number[]>>;
+  lightRoom?: string;
+};
+
 export function MapFloor({
   url,
   activeRooms,
@@ -53,6 +58,7 @@ export function MapFloor({
   setClickedRoom,
   clickedRoomZoom,
   setClickedRoomZoom,
+  lightRoom,
 }: MapFloorProps) {
   const { nodes } = useGLTF(url);
   const meshRefs = useRef<{ [key: string]: Mesh }>({});
@@ -63,6 +69,7 @@ export function MapFloor({
       if (!mesh) return;
 
       const isClicked = clickedRoom === key;
+      const isLight = lightRoom === key;
       const newPosition = new THREE.Vector3().copy(mesh.position);
       const newMaterial = (mesh.material as THREE.MeshStandardMaterial).clone();
 
@@ -71,6 +78,7 @@ export function MapFloor({
         extraRooms,
         activeRooms,
         isClicked,
+        isLight,
       );
       newPosition.z = isClicked ? node.position.z - 0.3 : node.position.z;
 

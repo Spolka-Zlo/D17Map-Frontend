@@ -1,7 +1,12 @@
-import { Dispatch, SetStateAction } from "react";
+"use client";
+
+import { Dispatch, SetStateAction, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { EditDeleteButtonsSection } from "../EditDeleteButtonsSection";
 import { Classroom } from "@/schemas/classroomSchemas";
+import { deleteClassroom } from "../../_actions/delete-classroom";
+import { ConfirmationModal } from "@/components/ConfirmationModal";
+import { toast } from "sonner";
 
 type ClassroomListElementProps = {
   classroom: Classroom;
@@ -14,6 +19,10 @@ export function ClassroomListElement({
   editedElement,
   setEditedElement,
 }: ClassroomListElementProps) {
+  const [isConfirmationModalOpen, openCloseConfirmationModal] = useState(false);
+  const [deletedClassroom, setDeletedClassroom] = useState<Classroom | null>(
+    null,
+  );
   return (
     <li
       key={classroom.id}
@@ -27,8 +36,31 @@ export function ClassroomListElement({
       <p>Floor {classroom.name[0]}</p>
       <EditDeleteButtonsSection
         onEdit={() => setEditedElement}
-        onDelete={() => {}}
+        onDelete={() => {
+          setDeletedClassroom(classroom);
+          openCloseConfirmationModal(true);
+        }}
       />
+      {deletedClassroom && (
+        <ConfirmationModal
+          isOpen={isConfirmationModalOpen}
+          onClose={() => {
+            openCloseConfirmationModal(false);
+          }}
+          onConfirm={async () => {
+            await deleteClassroom(deletedClassroom.name)
+              .then(() => {
+                toast.success("Sala została usunięta");
+              })
+              .catch(() => {
+                toast.error("Nie udało się usunąć sali");
+              });
+            openCloseConfirmationModal(false);
+          }}
+          message={`Czy na pewno chcesz usunąć salę ${deletedClassroom.name}?`}
+          title="Usuwanie sali"
+        />
+      )}
     </li>
   );
 }

@@ -4,7 +4,7 @@ import { getToken } from "@/auth/getToken";
 import { getRole } from "@/auth/getRole";
 import { HOST } from "@/server-endpoints/host";
 
-export async function putClassrooms(formData: FormData) {
+export async function putExtraRoom(formData: FormData) {
   const token = await getToken();
   const role = await getRole();
 
@@ -29,18 +29,19 @@ export async function putClassrooms(formData: FormData) {
   };
 
   if (id) {
-    await fetch(`${HOST}/classrooms/admin/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(body),
-    });
+    console.log("waiting for PUT /extra-rooms/admin/:id to be implemented");
+    // await fetch(`${HOST}/extra-rooms/admin/${id}`, {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    //   body: JSON.stringify(body),
+    // });
     return;
   }
 
-  await fetch(`${HOST}/classrooms`, {
+  await fetch(`${HOST}/extra-rooms`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -2,6 +2,7 @@
 
 import { fetchPost } from "@/server-endpoints/fetchServer";
 import { createEquipmentSchema } from "@/schemas/equipmentSchemas";
+import { HOST } from "@/server-endpoints/host";
 
 export async function createEquipment(formData: FormData) {
   const name = formData.get("name") as string;
@@ -9,17 +10,17 @@ export async function createEquipment(formData: FormData) {
 
   if (id) {
     console.log("waiting for PUT /equipments/:id to be implemented");
-    // await fetch(`http://localhost:8080/equipments/${id}`, {
-    //   method: "PUT",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ name }),
-    // });
-    // return;
+    await fetch(`${HOST}/equipments/admin/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name }),
+    });
+    return;
   }
 
-  await fetch("http://localhost:8080/equipments", {
+  await fetch(`${HOST}/equipments`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

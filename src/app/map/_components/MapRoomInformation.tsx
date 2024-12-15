@@ -1,6 +1,6 @@
 import { Classroom } from "@/schemas/classroomSchemas";
 import { Equipment } from "@/schemas/equipmentSchemas";
-import { ExtraRoom } from "@/schemas/extraRoomsSchema";
+import { ExtraRoom } from "@/schemas/extraRoomSchemas";
 import Link from "next/link";
 
 type MapRoomInformationProps = {

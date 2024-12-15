@@ -2,7 +2,7 @@
 
 import { Classroom } from "@/schemas/classroomSchemas";
 import { Equipment } from "@/schemas/equipmentSchemas";
-import { ExtraRoom } from "@/schemas/extraRoomsSchema";
+import { ExtraRoom } from "@/schemas/extraRoomSchemas";
 import { useState } from "react";
 import { MapSection } from "./MapSection";
 import { Floor } from "@/schemas/floorsSchema";
@@ -29,8 +29,6 @@ export function MapPageContent({
       }
       return acc;
     }, []);
-
-  console.log(clickedRoom);
 
   return (
     <div className="flex h-[81vh] w-full flex-row justify-stretch">

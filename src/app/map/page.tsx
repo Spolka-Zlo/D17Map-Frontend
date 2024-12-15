@@ -2,7 +2,7 @@ import { fetchGet } from "@/server-endpoints/fetchServer";
 import { MapPageContent } from "./_components/MapPageContent";
 import { getEquipmentsSchema } from "@/schemas/equipmentSchemas";
 import { getClassroomsSchema } from "@/schemas/classroomSchemas";
-import { getExtraRoomsSchema } from "@/schemas/extraRoomsSchema";
+import { getExtraRoomsSchema } from "@/schemas/extraRoomSchemas";
 import { getFloorsSchema } from "@/schemas/floorsSchema";
 
 export default async function Map() {
