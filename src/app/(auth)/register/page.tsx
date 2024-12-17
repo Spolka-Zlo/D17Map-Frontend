@@ -1,6 +1,15 @@
 import { register } from "@/auth/register";
 
 export default function RegisterPage() {
+  function isPasswordValid(password: string) {
+    return (
+      password.length >= 8 &&
+      password.length <= 32 &&
+      /[A-Z]/.test(password) &&
+      /[a-z]/.test(password) &&
+      /[0-9]/.test(password)
+    );
+  }
   return (
     <div className="m-auto w-[25vw] justify-center rounded-md bg-white/25 p-10">
       <form
@@ -14,6 +23,7 @@ export default function RegisterPage() {
           if (!username || !password) {
             return;
           }
+
           if (password !== confirmPassword) {
             console.error("Passwords do not match");
             return;
@@ -25,7 +35,15 @@ export default function RegisterPage() {
         <label htmlFor="username">Username</label>
         <input type="text" id="username" name="username" />
         <label htmlFor="password">Password</label>
-        <input type="password" id="password" name="password" />
+        <input
+          minLength={8}
+          maxLength={32}
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          title="Password must contain at least one number, one uppercase and one lowercase letter, and at least 8 or more characters"
+          type="password"
+          id="password"
+          name="password"
+        />
         <label htmlFor="confirm-password">Confirm Password</label>
         <input type="password" id="confirm-password" name="confirm-password" />
         <button

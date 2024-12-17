@@ -7,12 +7,14 @@ import { useState } from "react";
 import { MapSection } from "./MapSection";
 import { Floor } from "@/schemas/floorsSchema";
 import { ThreeSixtyViewer } from "@/app/sphere/_components/ThreeSixtyViewer";
+import { RoomInformationSection } from "./RoomInformationSection";
 
 type MapPageContentProps = {
   classrooms: Classroom[];
   equipments: Equipment[];
   extraRooms: ExtraRoom[];
   floors: Floor[];
+  reservationTypes: string[];
 };
 
 export function MapPageContent({
@@ -20,6 +22,7 @@ export function MapPageContent({
   equipments,
   extraRooms,
   floors,
+  reservationTypes,
 }: MapPageContentProps) {
   const [clickedRoom, setClickedRoom] = useState<string | null>(null);
   const extraRoomsTypes = extraRooms
@@ -43,17 +46,14 @@ export function MapPageContent({
         floors={floors}
       />
       <div className="border-l-4 border-black"></div>
-      <div className="flex w-full flex-col justify-between p-10">
-        <h1 className="text-2xl font-bold">{clickedRoom}</h1>
-
-        {clickedRoom !== "" && (
-          <ThreeSixtyViewer
-            classroomId={
-              classrooms.find((c) => c.modelKey === clickedRoom)?.id || ""
-            }
-          />
-        )}
-      </div>
+      <RoomInformationSection
+        clickedRoom={clickedRoom}
+        setClickedRoom={setClickedRoom}
+        classrooms={classrooms}
+        extraRooms={extraRooms}
+        equipments={equipments}
+        reservationTypes={reservationTypes}
+      />
     </div>
   );
 }

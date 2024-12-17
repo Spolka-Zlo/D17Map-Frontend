@@ -25,9 +25,6 @@ export function ThreeSixtyViewer({ classroomId }: { classroomId: string }) {
 }
 
 function Sphere({ classroomId }: { classroomId: string }) {
-  // const texture = new THREE.TextureLoader().load("/sphere/photo.jpg");
-  // const photoUrl = `http://localhost:8080/classrooms/${classroomId}/photo`;
-  // console.log(photoUrl);
   const [texture, setTexture] = React.useState<THREE.Texture | null>(null);
 
   async function fetchPhoto() {
@@ -36,17 +33,10 @@ function Sphere({ classroomId }: { classroomId: string }) {
       method: "GET",
     });
     const blob = await response.blob();
-    // console.log("blob", blob);
     const url = URL.createObjectURL(blob);
-    console.log("url", url);
-    // image.crossOrigin = "anonymous";
     image.src = url;
-    console.log("image", image);
-    // setPhotoUrl(url);
-    // console.log(blob);
     try {
       image.onload = () => {
-        console.log("Image loaded");
         const loadedTexture = new THREE.Texture();
         loadedTexture.image = image;
         loadedTexture.needsUpdate = true;

@@ -8,8 +8,6 @@ export async function LoginSection() {
   const role = await getRole();
   const isLoggedIn = !!token;
 
-  // console.log("isLoggedIn", isLoggedIn, token);
-
   return (
     <div className="flex h-full w-full items-center justify-center gap-4 maxML:hidden">
       {!isLoggedIn ? (

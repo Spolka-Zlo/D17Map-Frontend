@@ -76,7 +76,6 @@ export function MapFloor({
   });
 
   useEffect(() => {
-    console.log("MapFloor useEffect activeRooms", activeRooms);
     Object.entries(nodes).forEach(([key, node]) => {
       const mesh = meshRefs.current[key];
       if (!mesh) return;

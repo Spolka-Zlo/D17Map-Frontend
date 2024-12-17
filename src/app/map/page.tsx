@@ -4,29 +4,22 @@ import { getEquipmentsSchema } from "@/schemas/equipmentSchemas";
 import { getClassroomsSchema } from "@/schemas/classroomSchemas";
 import { getExtraRoomsSchema } from "@/schemas/extraRoomSchemas";
 import { getFloorsSchema } from "@/schemas/floorsSchema";
+import { z } from "zod";
+import { HOST } from "@/server-endpoints/host";
 
 export default async function Map() {
-  const floors = await fetchGet(
-    "http://localhost:8080/floors",
-    getFloorsSchema,
-  );
+  const floors = await fetchGet(`${HOST}/floors`, getFloorsSchema);
 
-  const equipments = await fetchGet(
-    "http://localhost:8080/equipments",
-    getEquipmentsSchema,
-  );
+  const equipments = await fetchGet(`${HOST}/equipments`, getEquipmentsSchema);
 
-  const classrooms = await fetchGet(
-    "http://localhost:8080/classrooms",
-    getClassroomsSchema,
-  );
+  const classrooms = await fetchGet(`${HOST}/classrooms`, getClassroomsSchema);
 
-  const extraRooms = await fetchGet(
-    "http://localhost:8080/extra-rooms",
-    getExtraRoomsSchema,
-  );
+  const extraRooms = await fetchGet(`${HOST}/extra-rooms`, getExtraRoomsSchema);
 
-  console.log("extraRooms", extraRooms);
+  const reservationTypes = await fetchGet(
+    `${HOST}/reservations/types`,
+    z.array(z.string()),
+  );
 
   return (
     <main>
@@ -35,6 +28,7 @@ export default async function Map() {
         classrooms={classrooms}
         extraRooms={extraRooms}
         floors={floors}
+        reservationTypes={reservationTypes}
       />
     </main>
   );

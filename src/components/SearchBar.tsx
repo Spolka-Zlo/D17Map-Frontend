@@ -16,7 +16,6 @@ export function SearchBar({ onChange }: { onChange?: (room: string) => void }) {
         }}
         onKeyDown={(e) => {
           if (e.key === "Enter" && onChange) {
-            console.log("dupa");
             onChange(search.replace(".", ""));
           }
         }}

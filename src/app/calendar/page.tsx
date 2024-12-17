@@ -5,6 +5,7 @@ import { fetchGet } from "@/server-endpoints/fetchServer";
 import { getEquipmentsSchema } from "@/schemas/equipmentSchemas";
 import { getClassroomsSchema } from "@/schemas/classroomSchemas";
 import { reservationSchema } from "@/schemas/reservationSchemas";
+import { HOST } from "@/server-endpoints/host";
 
 export default async function ReservationPage({
   searchParams,
@@ -20,7 +21,7 @@ export default async function ReservationPage({
 
   const userUpcomingReservations = (
     await fetchGet(
-      `http://localhost:8080/reservations/user/week?startDay=${queryDate}`,
+      `${HOST}/reservations/user/week?startDay=${queryDate}`,
       z.array(reservationSchema),
       {
         cache: "force-cache",
@@ -37,7 +38,7 @@ export default async function ReservationPage({
 
   const weekReservations = (
     await fetchGet(
-      `http://localhost:8080/reservations/week?startDay=${queryDate}`,
+      `${HOST}/reservations/week?startDay=${queryDate}`,
       z.array(reservationSchema),
     )
   ).map((reservation) => ({
@@ -47,19 +48,13 @@ export default async function ReservationPage({
   }));
 
   const reservationTypes = await fetchGet(
-    "http://localhost:8080/reservations/types",
+    `${HOST}/reservations/types`,
     z.array(z.string()),
   );
 
-  const equipments = await fetchGet(
-    "http://localhost:8080/equipments",
-    getEquipmentsSchema,
-  );
+  const equipments = await fetchGet(`${HOST}/equipments`, getEquipmentsSchema);
 
-  const classrooms = await fetchGet(
-    "http://localhost:8080/classrooms",
-    getClassroomsSchema,
-  );
+  const classrooms = await fetchGet(`${HOST}/classrooms`, getClassroomsSchema);
 
   const availableRooms = classrooms.map((classroom) => classroom.name);
 

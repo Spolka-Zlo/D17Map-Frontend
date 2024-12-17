@@ -48,7 +48,7 @@ export function ClassroomListElement({
             openCloseConfirmationModal(false);
           }}
           onConfirm={async () => {
-            await deleteClassroom(deletedClassroom.name)
+            await deleteClassroom(deletedClassroom.id)
               .then(() => {
                 toast.success("Sala została usunięta");
               })

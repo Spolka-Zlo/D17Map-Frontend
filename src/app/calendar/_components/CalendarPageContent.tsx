@@ -38,11 +38,8 @@ export function CalendarPageContent({
       />
       <div className="border-l-4 border-black"></div>
       <CalendarReservationsSection
-        weekUserReservations={weekReservations}
-        mondayDate={mondayDateTimestamp}
         isReservationModalOpen={isReservationModalOpen}
         openCloseReservationModal={openCloseReservationModal}
-        equipments={equipments}
         classrooms={classrooms}
         reservationTypes={reservationTypes}
         userUpcomingReservations={userUpcomingReservations}

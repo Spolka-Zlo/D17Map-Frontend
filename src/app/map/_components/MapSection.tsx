@@ -44,7 +44,6 @@ function searchForRoom(
       const finishFloorMovingDevice = extraRooms.find(
         (r) => r.type === "Klatki schodowe" && r.floorName === room.floorName,
       );
-      console.log(currentFloor, movingDevice);
       setLightRoom(movingDevice?.modelKey || "");
       setShowMoveFloor(room.floorName > currentFloor ? "UP" : "DOWN");
       setDestinationFloor(room.floorName);
@@ -89,8 +88,8 @@ export function MapSection({
     if (!clickedRoom) return null;
 
     const roomData: Classroom | ExtraRoom | undefined = isExtraRoom(clickedRoom)
-      ? extraRooms.find((room) => room.name.replace(".", "") === clickedRoom)
-      : classrooms.find((room) => room.name.replace(".", "") === clickedRoom);
+      ? extraRooms.find((room) => room.modelKey === clickedRoom)
+      : classrooms.find((room) => room.modelKey === clickedRoom);
 
     return (
       <MapRoomInformation

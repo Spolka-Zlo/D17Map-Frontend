@@ -7,22 +7,16 @@ import { Equipment } from "@/schemas/equipmentSchemas";
 import { Classroom } from "@/schemas/classroomSchemas";
 
 type CalendarReservationsSectionProps = {
-  weekUserReservations: Reservation[];
-  mondayDate: number;
   isReservationModalOpen: boolean;
   openCloseReservationModal: Dispatch<SetStateAction<boolean>>;
-  equipments: Equipment[];
   classrooms: Classroom[];
   reservationTypes: string[];
   userUpcomingReservations: Reservation[];
 };
 
 export function CalendarReservationsSection({
-  weekUserReservations,
-  mondayDate,
   isReservationModalOpen,
   openCloseReservationModal,
-  equipments,
   classrooms,
   reservationTypes,
   userUpcomingReservations,
@@ -30,7 +24,6 @@ export function CalendarReservationsSection({
   const [editedReservation, setEditedReservation] =
     useState<Reservation | null>(null);
 
-  console.log("userUpcomingReservations", userUpcomingReservations);
   return (
     <div className="flex w-[25vw] flex-col items-center justify-start px-2">
       <h1 className="text-center text-2xl">Your Upcoming Reservations</h1>
