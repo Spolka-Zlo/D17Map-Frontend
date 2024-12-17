@@ -14,6 +14,7 @@ export default function RegisterPage() {
           if (!username || !password) {
             return;
           }
+
           if (password !== confirmPassword) {
             console.error("Passwords do not match");
             return;
@@ -25,7 +26,15 @@ export default function RegisterPage() {
         <label htmlFor="username">Username</label>
         <input type="text" id="username" name="username" />
         <label htmlFor="password">Password</label>
-        <input type="password" id="password" name="password" />
+        <input
+          minLength={8}
+          maxLength={32}
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          title="Password must contain at least one number, one uppercase and one lowercase letter, and at least 8 or more characters"
+          type="password"
+          id="password"
+          name="password"
+        />
         <label htmlFor="confirm-password">Confirm Password</label>
         <input type="password" id="confirm-password" name="confirm-password" />
         <button

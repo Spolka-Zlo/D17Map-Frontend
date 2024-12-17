@@ -1,2 +1,4 @@
-export const LOGIN_URL = "http://localhost:8080/auth/login";
-export const REGISTER_URL = "http://localhost:8080/auth/register";
+import { HOST } from "@/server-endpoints/host";
+
+export const LOGIN_URL = `${HOST}/auth/login`;
+export const REGISTER_URL = `${HOST}/auth/register`;

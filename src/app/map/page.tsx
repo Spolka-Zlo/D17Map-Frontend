@@ -1,36 +1,41 @@
-"use client";
-import { useState } from "react";
-import ThreeSixtyViewer from "../sphere/_components/ThreeSixtyViewer";
-import { MapSection } from "./_components/MapSection";
+import { fetchGet } from "@/server-endpoints/fetchServer";
+import { MapPageContent } from "./_components/MapPageContent";
+import { getEquipmentsSchema } from "@/schemas/equipmentSchemas";
+import { getClassroomsSchema } from "@/schemas/classroomSchemas";
+import { getExtraRoomsSchema } from "@/schemas/extraRoomSchemas";
+import { getFloorsSchema } from "@/schemas/floorsSchema";
 import { z } from "zod";
+import { HOST } from "@/server-endpoints/host";
+import { getToken } from "@/auth/getToken";
+import { redirect } from "next/navigation";
 
-const classroomSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  description: z.string(),
-  capacity: z.number(),
-  equipmentIds: z.array(z.string()),
-});
+export default async function Map() {
+  const token = await getToken();
+  if (!token) {
+    redirect("/login");
+  }
+  const floors = await fetchGet(`${HOST}/floors`, getFloorsSchema);
 
-const equipmentSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-});
+  const equipments = await fetchGet(`${HOST}/equipments`, getEquipmentsSchema);
 
-export default function Map() {
-  const [clickedRoom, setClickedRoom] = useState<string | null>(null);
+  const classrooms = await fetchGet(`${HOST}/classrooms`, getClassroomsSchema);
+
+  const extraRooms = await fetchGet(`${HOST}/extra-rooms`, getExtraRoomsSchema);
+
+  const reservationTypes = await fetchGet(
+    `${HOST}/reservations/types`,
+    z.array(z.string()),
+  );
 
   return (
     <main>
-      <div className="flex h-[81vh] w-full flex-row justify-stretch">
-        <MapSection clickedRoom={clickedRoom} setClickedRoom={setClickedRoom} />
-        <div className="border-l-4 border-black"></div>
-        <div className="w-full p-10">
-          <h1 className="text-2xl font-bold">{clickedRoom}</h1>
-
-          <ThreeSixtyViewer />
-        </div>
-      </div>
+      <MapPageContent
+        equipments={equipments}
+        classrooms={classrooms}
+        extraRooms={extraRooms}
+        floors={floors}
+        reservationTypes={reservationTypes}
+      />
     </main>
   );
 }

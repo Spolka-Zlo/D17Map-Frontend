@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { LOGIN_URL, REGISTER_URL } from "./constants";
+import { REGISTER_URL } from "./constants";
 
 export async function register(username: string, password: string) {
   const response = await fetch(REGISTER_URL, {

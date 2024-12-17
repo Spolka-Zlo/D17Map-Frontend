@@ -8,16 +8,21 @@ import { Reservation } from "@/schemas/reservationSchemas";
 import { Classroom } from "@/schemas/classroomSchemas";
 import { Equipment } from "@/schemas/equipmentSchemas";
 import { AdminPanelReservationList } from "./reservations/AdminPanelReservationList";
+import { ExtraRoom } from "@/schemas/extraRoomSchemas";
+import { AdminPanelExtraRoomList } from "./extra-rooms/AdminPanelExtraRoomList";
+import { AddEditExtraRoom } from "./extra-rooms/AddEditExtraRoom";
 
 type AdminPanelListProps = {
   equipments: Equipment[];
   classrooms: Classroom[];
+  extraRooms: ExtraRoom[];
   reservations: Reservation[];
 };
 
 export default function AdminPanelList({
   equipments,
   classrooms,
+  extraRooms,
   reservations,
 }: AdminPanelListProps) {
   return (
@@ -29,6 +34,10 @@ export default function AdminPanelList({
       <AdminPanelListItem name="Equipments">
         <AddEditEquipment equipments={equipments} />
         <AdminPanelEquipmentList equipments={equipments} />
+      </AdminPanelListItem>
+      <AdminPanelListItem name="Extra Rooms">
+        <AddEditExtraRoom extraRooms={extraRooms} />
+        <AdminPanelExtraRoomList extraRooms={extraRooms} />
       </AdminPanelListItem>
       <AdminPanelListItem name="Reservations">
         <AddEditReservation reservations={reservations} />

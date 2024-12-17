@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { getToken } from "../auth/getToken";
-import { redirect } from "next/dist/server/api-utils";
+import { redirect } from "next/navigation";
 import { logout } from "@/auth/logout";
 
 export async function fetchGet<T>(
@@ -10,7 +10,7 @@ export async function fetchGet<T>(
 ) {
   const token = await getToken();
   if (!token) {
-    throw new Error("Not authenticated");
+    redirect("/login");
   }
 
   const response = await fetch(url, {
@@ -38,7 +38,7 @@ export async function fetchPost<T, U>(
 ) {
   const token = await getToken();
   if (!token) {
-    throw new Error("Not authenticated");
+    redirect("/login");
   }
 
   const response = await fetch(url, {

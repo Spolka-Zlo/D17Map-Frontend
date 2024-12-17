@@ -2,6 +2,7 @@
 
 import { getToken } from "@/auth/getToken";
 import { getRole } from "@/auth/getRole";
+import { HOST } from "@/server-endpoints/host";
 
 export async function putClassrooms(formData: FormData) {
   const token = await getToken();
@@ -28,19 +29,22 @@ export async function putClassrooms(formData: FormData) {
   };
 
   if (id) {
-    console.log("waiting for PUT /classrooms/:id to be implemented");
-    // await fetch(`http://localhost:8080/classrooms/${id}`, {
-    //   method: "PUT",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    //   body: JSON.stringify(body),
-    // });
-    // return;
+    const response = await fetch(`${HOST}/classrooms/admin/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to update classroom");
+    }
+    return;
   }
 
-  await fetch("http://localhost:8080/classrooms", {
+  const response = await fetch(`${HOST}/classrooms`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -48,4 +52,9 @@ export async function putClassrooms(formData: FormData) {
     },
     body: JSON.stringify(body),
   });
+  if (!response.ok) {
+    throw new Error("Failed to create classroom");
+  }
+
+  console.log("Classroom created successfully");
 }

@@ -8,6 +8,7 @@ import { Reservation } from "@/schemas/reservationSchemas";
 import { modifyReservation } from "@/shared-endpoints/modifyReservation";
 import { revalidateTag } from "next/cache";
 import { toast } from "sonner";
+import { twMerge } from "tailwind-merge";
 
 type CalendarReservationFormProps = {
   room: string;
@@ -82,17 +83,26 @@ export function CalendarReservationForm({
             defaultValue={editedReservation?.description}
           />
           <input
-            className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
+            className={twMerge(
+              "rounded-md border-b-2 border-l-2 border-primary p-1 text-center",
+              editedReservation && "text-gray-500",
+            )}
             name="date"
             type="date"
             placeholder="Data"
             required
             defaultValue={date.toISOString().slice(0, 10)}
+            disabled={
+              editedReservation !== null && editedReservation !== undefined
+            }
           />
           <div className="flex justify-center gap-3">
             <input
               name="startTime"
-              className="rounded-md border-b-2 border-l-2 border-primary p-1"
+              className={twMerge(
+                "rounded-md border-b-2 border-l-2 border-primary p-1",
+                editedReservation && "text-gray-500",
+              )}
               type="time"
               list="time"
               required
@@ -103,9 +113,15 @@ export function CalendarReservationForm({
                       .slice(0, 5)
                   : undefined
               }
+              disabled={
+                editedReservation !== null && editedReservation !== undefined
+              }
             />
             <input
-              className="rounded-md border-b-2 border-l-2 border-primary p-1"
+              className={twMerge(
+                "rounded-md border-b-2 border-l-2 border-primary p-1",
+                editedReservation && "text-gray-500",
+              )}
               name="endTime"
               type="time"
               list="time"
@@ -116,6 +132,9 @@ export function CalendarReservationForm({
                       .toTimeString()
                       .slice(0, 5)
                   : undefined
+              }
+              disabled={
+                editedReservation !== null && editedReservation !== undefined
               }
             />
             <datalist id="time">
@@ -149,7 +168,10 @@ export function CalendarReservationForm({
               .map((room) => ({ id: room.id, name: room.name }))}
             className="z-20"
             htmlName="classroomId"
-            defaultValue={editedReservation?.classroom.name}
+            defaultValue={
+              editedReservation?.classroom.name ||
+              classrooms.find((r) => r.name === room)?.name
+            }
           />
           <RadioDropdown
             options={reservationTypes.map((type) => ({ id: type, name: type }))}

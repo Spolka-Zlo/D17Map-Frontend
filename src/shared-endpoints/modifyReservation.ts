@@ -13,11 +13,13 @@ export async function modifyReservation(formData: FormData) {
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
   const type = formData.get("type") as string;
+  const classroomId = formData.get("classroomId") as string;
 
   const body = {
     title,
     description,
     type,
+    classroomId: formData.get("classroomId"),
   };
 
   const response = await fetch(MODIFY_RESERVATION_URL + id, {
@@ -31,6 +33,7 @@ export async function modifyReservation(formData: FormData) {
 
   if (!response.ok) {
     console.log(response.status);
+    console.log("body", body);
     throw new Error("Failed to modify reservation");
   } else {
     console.log("Reservation modified successfully");
