@@ -57,7 +57,6 @@ function Sphere({ classroomId }: { classroomId: string }) {
     return null;
   }
   return (
-    // <img src={photoUrl ?? ""} />
     <mesh>
       <sphereGeometry args={[500, 60, 40]} />
       <meshBasicMaterial map={texture} side={THREE.BackSide} />

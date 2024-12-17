@@ -41,7 +41,7 @@ export async function putExtraRoom(formData: FormData) {
     return;
   }
 
-  await fetch(`${HOST}/extra-rooms`, {
+  const response = await fetch(`${HOST}/extra-rooms`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -49,4 +49,10 @@ export async function putExtraRoom(formData: FormData) {
     },
     body: JSON.stringify(body),
   });
+
+  if (!response.ok) {
+    throw new Error("Failed to create extra room");
+  } else {
+    console.log("Extra room created successfully");
+  }
 }

@@ -1,15 +1,6 @@
 import { register } from "@/auth/register";
 
 export default function RegisterPage() {
-  function isPasswordValid(password: string) {
-    return (
-      password.length >= 8 &&
-      password.length <= 32 &&
-      /[A-Z]/.test(password) &&
-      /[a-z]/.test(password) &&
-      /[0-9]/.test(password)
-    );
-  }
   return (
     <div className="m-auto w-[25vw] justify-center rounded-md bg-white/25 p-10">
       <form

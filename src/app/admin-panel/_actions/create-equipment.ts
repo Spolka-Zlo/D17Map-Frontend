@@ -10,7 +10,7 @@ export async function createEquipment(formData: FormData) {
   const name = formData.get("name") as string;
   const id = formData.get("id") as string;
   if (id) {
-    await fetch(`${HOST}/equipments/admin/${id}`, {
+    const response = await fetch(`${HOST}/equipments/admin/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -18,6 +18,11 @@ export async function createEquipment(formData: FormData) {
       },
       body: JSON.stringify({ name }),
     });
+    if (!response.ok) {
+      throw new Error("Failed to update equipment");
+    } else {
+      console.log("Equipment updated successfully");
+    }
     return;
   }
 

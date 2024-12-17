@@ -6,8 +6,14 @@ import { getExtraRoomsSchema } from "@/schemas/extraRoomSchemas";
 import { getFloorsSchema } from "@/schemas/floorsSchema";
 import { z } from "zod";
 import { HOST } from "@/server-endpoints/host";
+import { getToken } from "@/auth/getToken";
+import { redirect } from "next/navigation";
 
 export default async function Map() {
+  const token = await getToken();
+  if (!token) {
+    redirect("/login");
+  }
   const floors = await fetchGet(`${HOST}/floors`, getFloorsSchema);
 
   const equipments = await fetchGet(`${HOST}/equipments`, getEquipmentsSchema);

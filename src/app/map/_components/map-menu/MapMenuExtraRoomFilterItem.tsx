@@ -7,21 +7,18 @@ type MapMenuExtraRoomFilterItemProps = {
 };
 
 function setColor(type: string, activeRooms: string[]) {
-  if (activeRooms.includes(type)) {
-    if (type === "WC") {
-      return "bg-toiletColor";
-    }
-    if (type === "Inne") {
-      return "bg-othersColor";
-    }
-    if (type === "Klatki schodowe") {
-      return "bg-stairsColor";
-    }
-    if (type === "Windy") {
-      return "bg-elevatorColor";
-    }
-  } else {
-    return "bg-white";
+  if (!activeRooms.includes(type)) return "bg-white";
+  if (type === "WC") {
+    return "bg-toiletColor";
+  }
+  if (type === "Inne") {
+    return "bg-othersColor";
+  }
+  if (type === "Klatki schodowe") {
+    return "bg-stairsColor";
+  }
+  if (type === "Windy") {
+    return "bg-elevatorColor";
   }
 }
 
