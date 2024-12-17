@@ -1,1 +1,1 @@
-export const HOST = "http://localhost:8080";
+export const HOST = process.env.BACKEND_URL || "http://localhost:8080";
