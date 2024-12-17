@@ -21,35 +21,28 @@ export function MapMenu({
   floors,
 }: MapMenuProps) {
   return (
-    <div className="absolute bottom-0 left-10 p-4">
-      <div className="flex justify-start gap-5">
-        <Dropdown
-          selected={floor}
-          setSelected={setFloor}
-          options={floors.map((f) => f.floorName)}
+    <div className="absolute bottom-0 left-0 right-0 p-4">
+      <div className="flex justify-center gap-5 p-2 pl-10">
+        <MapMenuExtraRoomFilterItem
+          type="WC"
+          activeRooms={activeRooms}
+          setActiveRooms={setActiveRooms}
         />
-        <div className="flex gap-5 p-2 pl-10">
-          <MapMenuExtraRoomFilterItem
-            type="WC"
-            activeRooms={activeRooms}
-            setActiveRooms={setActiveRooms}
-          />
-          <MapMenuExtraRoomFilterItem
-            type="CAFETERIA"
-            activeRooms={activeRooms}
-            setActiveRooms={setActiveRooms}
-          />
-          <MapMenuExtraRoomFilterItem
-            type="Klatki schodowe"
-            activeRooms={activeRooms}
-            setActiveRooms={setActiveRooms}
-          />
-          <MapMenuExtraRoomFilterItem
-            type="Windy"
-            activeRooms={activeRooms}
-            setActiveRooms={setActiveRooms}
-          />
-        </div>
+        <MapMenuExtraRoomFilterItem
+          type="Inne"
+          activeRooms={activeRooms}
+          setActiveRooms={setActiveRooms}
+        />
+        <MapMenuExtraRoomFilterItem
+          type="Klatki schodowe"
+          activeRooms={activeRooms}
+          setActiveRooms={setActiveRooms}
+        />
+        <MapMenuExtraRoomFilterItem
+          type="Windy"
+          activeRooms={activeRooms}
+          setActiveRooms={setActiveRooms}
+        />
       </div>
     </div>
   );

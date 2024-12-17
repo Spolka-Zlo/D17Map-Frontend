@@ -12,6 +12,7 @@ type MapSceneProps = {
   setClickedRoom: Dispatch<SetStateAction<string | null>>;
   extraRooms: ExtraRoom[];
   lightRoom: string;
+  activeRooms: string[];
 };
 export function MapScene({
   floor,
@@ -19,6 +20,7 @@ export function MapScene({
   setClickedRoom,
   extraRooms,
   lightRoom,
+  activeRooms,
 }: MapSceneProps) {
   const [clickedRoomZoom, setClickedRoomZoom] = useState<number[]>([0, 0, 0]);
   return (
@@ -33,7 +35,7 @@ export function MapScene({
       <Suspense fallback={<Html>Loading...</Html>}>
         <MapFloor
           url={`/gltf/floor${floor}.glb`}
-          activeRooms={["WC", "CAFETERIA", "Klatki schodowe", "Windy"]}
+          activeRooms={activeRooms}
           clickedRoom={clickedRoom}
           setClickedRoom={setClickedRoom}
           extraRooms={extraRooms.filter((room) => room.floorName === floor)}
@@ -52,7 +54,7 @@ export function MapScene({
         panSpeed={0.1}
         enableDamping={true}
       />
-      <primitive object={new CameraHelper(new OrthographicCamera())} />
+      {/* <primitive object={new CameraHelper(new OrthographicCamera())} /> */}
     </Canvas>
   );
 }

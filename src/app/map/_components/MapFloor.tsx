@@ -1,17 +1,17 @@
 "use client";
 import { ExtraRoom } from "@/schemas/extraRoomSchemas";
 import { useGLTF } from "@react-three/drei";
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Mesh } from "three";
 import * as THREE from "three";
 
 const ROOM_COLORS = {
   WC: new THREE.Color(0xffde21),
-  CAFETERIA: new THREE.Color(0xadebb3),
+  Inne: new THREE.Color(0xadebb3),
   "Klatki schodowe": new THREE.Color(0xed80e9),
   Windy: new THREE.Color(0x8e4585),
   DEFAULT: new THREE.Color(0xffffff),
-  ACTIVE: new THREE.Color(0x6fd8ed),
   CLICKED: new THREE.Color(0xf6a200),
   LIGHT: new THREE.Color(0x00ff00),
 } as const;
@@ -29,10 +29,8 @@ function getRoomTypeColor(
 
   if (isClicked) return ROOM_COLORS.CLICKED;
 
-  if (activeRooms.includes(roomKey)) return ROOM_COLORS.ACTIVE;
-
   const room = extraRooms.find((e) => e.modelKey === roomKey);
-  if (!room) return ROOM_COLORS.DEFAULT;
+  if (!room || !activeRooms.includes(room.type)) return ROOM_COLORS.DEFAULT;
 
   return (
     ROOM_COLORS[room.type as keyof ROOM_COLORS_TYPE] || ROOM_COLORS.DEFAULT
@@ -63,7 +61,22 @@ export function MapFloor({
   const { nodes } = useGLTF(url);
   const meshRefs = useRef<{ [key: string]: Mesh }>({});
 
+  const pulseScales = useRef<{ [key: string]: number }>({});
+  const [time, setTime] = useState(0);
+
+  useFrame((state, delta) => {
+    setTime((prev) => prev + delta);
+    Object.entries(meshRefs.current).forEach(([key, mesh]) => {
+      if (lightRoom === key) {
+        mesh.translateY(0.01 * (0.3 + Math.sin(2 * time)));
+      } else {
+        mesh.scale.set(1, 1, 1);
+      }
+    });
+  });
+
   useEffect(() => {
+    console.log("MapFloor useEffect activeRooms", activeRooms);
     Object.entries(nodes).forEach(([key, node]) => {
       const mesh = meshRefs.current[key];
       if (!mesh) return;

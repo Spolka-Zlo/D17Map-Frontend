@@ -30,7 +30,7 @@ const config: Config = {
         white: "#FFFFFF",
         mapRed: "#4a0309",
         toiletColor: "#ffde21",
-        cafeteriaColor: "#adebb3",
+        othersColor: "#adebb3",
         stairsColor: "#ed80e9",
         elevatorColor: "#8e4585",
       },

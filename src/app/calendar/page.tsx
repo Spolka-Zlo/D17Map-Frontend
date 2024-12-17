@@ -20,7 +20,7 @@ export default async function ReservationPage({
 
   const userUpcomingReservations = (
     await fetchGet(
-      `http://localhost:8080/reservations/user/future`,
+      `http://localhost:8080/reservations/user/week?startDay=${queryDate}`,
       z.array(reservationSchema),
       {
         cache: "force-cache",

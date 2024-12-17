@@ -6,6 +6,7 @@ import { ExtraRoom } from "@/schemas/extraRoomSchemas";
 import { useState } from "react";
 import { MapSection } from "./MapSection";
 import { Floor } from "@/schemas/floorsSchema";
+import { ThreeSixtyViewer } from "@/app/sphere/_components/ThreeSixtyViewer";
 
 type MapPageContentProps = {
   classrooms: Classroom[];
@@ -42,10 +43,16 @@ export function MapPageContent({
         floors={floors}
       />
       <div className="border-l-4 border-black"></div>
-      <div className="w-full p-10">
+      <div className="flex w-full flex-col justify-between p-10">
         <h1 className="text-2xl font-bold">{clickedRoom}</h1>
 
-        {/* <ThreeSixtyViewer /> */}
+        {clickedRoom !== "" && (
+          <ThreeSixtyViewer
+            classroomId={
+              classrooms.find((c) => c.modelKey === clickedRoom)?.id || ""
+            }
+          />
+        )}
       </div>
     </div>
   );
