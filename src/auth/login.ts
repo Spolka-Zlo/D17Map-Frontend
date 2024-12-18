@@ -17,7 +17,8 @@ export async function login(username: string, password: string) {
     throw new Error("Login failed");
   }
 
-  const { token, role } = await response.json();
+  const { token, roles } = await response.json();
+  const role = roles[0];
   if (typeof token !== "string" || typeof role !== "string") {
     throw new Error("Invalid data received");
   }
