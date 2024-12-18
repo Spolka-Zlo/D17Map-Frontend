@@ -20,5 +20,4 @@ export const createExtraRoomSchema = z.object({
   description: z.string(),
   type: z.string(),
   floorName: z.string(),
-  buildingName: z.string(),
 });

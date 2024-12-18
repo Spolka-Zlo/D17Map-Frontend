@@ -21,7 +21,7 @@ export default async function ReservationPage({
 
   const userUpcomingReservations = (
     await fetchGet(
-      `${HOST}/reservations/user/week?startDay=${queryDate}`,
+      `${HOST}/buildings/D17/reservations/user/week?startDay=${queryDate}`,
       z.array(reservationSchema),
       {
         cache: "force-cache",
@@ -38,7 +38,7 @@ export default async function ReservationPage({
 
   const weekReservations = (
     await fetchGet(
-      `${HOST}/reservations/week?startDay=${queryDate}`,
+      `${HOST}/buildings/D17/reservations/week?startDay=${queryDate}`,
       z.array(reservationSchema),
     )
   ).map((reservation) => ({
@@ -54,7 +54,10 @@ export default async function ReservationPage({
 
   const equipments = await fetchGet(`${HOST}/equipments`, getEquipmentsSchema);
 
-  const classrooms = await fetchGet(`${HOST}/classrooms`, getClassroomsSchema);
+  const classrooms = await fetchGet(
+    `${HOST}/buildings/D17/classrooms`,
+    getClassroomsSchema,
+  );
 
   const availableRooms = classrooms.map((classroom) => classroom.name);
 

@@ -9,13 +9,16 @@ import { HOST } from "@/server-endpoints/host";
 
 export default async function AdminPanel() {
   const equipmentsPromise = fetchGet(`${HOST}/equipments`, getEquipmentsSchema);
-  const classroomsPromise = fetchGet(`${HOST}/classrooms`, getClassroomsSchema);
+  const classroomsPromise = fetchGet(
+    `${HOST}/buildings/D17/classrooms`,
+    getClassroomsSchema,
+  );
   const extraRoomsPromise = fetchGet(
-    `${HOST}/extra-rooms`,
+    `${HOST}/buildings/D17/extra-rooms`,
     getExtraRoomsSchema,
   );
   const reservationsPromise = fetchGet(
-    `${HOST}/reservations?day=2024-07-07`,
+    `${HOST}/buildings/D17/reservations?day=2024-07-07`,
     getReservationsSchema,
   ).then((reservations) =>
     reservations.map((reservation) => ({

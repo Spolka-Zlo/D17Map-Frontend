@@ -29,14 +29,17 @@ export async function putClassrooms(formData: FormData) {
   };
 
   if (id) {
-    const response = await fetch(`${HOST}/classrooms/admin/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+    const response = await fetch(
+      `${HOST}/buildings/D17/classrooms/admin/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
       },
-      body: JSON.stringify(body),
-    });
+    );
 
     if (!response.ok) {
       throw new Error("Failed to update classroom");
@@ -44,7 +47,7 @@ export async function putClassrooms(formData: FormData) {
     return;
   }
 
-  const response = await fetch(`${HOST}/classrooms`, {
+  const response = await fetch(`${HOST}/buildings/D17/classrooms`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
