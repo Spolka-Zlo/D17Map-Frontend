@@ -21,6 +21,7 @@ export async function addReservation(formData: FormData) {
   const numberOfParticipants = Number(
     formData.get("numberOfParticipants") as string,
   );
+  const isRecurring = formData.get("isRecurring") === "true";
 
   const body = {
     title,
