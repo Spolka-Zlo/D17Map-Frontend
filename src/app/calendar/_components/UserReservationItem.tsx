@@ -5,6 +5,7 @@ import { deleteReservation } from "../../../shared-endpoints/deleteReservation";
 import { useState } from "react";
 import { ConfirmationModal } from "@/components/ConfirmationModal";
 import { toast } from "sonner";
+import { RecurringInformationModal } from "./RecurringInformationModal";
 
 export function UserReservationItem({
   reservation,
@@ -14,10 +15,22 @@ export function UserReservationItem({
   editReservation: () => void;
 }) {
   const [isConfirmationModalOpen, openCloseConfirmationModal] = useState(false);
+  const [isRecurringInfoModalOpen, openCloseRecurringInfoModal] =
+    useState(false);
 
   return (
     <div className="relative flex w-full flex-col items-center justify-between gap-3 rounded-md border-2 border-black p-2 text-center text-primary">
       <div>
+        {"recurringId" in reservation && (
+          <button
+            onClick={() => openCloseRecurringInfoModal(true)}
+            className="absolute left-2 top-2 z-10 flex cursor-pointer justify-between gap-1 border-primary"
+          >
+            <span className="p-1 text-sm underline">
+              Cykl <span className="text-xs">&#9432;</span>
+            </span>
+          </button>
+        )}
         <div>{reservation.title}</div>
         <div className="absolute right-2 top-2 z-10 flex justify-between gap-1">
           <button
@@ -71,6 +84,11 @@ export function UserReservationItem({
         }}
         message="Czy na pewno chcesz odwołać rezerwację?"
         title="Odwołanie rezerwacji"
+      />
+      <RecurringInformationModal
+        reservation={reservation}
+        isRecurrenceInfoModalOpen={isRecurringInfoModalOpen}
+        setIsRecurrenceInfoModalOpen={openCloseRecurringInfoModal}
       />
     </div>
   );

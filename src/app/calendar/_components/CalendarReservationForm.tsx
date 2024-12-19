@@ -211,10 +211,10 @@ export function CalendarReservationForm({
             </div>
             <RadioDropdown
               options={[
-                { id: "daily", name: "Codziennie" },
-                { id: "weekly", name: "Co tydzień" },
-                { id: "biweekly", name: "Co dwa tygodnie" },
-                { id: "monthly", name: "Co miesiąc" },
+                { id: "DAILY", name: "Codziennie" },
+                { id: "WEEKLY", name: "Co tydzień" },
+                { id: "BIWEEKLY", name: "Co dwa tygodnie" },
+                { id: "MONTHLY", name: "Co miesiąc" },
               ]}
               className="z-20"
               htmlName="recurringType"
