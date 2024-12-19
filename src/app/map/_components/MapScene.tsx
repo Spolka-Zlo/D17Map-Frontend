@@ -26,7 +26,7 @@ export function MapScene({
   return (
     <Canvas
       camera={{
-        position: new Vector3(-0, 0, 5),
+        position: new Vector3(0, 0, 0),
         fov: 100,
       }}
     >

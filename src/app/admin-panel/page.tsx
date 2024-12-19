@@ -8,7 +8,6 @@ import { getExtraRoomsSchema } from "@/schemas/extraRoomSchemas";
 import { HOST } from "@/server-endpoints/host";
 
 export default async function AdminPanel() {
-  const equipmentsPromise = fetchGet(`${HOST}/equipments`, getEquipmentsSchema);
   const classroomsPromise = fetchGet(
     `${HOST}/buildings/D17/classrooms`,
     getClassroomsSchema,
@@ -20,6 +19,7 @@ export default async function AdminPanel() {
   const reservationsPromise = fetchGet(
     `${HOST}/buildings/D17/reservations?day=2024-07-07`,
     getReservationsSchema,
+    true,
   ).then((reservations) =>
     reservations.map((reservation) => ({
       ...reservation,
@@ -27,12 +27,13 @@ export default async function AdminPanel() {
       endTime: toTimestamp(reservation.date + "T" + reservation.endTime),
     })),
   );
-  const [equipments, classrooms, extraRooms, reservations] = await Promise.all([
-    equipmentsPromise,
+  const [classrooms, extraRooms, reservations] = await Promise.all([
     classroomsPromise,
     extraRoomsPromise,
     reservationsPromise,
   ]);
+
+  const equipments = await fetchGet(`${HOST}/equipments`, getEquipmentsSchema);
 
   return (
     <main className="flex flex-row items-start justify-start gap-4">

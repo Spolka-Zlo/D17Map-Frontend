@@ -4,11 +4,12 @@ import { getToken } from "@/auth/getToken";
 
 import { DELETE_RESERVATION_URL } from "@/server-endpoints/reservations";
 import { revalidateTag } from "next/cache";
-
+import { redirect } from "next/navigation";
 export async function deleteReservation(id: string) {
   const token = await getToken();
   if (!token) {
-    throw new Error("Not authenticated");
+    console.error("Not authenticated");
+    redirect("/login");
   }
 
   const response = await fetch(DELETE_RESERVATION_URL + id, {

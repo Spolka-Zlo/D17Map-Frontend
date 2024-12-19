@@ -4,7 +4,6 @@ import { OrangeButton } from "@/components/OrangeButton";
 import { Classroom } from "@/schemas/classroomSchemas";
 import { Equipment } from "@/schemas/equipmentSchemas";
 import { ExtraRoom } from "@/schemas/extraRoomSchemas";
-import { Reservation } from "@/schemas/reservationSchemas";
 import { Dispatch, SetStateAction, useState } from "react";
 
 type RoomInformationSectionProps = {
@@ -37,9 +36,13 @@ export function RoomInformationSection({
       : [];
   return (
     <div className="flex w-full flex-col justify-between p-10">
-      <div>
+      <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">{room.name}</h1>
-        <OrangeButton onClick={() => openCloseReservationModal(true)} text={""}>
+        <OrangeButton
+          onClick={() => openCloseReservationModal(true)}
+          text={"Zarezerwuj"}
+          className="border-primary bg-accent text-primary"
+        >
           Zarezerwuj
         </OrangeButton>
       </div>

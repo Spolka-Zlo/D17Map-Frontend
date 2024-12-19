@@ -6,8 +6,31 @@ import { logout } from "@/auth/logout";
 export async function fetchGet<T>(
   url: string,
   schema: z.ZodSchema<T>,
+  isTokenRequired = false,
   options?: RequestInit,
 ) {
+  if (!isTokenRequired) {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      console.error(response.statusText);
+      if (response.status === 404) {
+        redirect("/404");
+      }
+      if (response.status === 500) {
+        redirect("/500");
+      }
+    }
+
+    const data = await response.json();
+    try {
+      return schema.parse(data);
+    } catch (error) {
+      console.error(error);
+      console.error(data);
+      throw error;
+    }
+  }
+
   const token = await getToken();
   if (!token) {
     redirect("/login");
@@ -24,7 +47,13 @@ export async function fetchGet<T>(
     if (response.status === 401 || response.status === 403) {
       await logout();
     }
-    throw new Error(url);
+    if (response.status === 404) {
+      redirect("/404");
+    }
+    if (response.status === 500) {
+      redirect("/500");
+    }
+    throw new Error(response.statusText);
   }
 
   const data = await response.json();
@@ -51,6 +80,15 @@ export async function fetchPost<T, U>(
   });
 
   if (!response.ok) {
+    if (response.status === 401 || response.status === 403) {
+      await logout();
+    }
+    if (response.status === 404) {
+      redirect("/404");
+    }
+    if (response.status === 500) {
+      redirect("/500");
+    }
     throw new Error(response.statusText);
   }
 

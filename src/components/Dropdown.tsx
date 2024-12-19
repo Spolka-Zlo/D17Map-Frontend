@@ -8,6 +8,7 @@ type DropdownProps = {
   selected: string;
   setSelected: Dispatch<SetStateAction<string>>;
   className?: string;
+  additionalInfo?: string;
 };
 
 export function Dropdown({
@@ -15,15 +16,18 @@ export function Dropdown({
   selected,
   setSelected,
   className,
+  additionalInfo = "",
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className={twMerge("relative w-44", className)}>
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="cursor-pointer rounded-md border-b-2 border-l-2 border-accent bg-primary p-2 text-secondary focus:ring-2 focus:ring-secondary focus:ring-opacity-50"
+        className="flex cursor-pointer justify-between rounded-md border-b-2 border-l-2 border-accent bg-primary p-2 text-secondary focus:ring-2 focus:ring-secondary focus:ring-opacity-50"
       >
-        {selected}
+        <span>{selected + " " + additionalInfo}</span>
+
+        <span className="text-xs">{isOpen ? "▲" : "▼"}</span>
       </div>
 
       {isOpen && (

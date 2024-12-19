@@ -46,6 +46,7 @@ export function MapPageContent({
         floors={floors}
       />
       <div className="border-l-4 border-black"></div>
+
       <RoomInformationSection
         clickedRoom={clickedRoom}
         setClickedRoom={setClickedRoom}

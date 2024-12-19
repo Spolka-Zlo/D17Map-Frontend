@@ -16,7 +16,7 @@ export default function RegisterPage() {
           }
 
           if (password !== confirmPassword) {
-            console.error("Passwords do not match");
+            alert("Passwords do not match");
             return;
           }
           await register(username, password);

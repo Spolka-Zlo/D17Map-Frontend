@@ -23,12 +23,7 @@ export default async function ReservationPage({
     await fetchGet(
       `${HOST}/buildings/D17/reservations/user/week?startDay=${queryDate}`,
       z.array(reservationSchema),
-      {
-        cache: "force-cache",
-        next: {
-          tags: ["userReservations"],
-        },
-      },
+      true,
     )
   ).map((reservation) => ({
     ...reservation,
@@ -40,6 +35,7 @@ export default async function ReservationPage({
     await fetchGet(
       `${HOST}/buildings/D17/reservations/week?startDay=${queryDate}`,
       z.array(reservationSchema),
+      true,
     )
   ).map((reservation) => ({
     ...reservation,

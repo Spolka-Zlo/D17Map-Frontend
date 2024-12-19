@@ -3,11 +3,13 @@
 import { getToken } from "@/auth/getToken";
 import { MODIFY_RESERVATION_URL } from "@/server-endpoints/reservations";
 import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function modifyReservation(formData: FormData) {
   const token = await getToken();
   if (!token) {
-    throw new Error("Not authenticated");
+    console.error("Not authenticated");
+    redirect("/login");
   }
   const id = formData.get("id") as string;
   const title = formData.get("title") as string;

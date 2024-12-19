@@ -14,7 +14,6 @@ export async function register(username: string, password: string) {
 
   if (!response.ok) {
     console.error(response.statusText);
-    throw new Error("Registration failed");
   } else {
     redirect("/login");
   }

@@ -9,7 +9,6 @@ import { MapRoomInformation } from "./MapRoomInformation";
 import { SearchBar } from "@/components/SearchBar";
 import { Floor } from "@/schemas/floorsSchema";
 import { Dropdown } from "@/components/Dropdown";
-import { UpArrow } from "../UpArrow";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 
@@ -112,6 +111,7 @@ export function MapSection({
           selected={floor}
           setSelected={setFloor}
           options={floors.map((f) => f.floorName)}
+          additionalInfo="piętro"
         />
         <SearchBar
           onChange={(input: string) =>
@@ -129,7 +129,14 @@ export function MapSection({
           }
         />
       </div>
-      <div className="h-[70vh] w-[60vw]">
+      <div
+        className={twMerge(
+          "h-[70vh]",
+          clickedRoom
+            ? "w-[60vw] transition-[width] duration-500"
+            : "w-[80vw] transition-[width] duration-500",
+        )}
+      >
         {showMoveFloor !== "NONE" && (
           <div className="absolute left-1/2 top-40 -translate-x-1/2 -translate-y-1/2 transform animate-pulse text-center text-3xl duration-[3000]">
             {destinationFloor}

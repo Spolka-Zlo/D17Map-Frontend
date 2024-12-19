@@ -4,11 +4,16 @@ import { fetchPost } from "@/server-endpoints/fetchServer";
 import { createEquipmentSchema } from "@/schemas/equipmentSchemas";
 import { HOST } from "@/server-endpoints/host";
 import { getToken } from "@/auth/getToken";
+import { redirect } from "next/navigation";
 
 export async function createEquipment(formData: FormData) {
   const token = await getToken();
   const name = formData.get("name") as string;
   const id = formData.get("id") as string;
+  if (!token) {
+    console.error("Not authenticated");
+    redirect("/login");
+  }
   if (id) {
     const response = await fetch(`${HOST}/equipments/admin/${id}`, {
       method: "PUT",
