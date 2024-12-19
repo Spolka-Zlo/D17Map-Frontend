@@ -30,7 +30,7 @@ export async function putExtraRoom(formData: FormData) {
 
   if (id) {
     console.log("waiting for PUT /extra-rooms/admin/:id to be implemented");
-    // await fetch(`${HOST}/extra-rooms/admin/${id}`, {
+    // await fetch(`${HOST}/buildings/D17/extra-rooms/admin/${id}`, {
     //   method: "PUT",
     //   headers: {
     //     "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export async function putExtraRoom(formData: FormData) {
     return;
   }
 
-  const response = await fetch(`${HOST}/extra-rooms`, {
+  const response = await fetch(`${HOST}/buildings/D17/extra-rooms`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

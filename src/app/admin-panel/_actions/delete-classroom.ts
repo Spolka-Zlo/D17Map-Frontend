@@ -12,7 +12,7 @@ export async function deleteClassroom(id: string) {
     throw new Error("Not authenticated");
   }
 
-  const response = await fetch(`${HOST}/classrooms/${id}`, {
+  const response = await fetch(`${HOST}/buildings/D17/classrooms/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,

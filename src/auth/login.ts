@@ -14,13 +14,16 @@ export async function login(username: string, password: string) {
   });
 
   if (!response.ok) {
-    throw new Error("Login failed");
+    console.error("Failed to login");
+    return;
   }
 
   const { token, roles } = await response.json();
   const role = roles[0];
+
   if (typeof token !== "string" || typeof role !== "string") {
-    throw new Error("Invalid data received");
+    console.error("Failed to login");
+    return;
   }
 
   // TODO: handle any errors with login

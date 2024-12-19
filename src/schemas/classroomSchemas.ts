@@ -22,5 +22,5 @@ export const createClassroomSchema = z.object({
   capacity: z.number(),
   equipmentIds: z.array(z.string()),
   floorName: z.string(),
-  buildingName: z.string(),
+  photo: z.string().optional(),
 });

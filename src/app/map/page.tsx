@@ -14,17 +14,21 @@ export default async function Map() {
   if (!token) {
     redirect("/login");
   }
-  const floors = await fetchGet(`${HOST}/floors`, getFloorsSchema);
+  const floors = await fetchGet(
+    `${HOST}/buildings/D17/floors`,
+    getFloorsSchema,
+  );
 
   const equipments = await fetchGet(`${HOST}/equipments`, getEquipmentsSchema);
 
-  const classrooms = await fetchGet(`${HOST}/classrooms`, getClassroomsSchema);
+  const classrooms = await fetchGet(
+    `${HOST}/buildings/D17/classrooms`,
+    getClassroomsSchema,
+  );
 
-  const extraRooms = await fetchGet(`${HOST}/extra-rooms`, getExtraRoomsSchema);
-
-  const reservationTypes = await fetchGet(
-    `${HOST}/reservations/types`,
-    z.array(z.string()),
+  const extraRooms = await fetchGet(
+    `${HOST}/buildings/D17/extra-rooms`,
+    getExtraRoomsSchema,
   );
 
   return (
@@ -34,7 +38,6 @@ export default async function Map() {
         classrooms={classrooms}
         extraRooms={extraRooms}
         floors={floors}
-        reservationTypes={reservationTypes}
       />
     </main>
   );

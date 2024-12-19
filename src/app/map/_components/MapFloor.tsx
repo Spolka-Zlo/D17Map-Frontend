@@ -97,7 +97,7 @@ export function MapFloor({
       mesh.material = newMaterial;
       mesh.position.copy(newPosition);
     });
-  }, [activeRooms, nodes, clickedRoom, extraRooms]);
+  }, [activeRooms, nodes, clickedRoom, extraRooms, lightRoom]);
 
   return (
     <group

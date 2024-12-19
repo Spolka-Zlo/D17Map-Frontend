@@ -4,18 +4,18 @@ import { OrangeButton } from "@/components/OrangeButton";
 import { addReservation } from "../../../shared-endpoints/addReservation";
 import { RadioDropdown } from "@/components/RadioDropdown";
 import { Classroom } from "@/schemas/classroomSchemas";
-import { Reservation } from "@/schemas/reservationSchemas";
+import { Reservation, reservationTypes } from "@/schemas/reservationSchemas";
 import { modifyReservation } from "@/shared-endpoints/modifyReservation";
 import { revalidateTag } from "next/cache";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
+import { KeyObject } from "crypto";
 
 type CalendarReservationFormProps = {
   room: string;
   date: Date;
   setOpen: Dispatch<SetStateAction<boolean>>;
   classrooms: Classroom[];
-  reservationTypes: string[];
   editedReservation?: Reservation | null;
   setEditedReservation: Dispatch<SetStateAction<Reservation | null>>;
 };
@@ -25,7 +25,6 @@ export function CalendarReservationForm({
   date,
   setOpen,
   classrooms,
-  reservationTypes,
   editedReservation,
   setEditedReservation,
 }: CalendarReservationFormProps) {
@@ -174,7 +173,10 @@ export function CalendarReservationForm({
             }
           />
           <RadioDropdown
-            options={reservationTypes.map((type) => ({ id: type, name: type }))}
+            options={Object.keys(reservationTypes).map((key) => ({
+              id: reservationTypes[key],
+              name: key,
+            }))}
             className="z-20"
             htmlName="type"
             defaultValue={editedReservation?.type}

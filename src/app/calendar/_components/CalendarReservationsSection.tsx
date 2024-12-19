@@ -10,7 +10,6 @@ type CalendarReservationsSectionProps = {
   isReservationModalOpen: boolean;
   openCloseReservationModal: Dispatch<SetStateAction<boolean>>;
   classrooms: Classroom[];
-  reservationTypes: string[];
   userUpcomingReservations: Reservation[];
 };
 
@@ -18,7 +17,6 @@ export function CalendarReservationsSection({
   isReservationModalOpen,
   openCloseReservationModal,
   classrooms,
-  reservationTypes,
   userUpcomingReservations,
 }: CalendarReservationsSectionProps) {
   const [editedReservation, setEditedReservation] =
@@ -33,7 +31,6 @@ export function CalendarReservationsSection({
           room="Room 1"
           date={new Date()}
           classrooms={classrooms}
-          reservationTypes={reservationTypes}
           editedReservation={editedReservation}
           setEditedReservation={setEditedReservation}
         />

@@ -4,14 +4,13 @@ import { CalendarWeekSchedule } from "./CalendarWeekSchedule";
 import Link from "next/link";
 import { FilterSection } from "./FilterSection";
 import { Dispatch, SetStateAction, useState } from "react";
-import { Reservation } from "@/schemas/reservationSchemas";
+import { Reservation, reservationTypes } from "@/schemas/reservationSchemas";
 
 type CalendarSectionProps = {
   reservations: Reservation[];
   availableRooms: string[];
   mondayDate: number;
   openCloseReservationModal: Dispatch<SetStateAction<boolean>>;
-  reservationTypes: string[];
 };
 
 export function CalendarSection({
@@ -19,11 +18,10 @@ export function CalendarSection({
   availableRooms,
   mondayDate,
   openCloseReservationModal,
-  reservationTypes,
 }: CalendarSectionProps) {
   const [filters, setFilters] = useState(["CLASS"]);
   const [selectedRoom, setSelectedRoom] = useState(availableRooms[0]);
-  const allFilters = reservationTypes;
+  const allFilters = Object.keys(reservationTypes);
   return (
     <section className="flex w-[62vw] flex-col gap-5">
       <FilterSection
