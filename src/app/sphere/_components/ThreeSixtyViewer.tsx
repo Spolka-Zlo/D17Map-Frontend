@@ -3,7 +3,6 @@ import React, { Suspense, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
-import { getToken } from "@/auth/getToken";
 
 export function ThreeSixtyViewer({ classroomId }: { classroomId: string }) {
   if (!classroomId) {

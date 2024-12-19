@@ -4,11 +4,10 @@ import { OrangeButton } from "@/components/OrangeButton";
 import { Classroom } from "@/schemas/classroomSchemas";
 import { Equipment } from "@/schemas/equipmentSchemas";
 import { ExtraRoom } from "@/schemas/extraRoomSchemas";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 
 type RoomInformationSectionProps = {
   clickedRoom: string | null;
-  setClickedRoom: Dispatch<SetStateAction<string | null>>;
   classrooms: Classroom[];
   extraRooms: ExtraRoom[];
   equipments: Equipment[];
@@ -16,7 +15,6 @@ type RoomInformationSectionProps = {
 
 export function RoomInformationSection({
   clickedRoom,
-  setClickedRoom,
   classrooms,
   extraRooms,
   equipments,

@@ -6,10 +6,8 @@ import { RadioDropdown } from "@/components/RadioDropdown";
 import { Classroom } from "@/schemas/classroomSchemas";
 import { Reservation, reservationTypes } from "@/schemas/reservationSchemas";
 import { modifyReservation } from "@/shared-endpoints/modifyReservation";
-import { revalidateTag } from "next/cache";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
-import { KeyObject } from "crypto";
 
 type CalendarReservationFormProps = {
   room: string;
@@ -36,11 +34,11 @@ export function CalendarReservationForm({
       formData.append("id", editedReservation.id);
       await modifyReservation(formData)
         .then(() => toast.success("Rezerwacja zmodyfikowana pomyślnie"))
-        .catch((error) => toast.error("Nie udało się zmodyfikować rezerwacji"));
+        .catch(() => toast.error("Nie udało się zmodyfikować rezerwacji"));
     } else {
       await addReservation(formData)
         .then(() => toast.success("Rezerwacja dodana pomyślnie"))
-        .catch((error) => toast.error("Nie udało się dodać rezerwacji"));
+        .catch(() => toast.error("Nie udało się dodać rezerwacji"));
     }
     setOpen(false);
     setEditedReservation(null);
@@ -191,7 +189,7 @@ export function CalendarReservationForm({
                 checked={isRecurring}
                 required
               />
-              <label onClick={(e) => setIsRecurring(!isRecurring)}>
+              <label onClick={() => setIsRecurring(!isRecurring)}>
                 Powtarzająca się rezerwacja
               </label>
             </div>

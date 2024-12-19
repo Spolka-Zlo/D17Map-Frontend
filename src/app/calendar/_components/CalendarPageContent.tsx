@@ -4,12 +4,10 @@ import { CalendarReservationsSection } from "./CalendarReservationsSection";
 import { CalendarSection } from "./CalendarSection";
 import { Reservation } from "@/schemas/reservationSchemas";
 import { Classroom } from "@/schemas/classroomSchemas";
-import { Equipment } from "@/schemas/equipmentSchemas";
 
 type CalendarPageContentProps = {
   weekReservations: Reservation[];
   availableRooms: string[];
-  equipments: Equipment[];
   mondayDate: Date;
   classrooms: Classroom[];
   userUpcomingReservations: Reservation[];
@@ -18,7 +16,6 @@ type CalendarPageContentProps = {
 export function CalendarPageContent({
   weekReservations,
   availableRooms,
-  equipments,
   mondayDate,
   classrooms,
   userUpcomingReservations,

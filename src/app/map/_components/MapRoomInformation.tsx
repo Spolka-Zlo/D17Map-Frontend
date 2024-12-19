@@ -1,20 +1,16 @@
 import { Classroom } from "@/schemas/classroomSchemas";
-import { Equipment } from "@/schemas/equipmentSchemas";
 import { ExtraRoom } from "@/schemas/extraRoomSchemas";
-import Link from "next/link";
 
 type MapRoomInformationProps = {
   classroom?: Classroom;
   extraRoom?: ExtraRoom;
   floor: string;
-  equipments: Equipment[];
 };
 
 export function MapRoomInformation({
   classroom,
   extraRoom,
   floor,
-  equipments,
 }: MapRoomInformationProps) {
   if (classroom)
     return (

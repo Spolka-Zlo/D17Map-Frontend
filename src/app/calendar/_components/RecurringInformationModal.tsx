@@ -15,9 +15,7 @@ export function RecurringInformationModal({
   setIsRecurrenceInfoModalOpen,
 }: RecurringInformationModalProps) {
   const [showAllReservations, setShowAllReservations] = useState(false);
-  const [reservationsFromCycle, setReservationsFromCycle] = useState<
-    Reservation[]
-  >(
+  const [reservationsFromCycle] = useState<Reservation[]>(
     [
       {
         id: "1",

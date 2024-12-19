@@ -1,7 +1,5 @@
 "use server";
 
-import { fetchPost } from "@/server-endpoints/fetchServer";
-import { createEquipmentSchema } from "@/schemas/equipmentSchemas";
 import { HOST } from "@/server-endpoints/host";
 import { getToken } from "@/auth/getToken";
 import { redirect } from "next/navigation";

@@ -3,7 +3,6 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { UserReservationItem } from "./UserReservationItem";
 import { CalendarReservationForm } from "./CalendarReservationForm";
 import { Reservation } from "@/schemas/reservationSchemas";
-import { Equipment } from "@/schemas/equipmentSchemas";
 import { Classroom } from "@/schemas/classroomSchemas";
 
 type CalendarReservationsSectionProps = {
