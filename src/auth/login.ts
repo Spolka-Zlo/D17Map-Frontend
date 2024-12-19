@@ -20,7 +20,7 @@ export async function login(username: string, password: string) {
 
   const { token, roles } = await response.json();
   const role = roles[0];
-  console.log("role", role);
+
   if (typeof token !== "string" || typeof role !== "string") {
     console.error("Failed to login");
     return;
