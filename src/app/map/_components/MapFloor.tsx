@@ -61,7 +61,6 @@ export function MapFloor({
   const { nodes } = useGLTF(url);
   const meshRefs = useRef<{ [key: string]: Mesh }>({});
 
-  const pulseScales = useRef<{ [key: string]: number }>({});
   const [time, setTime] = useState(0);
 
   useFrame((state, delta) => {

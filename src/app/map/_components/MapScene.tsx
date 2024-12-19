@@ -4,7 +4,7 @@ import { OrbitControls, Environment, Html } from "@react-three/drei";
 import { Dispatch, SetStateAction, Suspense, useState } from "react";
 import { MapFloor } from "./MapFloor";
 import { ExtraRoom } from "@/schemas/extraRoomSchemas";
-import { CameraHelper, Vector3, OrthographicCamera } from "three";
+import { Vector3 } from "three";
 
 type MapSceneProps = {
   floor: string;

@@ -1,4 +1,3 @@
-import { ButtonHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 import Link from "next/link";
 
@@ -18,8 +17,8 @@ export function OrangeLinkButton({
   return (
     <Link
       className={twMerge(
-        "px-4 py-2 bg-secondary text-black hover:text-secondary rounded-lg shadow-blueShadow hover:shadow-buttonHoverShadow hover:bg-primary",
-        className
+        "rounded-lg bg-secondary px-4 py-2 text-black shadow-blueShadow hover:bg-primary hover:text-secondary hover:shadow-buttonHoverShadow",
+        className,
       )}
       href={href}
     >

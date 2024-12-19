@@ -15,7 +15,6 @@ export async function modifyReservation(formData: FormData) {
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
   const type = formData.get("type") as string;
-  const classroomId = formData.get("classroomId") as string;
 
   const body = {
     title,

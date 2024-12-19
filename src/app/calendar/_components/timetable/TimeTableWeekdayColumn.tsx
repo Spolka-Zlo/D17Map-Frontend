@@ -4,14 +4,12 @@ import { ReservationWithTimestamp } from "./timetableUtils";
 
 type TimeTableDayContentProps = {
   reservationTimeStamps: ReservationWithTimestamp[];
-  day: string;
   typeFilters: string[];
   selectedRoom: string;
 };
 
 export function TimeTableDayContent({
   reservationTimeStamps,
-  day,
   typeFilters,
   selectedRoom,
 }: TimeTableDayContentProps) {

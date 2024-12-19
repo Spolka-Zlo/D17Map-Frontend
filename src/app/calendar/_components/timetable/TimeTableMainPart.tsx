@@ -67,7 +67,6 @@ export function TimeTableMainPart({
           <div className="border-b-4 border-black pb-3 text-center">{day}</div>
           <TimeTableDayContent
             reservationTimeStamps={reservationTimeStamps}
-            day={day}
             typeFilters={typeFilters}
             selectedRoom={selectedRoom}
           />

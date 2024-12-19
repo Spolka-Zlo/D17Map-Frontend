@@ -6,7 +6,6 @@ import { ExtraRoom } from "@/schemas/extraRoomSchemas";
 import { useState } from "react";
 import { MapSection } from "./MapSection";
 import { Floor } from "@/schemas/floorsSchema";
-import { ThreeSixtyViewer } from "@/app/sphere/_components/ThreeSixtyViewer";
 import { RoomInformationSection } from "./RoomInformationSection";
 
 type MapPageContentProps = {
@@ -38,7 +37,6 @@ export function MapPageContent({
         clickedRoom={clickedRoom}
         setClickedRoom={setClickedRoom}
         classrooms={classrooms}
-        equipments={equipments}
         extraRooms={extraRooms}
         extraRoomsTypes={extraRoomsTypes}
         floors={floors}
@@ -47,7 +45,6 @@ export function MapPageContent({
 
       <RoomInformationSection
         clickedRoom={clickedRoom}
-        setClickedRoom={setClickedRoom}
         classrooms={classrooms}
         extraRooms={extraRooms}
         equipments={equipments}

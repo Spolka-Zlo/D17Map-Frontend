@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 type RadioDropdownProps = {

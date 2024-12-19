@@ -3,7 +3,6 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { MapScene } from "./MapScene";
 import { MapMenu } from "./map-menu/MapMenu";
 import { Classroom } from "@/schemas/classroomSchemas";
-import { Equipment } from "@/schemas/equipmentSchemas";
 import { ExtraRoom } from "@/schemas/extraRoomSchemas";
 import { MapRoomInformation } from "./MapRoomInformation";
 import { SearchBar } from "@/components/SearchBar";
@@ -18,7 +17,6 @@ type MapSectionProps = {
   clickedRoom: string | null;
   setClickedRoom: Dispatch<SetStateAction<string | null>>;
   classrooms: Classroom[];
-  equipments: Equipment[];
   extraRooms: ExtraRoom[];
   extraRoomsTypes: string[];
   floors: Floor[];
@@ -69,7 +67,6 @@ export function MapSection({
   clickedRoom,
   setClickedRoom,
   classrooms,
-  equipments,
   extraRooms,
   extraRoomsTypes,
   floors,
@@ -99,7 +96,6 @@ export function MapSection({
           isExtraRoom(clickedRoom) ? (roomData as ExtraRoom) : undefined
         }
         floor={floor}
-        equipments={equipments}
       />
     );
   };
@@ -167,14 +163,7 @@ export function MapSection({
       </div>
       {getRoomInformation()}
 
-      <MapMenu
-        floor={floor}
-        setFloor={setFloor}
-        extraRoomsTypes={extraRoomsTypes}
-        activeRooms={activeRooms}
-        setActiveRooms={setActiveRooms}
-        floors={floors}
-      />
+      <MapMenu activeRooms={activeRooms} setActiveRooms={setActiveRooms} />
     </div>
   );
 }

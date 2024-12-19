@@ -1,4 +1,4 @@
-import { ExtraRoom, createExtraRoomSchema } from "@/schemas/extraRoomSchemas";
+import { ExtraRoom } from "@/schemas/extraRoomSchemas";
 import { putExtraRoom } from "../../_actions/put-extra-room";
 
 export function AddEditExtraRoomForm({ extraRoom }: { extraRoom?: ExtraRoom }) {
