@@ -93,12 +93,7 @@ export function RecurringInformationModal({
     MONTHLY: "Co miesiąc",
   } as const;
 
-  if (
-    "recurringId" in reservation === false ||
-    "recurringStartDate" in reservation === false ||
-    "recurringEndDate" in reservation === false ||
-    "recurringType" in reservation === false
-  ) {
+  if (!("recurringId" in reservation)) {
     return null;
   }
 

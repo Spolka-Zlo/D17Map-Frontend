@@ -143,23 +143,17 @@ export default async function ReservationPage({
         equipments={equipments}
         mondayDate={mondayDate}
         classrooms={classrooms}
-        userUpcomingReservations={userUpcomingReservationsMocked.filter(
-          (reservation) => {
-            console.log(
-              new Date(reservation.date).getTime(),
-              mondayDate.getTime(),
-              mondayDate.getTime() + 7 * 24 * 60 * 60 * 1000,
-              queryDate,
-              new Date(reservation.date),
-            );
-            const data = new Date(mondayDate);
-            data.setHours(0, 0, 0, 0);
+        userUpcomingReservations={userUpcomingReservations.concat(
+          userUpcomingReservationsMocked.filter((reservation) => {
+            const mondayMidnight = new Date(mondayDate);
+            mondayMidnight.setHours(0, 0, 0, 0);
             return (
-              new Date(reservation.date).getTime() >= data.getTime() &&
+              new Date(reservation.date).getTime() >=
+                mondayMidnight.getTime() &&
               new Date(reservation.date).getTime() <
-                data.getTime() + 7 * 24 * 60 * 60 * 1000
+                mondayMidnight.getTime() + 7 * 24 * 60 * 60 * 1000
             );
-          },
+          }),
         )}
       />
     </main>
