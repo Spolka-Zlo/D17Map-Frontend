@@ -13,10 +13,7 @@ export async function fetchGet<T>(
     const response = await fetch(url, options);
     if (!response.ok) {
       console.error(response.statusText);
-      if (response.status === 404) {
-        notFound();
-      }
-      if (response.status === 500) {
+      if (response.status >= 500) {
         throw new Error("Internal server error");
       }
     }

@@ -29,6 +29,7 @@ export function CalendarReservationForm({
   setEditedReservation,
 }: CalendarReservationFormProps) {
   const [participants, setParticipants] = useState(0);
+  const [isRecurring, setIsRecurring] = useState(false);
 
   const submitAction = async (formData: FormData) => {
     if (editedReservation) {
@@ -181,6 +182,45 @@ export function CalendarReservationForm({
             htmlName="type"
             defaultValue={editedReservation?.type}
           />
+          <div className="flex flex-col items-center gap-3">
+            <div className="flex justify-center gap-3">
+              <input
+                type="checkbox"
+                name="isRecurring"
+                onChange={(e) => setIsRecurring(e.target.checked)}
+                checked={isRecurring}
+                required
+              />
+              <label onClick={(e) => setIsRecurring(!isRecurring)}>
+                Powtarzająca się rezerwacja
+              </label>
+            </div>
+            <div className="flex justify-center gap-3">
+              <input
+                className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
+                type="date"
+                name="recurringEndDate"
+                hidden={!isRecurring}
+              />
+              <input
+                className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
+                type="date"
+                name="recurringStartDate"
+                hidden={!isRecurring}
+              />
+            </div>
+            <RadioDropdown
+              options={[
+                { id: "DAILY", name: "Codziennie" },
+                { id: "WEEKLY", name: "Co tydzień" },
+                { id: "BIWEEKLY", name: "Co dwa tygodnie" },
+                { id: "MONTHLY", name: "Co miesiąc" },
+              ]}
+              className="z-20"
+              htmlName="recurringType"
+              hidden={!isRecurring}
+            />
+          </div>
           <OrangeButton type="submit" text="Zarezerwuj" />
         </form>
       </div>

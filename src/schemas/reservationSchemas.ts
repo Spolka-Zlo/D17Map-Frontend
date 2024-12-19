@@ -28,6 +28,10 @@ export type Reservation = {
   };
   type: ReservationType;
   numberOfParticipants: number;
+  recurringId?: string;
+  recurringStartDate?: string;
+  recurringEndDate?: string;
+  recurringType?: string;
 };
 
 export const reservationSchema = z.object({
@@ -45,6 +49,10 @@ export const reservationSchema = z.object({
   }),
   type: z.string(),
   numberOfParticipants: z.number(),
+  recurringId: z.string().optional(),
+  recurringStartDate: z.string().optional(),
+  recurringEndDate: z.string().optional(),
+  recurringType: z.string().optional(),
 });
 
 export const getReservationsSchema = z.array(reservationSchema);

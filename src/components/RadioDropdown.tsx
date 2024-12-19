@@ -11,6 +11,7 @@ type RadioDropdownProps = {
   className?: string;
   htmlName: string;
   defaultValue?: string;
+  hidden?: boolean;
 };
 
 export function RadioDropdown({
@@ -18,11 +19,12 @@ export function RadioDropdown({
   className,
   htmlName,
   defaultValue,
+  hidden,
 }: RadioDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(defaultValue ?? options[0].name);
   return (
-    <div className={twMerge("relative w-44", className)}>
+    <div className={twMerge("relative w-44", className, hidden && "hidden")}>
       <div
         onClick={() => setIsOpen(!isOpen)}
         className="cursor-pointer rounded-md border-b-2 border-l-2 border-accent bg-primary p-2 text-secondary focus:ring-2 focus:ring-secondary focus:ring-opacity-50"
