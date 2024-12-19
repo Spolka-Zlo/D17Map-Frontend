@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { getToken } from "../auth/getToken";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { logout } from "@/auth/logout";
 
 export async function fetchGet<T>(
@@ -14,10 +14,10 @@ export async function fetchGet<T>(
     if (!response.ok) {
       console.error(response.statusText);
       if (response.status === 404) {
-        redirect("/404");
+        notFound();
       }
       if (response.status === 500) {
-        redirect("/500");
+        throw new Error("Internal server error");
       }
     }
 
@@ -48,10 +48,10 @@ export async function fetchGet<T>(
       await logout();
     }
     if (response.status === 404) {
-      redirect("/404");
+      notFound();
     }
     if (response.status === 500) {
-      redirect("/500");
+      throw new Error("Internal server error");
     }
     throw new Error(response.statusText);
   }
@@ -84,10 +84,10 @@ export async function fetchPost<T, U>(
       await logout();
     }
     if (response.status === 404) {
-      redirect("/404");
+      notFound();
     }
     if (response.status === 500) {
-      redirect("/500");
+      throw new Error("Internal server error");
     }
     throw new Error(response.statusText);
   }
