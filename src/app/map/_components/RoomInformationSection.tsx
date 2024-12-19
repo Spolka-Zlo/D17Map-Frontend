@@ -12,7 +12,6 @@ type RoomInformationSectionProps = {
   classrooms: Classroom[];
   extraRooms: ExtraRoom[];
   equipments: Equipment[];
-  reservationTypes: string[];
 };
 
 export function RoomInformationSection({
@@ -21,7 +20,6 @@ export function RoomInformationSection({
   classrooms,
   extraRooms,
   equipments,
-  reservationTypes,
 }: RoomInformationSectionProps) {
   const [isReservationModalOpen, openCloseReservationModal] = useState(false);
   const room =
@@ -94,7 +92,6 @@ export function RoomInformationSection({
             date={new Date()}
             classrooms={classrooms}
             setOpen={openCloseReservationModal}
-            reservationTypes={reservationTypes}
             setEditedReservation={() => {}}
           />
         )}

@@ -2,6 +2,17 @@ import { z } from "zod";
 
 export type ReservationType = string;
 
+export const reservationTypes: { [key: string]: string } = {
+  Zajęcia: "CLASS",
+  Egzamin: "EXAM",
+  Wykład: "LECTURE",
+  Konferencja: "CONFERENCE",
+  Kolokwium: "TEST",
+  Konsultacje: "CONSULTATIONS",
+  "Spotkanie koła naukowego": "STUDENT_CLUB_MEETING",
+  Wydarzenie: "EVENT",
+} as const;
+
 export type Reservation = {
   id: string;
   title: string;

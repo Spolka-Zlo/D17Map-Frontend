@@ -14,7 +14,6 @@ type MapPageContentProps = {
   equipments: Equipment[];
   extraRooms: ExtraRoom[];
   floors: Floor[];
-  reservationTypes: string[];
 };
 
 export function MapPageContent({
@@ -22,7 +21,6 @@ export function MapPageContent({
   equipments,
   extraRooms,
   floors,
-  reservationTypes,
 }: MapPageContentProps) {
   const [clickedRoom, setClickedRoom] = useState<string | null>(null);
   const extraRoomsTypes = extraRooms
@@ -53,7 +51,6 @@ export function MapPageContent({
         classrooms={classrooms}
         extraRooms={extraRooms}
         equipments={equipments}
-        reservationTypes={reservationTypes}
       />
     </div>
   );

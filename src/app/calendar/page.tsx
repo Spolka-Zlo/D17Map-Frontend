@@ -43,11 +43,6 @@ export default async function ReservationPage({
     endTime: toTimestamp(reservation.date + "T" + reservation.endTime),
   }));
 
-  const reservationTypes = await fetchGet(
-    `${HOST}/reservations/types`,
-    z.array(z.string()),
-  );
-
   const equipments = await fetchGet(`${HOST}/equipments`, getEquipmentsSchema);
 
   const classrooms = await fetchGet(
@@ -65,7 +60,6 @@ export default async function ReservationPage({
         equipments={equipments}
         mondayDate={mondayDate}
         classrooms={classrooms}
-        reservationTypes={reservationTypes}
         userUpcomingReservations={userUpcomingReservations}
       />
     </main>

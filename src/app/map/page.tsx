@@ -31,11 +31,6 @@ export default async function Map() {
     getExtraRoomsSchema,
   );
 
-  const reservationTypes = await fetchGet(
-    `${HOST}/reservations/types`,
-    z.array(z.string()),
-  );
-
   return (
     <main>
       <MapPageContent
@@ -43,7 +38,6 @@ export default async function Map() {
         classrooms={classrooms}
         extraRooms={extraRooms}
         floors={floors}
-        reservationTypes={reservationTypes}
       />
     </main>
   );
