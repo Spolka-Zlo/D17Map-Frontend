@@ -8,7 +8,6 @@ export const classroomSchema = z.object({
   capacity: z.number(),
   equipmentIds: z.array(z.string()),
   floorName: z.string(),
-  buildingName: z.string(),
 });
 
 export type Classroom = z.infer<typeof classroomSchema>;

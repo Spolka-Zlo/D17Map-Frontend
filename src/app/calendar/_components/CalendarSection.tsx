@@ -11,6 +11,8 @@ type CalendarSectionProps = {
   availableRooms: string[];
   mondayDate: number;
   openCloseReservationModal: Dispatch<SetStateAction<boolean>>;
+  events: Reservation[];
+  role: string | null;
 };
 
 export function CalendarSection({
@@ -18,21 +20,25 @@ export function CalendarSection({
   availableRooms,
   mondayDate,
   openCloseReservationModal,
+  events,
+  role,
 }: CalendarSectionProps) {
   const [filters, setFilters] = useState(["CLASS"]);
   const [selectedRoom, setSelectedRoom] = useState(availableRooms[0]);
   const allFilters = Object.keys(reservationTypes);
   return (
     <section className="flex w-[62vw] flex-col gap-5">
-      <FilterSection
-        allFilters={allFilters}
-        filters={filters}
-        setFilters={setFilters}
-        openCloseReservationModal={openCloseReservationModal}
-        selectedRoom={selectedRoom}
-        setSelectedRoom={setSelectedRoom}
-        availableRooms={availableRooms}
-      />
+      {role && (
+        <FilterSection
+          allFilters={allFilters}
+          filters={filters}
+          setFilters={setFilters}
+          openCloseReservationModal={openCloseReservationModal}
+          selectedRoom={selectedRoom}
+          setSelectedRoom={setSelectedRoom}
+          availableRooms={availableRooms}
+        />
+      )}
       <div className="flex w-full flex-col justify-between gap-5 rounded-md bg-white/25 p-5">
         <div className="flex w-full justify-center gap-8 px-2">
           <Link href={`?date=${mondayDate - 1000 * 60 * 60 * 24 * 7}`}>
@@ -48,6 +54,8 @@ export function CalendarSection({
           weekReservations={reservations}
           typeFilters={filters}
           selectedRoom={selectedRoom}
+          events={events}
+          role={role}
         />
       </div>
     </section>

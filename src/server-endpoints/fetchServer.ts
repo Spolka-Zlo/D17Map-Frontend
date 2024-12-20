@@ -19,18 +19,12 @@ export async function fetchGet<T>(
     }
 
     const data = await response.json();
-    try {
-      return schema.parse(data);
-    } catch (error) {
-      console.error(error);
-      console.error(data);
-      throw error;
-    }
+    return schema.parse(data);
   }
 
   const token = await getToken();
   if (!token) {
-    redirect("/login");
+    return [];
   }
 
   const response = await fetch(url, {

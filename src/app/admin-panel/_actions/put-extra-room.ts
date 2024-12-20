@@ -17,15 +17,15 @@ export async function putExtraRoom(formData: FormData) {
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
   const modelKey = formData.get("modelKey") as string;
-  const capacity = Number(formData.get("capacity") as string);
-  const equipmentIds = formData.getAll("equipmentIds") as string[];
+  const floorName = formData.get("floorName") as string;
+  const type = formData.get("type") as string;
 
   const body = {
     name,
     description,
+    type,
     modelKey,
-    capacity,
-    equipmentIds,
+    floorName,
   };
 
   if (id) {

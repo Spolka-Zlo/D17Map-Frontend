@@ -6,18 +6,22 @@ type TimeTableDayContentProps = {
   reservationTimeStamps: ReservationWithTimestamp[];
   typeFilters: string[];
   selectedRoom: string;
+  role: string | null;
 };
 
 export function TimeTableDayContent({
   reservationTimeStamps,
   typeFilters,
   selectedRoom,
+  role,
 }: TimeTableDayContentProps) {
-  const filteredReservations = filterReservationsWithProperTypeAndRoom(
-    reservationTimeStamps,
-    typeFilters,
-    selectedRoom,
-  );
+  const filteredReservations = role
+    ? filterReservationsWithProperTypeAndRoom(
+        reservationTimeStamps,
+        typeFilters,
+        selectedRoom,
+      )
+    : reservationTimeStamps;
 
   function filterReservationsWithProperTypeAndRoom(
     reservationTimeStamps: ReservationWithTimestamp[],

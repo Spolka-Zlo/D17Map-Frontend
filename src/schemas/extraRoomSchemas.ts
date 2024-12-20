@@ -7,7 +7,6 @@ export const extraRoomSchema = z.object({
   description: z.string(),
   type: z.string(),
   floorName: z.string(),
-  buildingName: z.string(),
 });
 
 export const getExtraRoomsSchema = z.array(extraRoomSchema);

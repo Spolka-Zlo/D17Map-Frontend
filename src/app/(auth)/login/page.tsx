@@ -16,21 +16,22 @@ export default function LoginPage() {
         }}
         className="flex flex-col gap-4"
       >
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">Nazwa użytkownika</label>
         <input type="text" id="username" name="username" />
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">Hasło</label>
         <input type="password" id="password" name="password" />
         <button
           type="submit"
-          className="w-44 self-center rounded-md border-b-2 border-l-2 border-primary p-2"
+          className="w-44 self-center rounded-md border-b-2 border-l-2 border-primary p-2 hover:bg-accent/25"
         >
-          Login
+          Zaloguj się
         </button>
+        <div className="text-center">Nie masz jeszcze konta?</div>
         <Link
-          className="w-44 self-center rounded-md border-b-2 border-l-2 border-primary p-2 text-center"
+          className="w-44 self-center rounded-md border-b-2 border-l-2 border-primary p-2 text-center hover:bg-accent/25"
           href="/register"
         >
-          Nowy
+          Zarejestruj się
         </Link>
       </form>
     </div>

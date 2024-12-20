@@ -5,12 +5,14 @@ import { fetchGet } from "@/server-endpoints/fetchServer";
 import { getClassroomsSchema } from "@/schemas/classroomSchemas";
 import { reservationSchema } from "@/schemas/reservationSchemas";
 import { HOST } from "@/server-endpoints/host";
+import { getRole } from "@/auth/getRole";
 
 export default async function ReservationPage({
   searchParams,
 }: {
   searchParams: { date: string };
 }) {
+  const role = await getRole();
   const lastMonday = new Date(2024, 10, 25, 9, 6, 0, 0);
   lastMonday.setDate(lastMonday.getDate());
   const mondayDate = new Date(
@@ -38,7 +40,7 @@ export default async function ReservationPage({
       date: "2024-11-25",
       startTime: "09:00",
       endTime: "10:00",
-      type: "CLASS",
+      type: "Zajęcia",
       classroom: {
         id: "7f000101-93df-1bc5-8193-df8bd984000f",
         name: "1.38",
@@ -132,10 +134,33 @@ export default async function ReservationPage({
 
   const availableRooms = classrooms.map((classroom) => classroom.name);
 
+  const events = (
+    await fetchGet(
+      `${HOST}/buildings/D17/reservations/events`,
+      z.array(reservationSchema),
+    )
+  ).map((event) => ({
+    ...event,
+    startTime: toTimestamp(event.date + "T" + event.startTime),
+    endTime: toTimestamp(event.date + "T" + event.endTime),
+  }));
+
   return (
     <main>
       <CalendarPageContent
-        weekReservations={weekReservations}
+        weekReservations={weekReservations.concat(
+          userUpcomingReservationsMocked.filter((reservation) => {
+            const mondayMidnight = new Date(mondayDate);
+            mondayMidnight.setHours(0, 0, 0, 0);
+            return (
+              role &&
+              new Date(reservation.date).getTime() >=
+                mondayMidnight.getTime() &&
+              new Date(reservation.date).getTime() <
+                mondayMidnight.getTime() + 7 * 24 * 60 * 60 * 1000
+            );
+          }),
+        )}
         availableRooms={availableRooms}
         mondayDate={mondayDate}
         classrooms={classrooms}
@@ -144,6 +169,7 @@ export default async function ReservationPage({
             const mondayMidnight = new Date(mondayDate);
             mondayMidnight.setHours(0, 0, 0, 0);
             return (
+              role &&
               new Date(reservation.date).getTime() >=
                 mondayMidnight.getTime() &&
               new Date(reservation.date).getTime() <
@@ -151,6 +177,8 @@ export default async function ReservationPage({
             );
           }),
         )}
+        events={events}
+        role={role}
       />
     </main>
   );

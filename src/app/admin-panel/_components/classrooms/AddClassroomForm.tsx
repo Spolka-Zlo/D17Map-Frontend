@@ -39,6 +39,13 @@ export function AddClassroomForm({
         name="capacity"
         defaultValue={classroom?.capacity}
       />
+      <label htmlFor="floorName">Floor Name</label>
+      <input
+        type="text"
+        id="floorName"
+        name="floorName"
+        defaultValue={classroom?.floorName}
+      />
       <h3>Equipment</h3>
       <ul className="flex h-28 flex-col gap-2 overflow-auto">
         {equipments.map((equipment) => (

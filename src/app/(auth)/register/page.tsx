@@ -23,9 +23,9 @@ export default function RegisterPage() {
         }}
         className="flex flex-col gap-4"
       >
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">Nazwa użytkownika</label>
         <input type="text" id="username" name="username" />
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">Hasło</label>
         <input
           minLength={8}
           maxLength={32}
@@ -35,13 +35,13 @@ export default function RegisterPage() {
           id="password"
           name="password"
         />
-        <label htmlFor="confirm-password">Confirm Password</label>
+        <label htmlFor="confirm-password">Potwierdź hasło</label>
         <input type="password" id="confirm-password" name="confirm-password" />
         <button
           type="submit"
-          className="w-44 self-center rounded-md border-b-2 border-l-2 border-primary p-2"
+          className="w-44 self-center rounded-md border-b-2 border-l-2 border-primary p-2 hover:bg-accent/25"
         >
-          Register
+          Zarejestruj się
         </button>
       </form>
     </div>

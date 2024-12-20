@@ -52,17 +52,7 @@ export function AddEditExtraRoomForm({ extraRoom }: { extraRoom?: ExtraRoom }) {
           defaultValue={extraRoom?.floorName}
           required
         />
-
-        <label htmlFor="buildingName">Building Name</label>
-        <input
-          type="text"
-          id="buildingName"
-          name="buildingName"
-          defaultValue={extraRoom?.buildingName}
-          required
-        />
       </div>
-
       <button type="submit" className="justify-self-end">
         {extraRoom ? "Edit" : "Add"}
       </button>

@@ -8,6 +8,7 @@ export type TimeTableMainPartProps = {
   reservations: Reservation[];
   typeFilters: string[];
   selectedRoom: string;
+  role: string | null;
 };
 
 export type weekdaysMapType = {
@@ -24,6 +25,7 @@ export function TimeTableMainPart({
   reservations,
   typeFilters,
   selectedRoom,
+  role,
 }: TimeTableMainPartProps) {
   const searchParams = useSearchParams();
   const mondayDate = Number(searchParams.get("date"));
@@ -69,6 +71,7 @@ export function TimeTableMainPart({
             reservationTimeStamps={reservationTimeStamps}
             typeFilters={typeFilters}
             selectedRoom={selectedRoom}
+            role={role}
           />
         </div>
       ))}

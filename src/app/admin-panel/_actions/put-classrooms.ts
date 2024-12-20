@@ -19,6 +19,7 @@ export async function putClassrooms(formData: FormData) {
   const modelKey = formData.get("modelKey") as string;
   const capacity = Number(formData.get("capacity") as string);
   const equipmentIds = formData.getAll("equipmentIds") as string[];
+  const floorName = formData.get("floorName") as string;
 
   const body = {
     name,
@@ -26,6 +27,7 @@ export async function putClassrooms(formData: FormData) {
     modelKey,
     capacity,
     equipmentIds,
+    floorName,
   };
 
   if (id) {
