@@ -24,10 +24,10 @@ export default function RootLayout({
       <body className={oswald.className}>
         <Navbar
           links={[
-            { name: "Home", url: "/" },
-            { name: "Calendar", url: "/calendar" },
+            { name: "Strona główna", url: "/" },
+            { name: "Kalendarz", url: "/calendar" },
             {
-              name: "Map",
+              name: "Mapa",
               url: "/map",
             },
           ]}

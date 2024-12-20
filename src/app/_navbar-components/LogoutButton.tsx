@@ -8,7 +8,7 @@ export function LogoutButton() {
       onClick={() => logout()}
       className="text-2xl font-extrabold text-secondary maxLG:hidden"
     >
-      Logout!
+      Wyloguj się
     </button>
   );
 }
