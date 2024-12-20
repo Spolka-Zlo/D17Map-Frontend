@@ -12,10 +12,11 @@ export function FilterButton({
   return (
     <button
       className={twMerge(
-        "rounded-md border-b-2 border-l-2 border-black p-2 text-primary hover:bg-accent/50",
+        "w-56 truncate rounded-md border-b-2 border-l-2 border-black p-2 text-primary hover:bg-accent/50",
         isOn && "bg-accent/50",
       )}
       onClick={onClickHandler}
+      title={filter}
     >
       {filter}
     </button>

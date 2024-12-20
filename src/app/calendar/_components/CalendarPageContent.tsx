@@ -11,6 +11,8 @@ type CalendarPageContentProps = {
   mondayDate: Date;
   classrooms: Classroom[];
   userUpcomingReservations: Reservation[];
+  events: Reservation[];
+  role: string | null;
 };
 
 export function CalendarPageContent({
@@ -19,6 +21,8 @@ export function CalendarPageContent({
   mondayDate,
   classrooms,
   userUpcomingReservations,
+  events,
+  role,
 }: CalendarPageContentProps) {
   const [isReservationModalOpen, openCloseReservationModal] = useState(false);
   const mondayDateTimestamp = mondayDate.getTime();
@@ -29,6 +33,8 @@ export function CalendarPageContent({
         availableRooms={availableRooms}
         mondayDate={mondayDateTimestamp}
         openCloseReservationModal={openCloseReservationModal}
+        events={events}
+        role={role}
       />
       <div className="border-l-4 border-black"></div>
       <CalendarReservationsSection
@@ -36,6 +42,8 @@ export function CalendarPageContent({
         openCloseReservationModal={openCloseReservationModal}
         classrooms={classrooms}
         userUpcomingReservations={userUpcomingReservations}
+        events={events}
+        role={role}
       />
     </section>
   );

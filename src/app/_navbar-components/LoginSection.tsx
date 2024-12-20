@@ -11,7 +11,11 @@ export async function LoginSection() {
   return (
     <div className="flex h-full w-full items-center justify-center gap-4 maxML:hidden">
       {!isLoggedIn ? (
-        <OrangeLinkButton text="Login" className="w-28" href="/login" />
+        <OrangeLinkButton
+          text="Login"
+          className="w-28 text-center"
+          href="/login"
+        />
       ) : (
         isLoggedIn && (
           <>

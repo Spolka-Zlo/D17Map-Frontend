@@ -187,7 +187,6 @@ export function CalendarReservationForm({
                 name="isRecurring"
                 onChange={(e) => setIsRecurring(e.target.checked)}
                 checked={isRecurring}
-                required
               />
               <label onClick={() => setIsRecurring(!isRecurring)}>
                 Powtarzająca się rezerwacja

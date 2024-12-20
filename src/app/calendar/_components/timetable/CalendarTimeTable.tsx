@@ -7,21 +7,26 @@ type CalendarTimeTableProps = {
   reservations: Reservation[];
   typeFilters: string[];
   selectedRoom: string;
+  events: Reservation[];
+  role: string | null;
 };
 
 export function CalendarTimeTable({
   reservations,
   typeFilters,
   selectedRoom,
+  events,
+  role,
 }: CalendarTimeTableProps) {
   return (
     <div className="relative">
       <div className="grid w-full grid-cols-8 grid-rows-1">
         <TimeTableHoursColumn />
         <TimeTableMainPart
-          reservations={reservations}
+          reservations={role ? reservations : events}
           typeFilters={typeFilters}
           selectedRoom={selectedRoom}
+          role={role}
         />
       </div>
     </div>
