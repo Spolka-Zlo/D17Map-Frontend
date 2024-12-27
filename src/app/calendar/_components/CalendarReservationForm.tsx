@@ -8,6 +8,7 @@ import { Reservation, reservationTypes } from "@/schemas/reservationSchemas";
 import { modifyReservation } from "@/shared-endpoints/modifyReservation";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
+import { ConfirmationModal } from "@/components/ConfirmationModal";
 
 type CalendarReservationFormProps = {
   room: string;
@@ -28,6 +29,8 @@ export function CalendarReservationForm({
 }: CalendarReservationFormProps) {
   const [participants, setParticipants] = useState(0);
   const [isRecurring, setIsRecurring] = useState(false);
+  const [isConfirmationModalOpen, openCloseConfirmationModal] = useState(false);
+  const [collisionsList, setCollisionsList] = useState<string[]>([]);
 
   const submitAction = async (formData: FormData) => {
     if (editedReservation) {
@@ -36,9 +39,15 @@ export function CalendarReservationForm({
         .then(() => toast.success("Rezerwacja zmodyfikowana pomyślnie"))
         .catch(() => toast.error("Nie udało się zmodyfikować rezerwacji"));
     } else {
-      await addReservation(formData)
-        .then(() => toast.success("Rezerwacja dodana pomyślnie"))
-        .catch(() => toast.error("Nie udało się dodać rezerwacji"));
+      const collisions = await addReservation(formData);
+
+      if (collisions) {
+        console.log("collisions", collisions);
+        setCollisionsList(collisions);
+        openCloseConfirmationModal(true);
+      } else {
+        console.log("no collisions", collisions);
+      }
     }
     setOpen(false);
     setEditedReservation(null);
@@ -192,25 +201,18 @@ export function CalendarReservationForm({
                 Powtarzająca się rezerwacja
               </label>
             </div>
-            <div className="flex justify-center gap-3">
-              <input
-                className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
-                type="date"
-                name="recurringEndDate"
-                hidden={!isRecurring}
-              />
-              <input
-                className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
-                type="date"
-                name="recurringStartDate"
-                hidden={!isRecurring}
-              />
-            </div>
+            <input
+              className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
+              type="date"
+              name="recurringEndDate"
+              placeholder="Data końcowa"
+              hidden={!isRecurring}
+            />
             <RadioDropdown
               options={[
                 { id: "DAILY", name: "Codziennie" },
                 { id: "WEEKLY", name: "Co tydzień" },
-                { id: "BIWEEKLY", name: "Co dwa tygodnie" },
+                { id: "EVERY_TWO_WEEKS", name: "Co dwa tygodnie" },
                 { id: "MONTHLY", name: "Co miesiąc" },
               ]}
               className="z-20"
@@ -221,6 +223,15 @@ export function CalendarReservationForm({
           <OrangeButton type="submit" text="Zarezerwuj" />
         </form>
       </div>
+      {isConfirmationModalOpen && (
+        <ConfirmationModal
+          isOpen={isConfirmationModalOpen}
+          onClose={() => openCloseConfirmationModal(false)}
+          onConfirm={() => {}}
+          message={`W wybranym cyklu występują już inne rezerwacje w datach: ${collisionsList}. Czy na pewno chcesz dodać cykl z pominięciem kolicji?`}
+          title="Potwierdzenie"
+        />
+      )}
     </div>
   );
 }

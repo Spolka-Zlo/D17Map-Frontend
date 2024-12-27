@@ -35,7 +35,7 @@ export function RecurringInformationModal({
         recurringId: "1",
         recurringStartDate: "2024-11-25",
         recurringEndDate: "2024-12-30",
-        recurringType: "BIWEEKLY",
+        recurringType: "EVERY_TWO_WEEKS",
       },
       {
         id: "2",
@@ -55,7 +55,7 @@ export function RecurringInformationModal({
         recurringId: "1",
         recurringStartDate: "2024-11-25",
         recurringEndDate: "2024-12-30",
-        recurringType: "BIWEEKLY",
+        recurringType: "EVERY_TWO_WEEKS",
       },
       {
         id: "3",
@@ -75,7 +75,7 @@ export function RecurringInformationModal({
         recurringId: "1",
         recurringStartDate: "2024-11-25",
         recurringEndDate: "2024-12-30",
-        recurringType: "BIWEEKLY",
+        recurringType: "EVERY_TWO_WEEKS",
       },
     ].map((reservation) => ({
       ...reservation,
@@ -87,7 +87,7 @@ export function RecurringInformationModal({
   const recurringTypeMap: { [key: string]: string } = {
     DAILY: "Codziennie",
     WEEKLY: "Co tydzień",
-    BIWEEKLY: "Co dwa tygodnie",
+    EVERY_TWO_WEEKS: "Co dwa tygodnie",
     MONTHLY: "Co miesiąc",
   } as const;
 
@@ -128,7 +128,7 @@ export function RecurringInformationModal({
               }).format(reservation.endTime)}
             </div>
             <div className="flex justify-center">
-              {reservation.recurringStartDate} - {reservation.recurringEndDate}
+              {reservation.date} - {reservation.recurringEndDate}
             </div>
             <span>Sala {reservation.classroom.name}</span>
             <span>{reservation.numberOfParticipants} uczestników</span>
