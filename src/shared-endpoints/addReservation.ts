@@ -1,11 +1,21 @@
 "use server";
 
 import { getToken } from "@/auth/getToken";
-import { ADD_RESERVATION_URL } from "@/server-endpoints/reservations";
+import {
+  ADD_RECURRING_RESERVATION_URL,
+  ADD_RESERVATION_URL,
+} from "@/server-endpoints/reservations";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function addReservation(formData: FormData) {
+export type CycleResponse = {
+  collisions: string[];
+  recurringId: string;
+};
+
+export async function addReservation(
+  formData: FormData,
+): Promise<CycleResponse | null | undefined> {
   const token = await getToken();
   if (!token) {
     console.error("Not authenticated");
@@ -21,6 +31,60 @@ export async function addReservation(formData: FormData) {
   const numberOfParticipants = Number(
     formData.get("numberOfParticipants") as string,
   );
+
+  const recurringType = formData.get("recurringType") as string;
+  const recurringEndDate = formData.get("recurringEndDate") as string;
+
+  console.log("recurringType", recurringType);
+  console.log("recurringEndDate", recurringEndDate);
+
+  if (recurringType && recurringEndDate) {
+    const body = {
+      title,
+      description,
+      startTime,
+      endTime,
+      date,
+      type,
+      classroomId,
+      numberOfParticipants,
+      recurringType,
+      recurringEndDate,
+    };
+
+    // console.log("body", body);
+
+    const response = await fetch(ADD_RECURRING_RESERVATION_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (response.status > 204) {
+      console.log("Failed to add reservation", response);
+      throw new Error("Failed to add reservation");
+    } else {
+      const data = await response.json();
+      console.log("Reservation added successfully", data);
+      if (
+        "message" in data &&
+        data.message === "Collisions detected." &&
+        "collisions" in data
+      ) {
+        console.log("Collisions detected.", data.collisions);
+        return {
+          collisions: data.collisions,
+          recurringId: data.recurringId,
+        };
+      } else {
+        revalidateTag("userReservations");
+      }
+    }
+    return null;
+  }
 
   const body = {
     title,

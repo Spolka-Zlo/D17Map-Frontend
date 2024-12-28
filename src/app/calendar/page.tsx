@@ -13,7 +13,7 @@ export default async function ReservationPage({
   searchParams: { date: string };
 }) {
   const role = await getRole();
-  const lastMonday = new Date(2024, 10, 25, 9, 6, 0, 0);
+  const lastMonday = new Date(2024, 11, 23, 9, 6, 0, 0);
   lastMonday.setDate(lastMonday.getDate());
   const mondayDate = new Date(
     Number(searchParams.date) || lastMonday.getTime(),
@@ -51,7 +51,7 @@ export default async function ReservationPage({
       recurringId: "1",
       recurringStartDate: "2024-11-25",
       recurringEndDate: "2024-12-30",
-      recurringType: "BIWEEKLY",
+      recurringType: "EVERY_TWO_WEEKS",
     },
     {
       id: "2",
@@ -71,7 +71,7 @@ export default async function ReservationPage({
       recurringId: "1",
       recurringStartDate: "2024-11-25",
       recurringEndDate: "2024-12-30",
-      recurringType: "BIWEEKLY",
+      recurringType: "EVERY_TWO_WEEKS",
     },
     {
       id: "3",
@@ -91,7 +91,7 @@ export default async function ReservationPage({
       recurringId: "1",
       recurringStartDate: "2024-11-25",
       recurringEndDate: "2024-12-30",
-      recurringType: "BIWEEKLY",
+      recurringType: "EVERY_TWO_WEEKS",
     },
     {
       id: "4",

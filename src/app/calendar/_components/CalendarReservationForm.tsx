@@ -4,10 +4,19 @@ import { OrangeButton } from "@/components/OrangeButton";
 import { addReservation } from "../../../shared-endpoints/addReservation";
 import { RadioDropdown } from "@/components/RadioDropdown";
 import { Classroom } from "@/schemas/classroomSchemas";
-import { Reservation, reservationTypes } from "@/schemas/reservationSchemas";
+import {
+  CycleReservationRequest,
+  Reservation,
+  reservationTypes,
+} from "@/schemas/reservationSchemas";
 import { modifyReservation } from "@/shared-endpoints/modifyReservation";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
+
+export type RecurringData = {
+  collisions: string[];
+  request: CycleReservationRequest;
+};
 
 type CalendarReservationFormProps = {
   room: string;
@@ -16,6 +25,7 @@ type CalendarReservationFormProps = {
   classrooms: Classroom[];
   editedReservation?: Reservation | null;
   setEditedReservation: Dispatch<SetStateAction<Reservation | null>>;
+  onCollision: Dispatch<SetStateAction<RecurringData | null>>;
 };
 
 export function CalendarReservationForm({
@@ -25,6 +35,7 @@ export function CalendarReservationForm({
   classrooms,
   editedReservation,
   setEditedReservation,
+  onCollision,
 }: CalendarReservationFormProps) {
   const [participants, setParticipants] = useState(0);
   const [isRecurring, setIsRecurring] = useState(false);
@@ -36,12 +47,19 @@ export function CalendarReservationForm({
         .then(() => toast.success("Rezerwacja zmodyfikowana pomyślnie"))
         .catch(() => toast.error("Nie udało się zmodyfikować rezerwacji"));
     } else {
-      await addReservation(formData)
-        .then(() => toast.success("Rezerwacja dodana pomyślnie"))
-        .catch(() => toast.error("Nie udało się dodać rezerwacji"));
+      const responseWithCollisions = await addReservation(formData);
+
+      if (responseWithCollisions) {
+        setOpen(false);
+        onCollision(
+          createRequestData(
+            formData,
+            responseWithCollisions.recurringId,
+            responseWithCollisions.collisions,
+          ),
+        );
+      }
     }
-    setOpen(false);
-    setEditedReservation(null);
   };
 
   return (
@@ -192,25 +210,18 @@ export function CalendarReservationForm({
                 Powtarzająca się rezerwacja
               </label>
             </div>
-            <div className="flex justify-center gap-3">
-              <input
-                className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
-                type="date"
-                name="recurringEndDate"
-                hidden={!isRecurring}
-              />
-              <input
-                className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
-                type="date"
-                name="recurringStartDate"
-                hidden={!isRecurring}
-              />
-            </div>
+            <input
+              className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
+              type="date"
+              name="recurringEndDate"
+              placeholder="Data końcowa"
+              hidden={!isRecurring}
+            />
             <RadioDropdown
               options={[
                 { id: "DAILY", name: "Codziennie" },
                 { id: "WEEKLY", name: "Co tydzień" },
-                { id: "BIWEEKLY", name: "Co dwa tygodnie" },
+                { id: "EVERY_TWO_WEEKS", name: "Co dwa tygodnie" },
                 { id: "MONTHLY", name: "Co miesiąc" },
               ]}
               className="z-20"
@@ -223,4 +234,32 @@ export function CalendarReservationForm({
       </div>
     </div>
   );
+}
+
+function createRequestData(
+  formData: FormData,
+  recurringId: string,
+  collisions: string[],
+) {
+  const request = {
+    id: formData.get("id") as string,
+    title: formData.get("title") as string,
+    description: formData.get("description") as string,
+    date: formData.get("date") as string,
+    startTime: formData.get("startTime") as string,
+    endTime: formData.get("endTime") as string,
+    classroomId: formData.get("classroomId") as string,
+    type: formData.get("type") as string,
+    numberOfParticipants: Number(
+      formData.get("numberOfParticipants") as string,
+    ),
+    recurringId,
+    recurringEndDate: formData.get("recurringEndDate") as string,
+    recurringType: formData.get("recurringType") as string,
+  } satisfies CycleReservationRequest;
+
+  return {
+    request,
+    collisions,
+  };
 }

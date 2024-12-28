@@ -1,9 +1,13 @@
+import { useEffect, useState } from "react";
+
 type ConfirmationModalProps = {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
   message: string;
   title: string;
+  time?: number;
+  cancelText?: string;
 };
 
 export function ConfirmationModal({
@@ -12,7 +16,20 @@ export function ConfirmationModal({
   onConfirm,
   message,
   title,
+  time,
+  cancelText = "Anuluj",
 }: ConfirmationModalProps) {
+  const [countdown, setCountdown] = useState(time ?? 0);
+
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else {
+      onClose();
+    }
+  }, [countdown, onClose]);
+
   if (!isOpen) return null;
   return (
     <div className={`fixed inset-0 z-50 bg-black bg-opacity-50`}>
@@ -22,6 +39,7 @@ export function ConfirmationModal({
         </button>
         <h2 className="text-2xl font-bold">{title}</h2>
         <p className="text-lg">{message}</p>
+        <p>Ta wiadomość zniknie za {countdown} sekund</p>
         <div className="flex justify-around gap-2 pt-4">
           <button
             onClick={onConfirm}
@@ -33,7 +51,7 @@ export function ConfirmationModal({
             onClick={onClose}
             className="rounded-md bg-gray-300 px-4 py-2"
           >
-            Anuluj
+            {cancelText}
           </button>
         </div>
       </div>
