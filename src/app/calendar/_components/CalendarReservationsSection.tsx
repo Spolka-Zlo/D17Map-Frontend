@@ -68,7 +68,6 @@ export function CalendarReservationsSection({
           onCollision={setRecurringData}
         />
       )}
-
       <ConfirmationModal
         isOpen={!!recurringData}
         onClose={onReject}
@@ -78,7 +77,6 @@ export function CalendarReservationsSection({
         time={120}
         cancelText="Nie"
       />
-
       <div className="flex w-full flex-col justify-center gap-8 px-2">
         {userUpcomingReservations.map((reservation) => (
           <UserReservationItem
