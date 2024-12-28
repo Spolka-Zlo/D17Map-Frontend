@@ -1,7 +1,7 @@
 "use server";
 
 import { getToken } from "@/auth/getToken";
-import { REJECT_RECURRING_RESERVATION_URL } from "@/server-endpoints/reservations";
+import { HOST } from "@/server-endpoints/host";
 import { redirect } from "next/navigation";
 
 export async function rejectCycleReservation(
@@ -13,16 +13,18 @@ export async function rejectCycleReservation(
     redirect("/login");
   }
 
-  const response = await fetch(REJECT_RECURRING_RESERVATION_URL, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
+  const response = await fetch(
+    `${HOST}/buildings/D17/reservations/recurringReservations/${recurringId}/reject`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-    body: JSON.stringify(recurringId),
-  });
+  );
 
   if (response.ok) {
-    return response.json();
+    console.log("Cycle reservation rejected");
   } else {
     throw new Error("Failed to reject cycle reservation");
   }

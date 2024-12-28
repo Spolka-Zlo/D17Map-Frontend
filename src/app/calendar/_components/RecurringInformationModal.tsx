@@ -1,6 +1,5 @@
 import { OrangeButton } from "@/components/OrangeButton";
 import { Reservation } from "@/schemas/reservationSchemas";
-import { toTimestamp } from "@/utils/DateUtils";
 import { Dispatch, SetStateAction, useState } from "react";
 
 type RecurringInformationModalProps = {
@@ -15,74 +14,7 @@ export function RecurringInformationModal({
   setIsRecurrenceInfoModalOpen,
 }: RecurringInformationModalProps) {
   const [showAllReservations, setShowAllReservations] = useState(false);
-  const [reservationsFromCycle] = useState<Reservation[]>(
-    [
-      {
-        id: "1",
-        title: "Zajęcia z wdi",
-        description: "Zajecia z wdi dla grupy 1",
-        date: "2024-11-25",
-        startTime: "09:00",
-        endTime: "10:00",
-        type: "CLASS",
-        classroom: {
-          id: "7f000101-93df-1bc5-8193-df8bd984000f",
-          name: "1.38",
-          modelKey: "138",
-          capacity: 120,
-        },
-        numberOfParticipants: 10,
-        recurringId: "1",
-        recurringStartDate: "2024-11-25",
-        recurringEndDate: "2024-12-30",
-        recurringType: "EVERY_TWO_WEEKS",
-      },
-      {
-        id: "2",
-        title: "Zajęcia z wdi",
-        description: "Zajecia z wdi dla grupy 1",
-        date: "2024-12-09",
-        startTime: "09:00",
-        endTime: "10:00",
-        type: "CLASS",
-        classroom: {
-          id: "7f000101-93df-1bc5-8193-df8bd984000f",
-          name: "1.38",
-          modelKey: "138",
-          capacity: 120,
-        },
-        numberOfParticipants: 10,
-        recurringId: "1",
-        recurringStartDate: "2024-11-25",
-        recurringEndDate: "2024-12-30",
-        recurringType: "EVERY_TWO_WEEKS",
-      },
-      {
-        id: "3",
-        title: "Zajęcia z wdi",
-        description: "Zajecia z wdi dla grupy 1",
-        date: "2024-12-23",
-        startTime: "09:00",
-        endTime: "10:00",
-        type: "CLASS",
-        classroom: {
-          id: "7f000101-93df-1bc5-8193-df8bd984000f",
-          name: "1.38",
-          modelKey: "138",
-          capacity: 120,
-        },
-        numberOfParticipants: 10,
-        recurringId: "1",
-        recurringStartDate: "2024-11-25",
-        recurringEndDate: "2024-12-30",
-        recurringType: "EVERY_TWO_WEEKS",
-      },
-    ].map((reservation) => ({
-      ...reservation,
-      startTime: toTimestamp(reservation.date + "T" + reservation.startTime),
-      endTime: toTimestamp(reservation.date + "T" + reservation.endTime),
-    })),
-  );
+  const [reservationsFromCycle] = useState<Reservation[]>([]);
 
   const recurringTypeMap: { [key: string]: string } = {
     DAILY: "Codziennie",
