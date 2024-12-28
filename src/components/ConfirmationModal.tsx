@@ -4,6 +4,7 @@ type ConfirmationModalProps = {
   onConfirm: () => void;
   message: string;
   title: string;
+  cancelText?: string;
 };
 
 export function ConfirmationModal({
@@ -12,6 +13,7 @@ export function ConfirmationModal({
   onConfirm,
   message,
   title,
+  cancelText = "Anuluj",
 }: ConfirmationModalProps) {
   if (!isOpen) return null;
   return (
@@ -33,7 +35,7 @@ export function ConfirmationModal({
             onClick={onClose}
             className="rounded-md bg-gray-300 px-4 py-2"
           >
-            Anuluj
+            {cancelText}
           </button>
         </div>
       </div>

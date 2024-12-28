@@ -33,6 +33,21 @@ export type Reservation = {
   recurringType?: string | null;
 };
 
+export type CycleReservationRequest = {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  classroomId: string;
+  type: ReservationType;
+  numberOfParticipants: number;
+  recurringId: string;
+  recurringEndDate: string;
+  recurringType: string;
+};
+
 export const reservationSchema = z.object({
   id: z.string(),
   title: z.string(),

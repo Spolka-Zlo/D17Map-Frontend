@@ -4,11 +4,19 @@ import { OrangeButton } from "@/components/OrangeButton";
 import { addReservation } from "../../../shared-endpoints/addReservation";
 import { RadioDropdown } from "@/components/RadioDropdown";
 import { Classroom } from "@/schemas/classroomSchemas";
-import { Reservation, reservationTypes } from "@/schemas/reservationSchemas";
+import {
+  CycleReservationRequest,
+  Reservation,
+  reservationTypes,
+} from "@/schemas/reservationSchemas";
 import { modifyReservation } from "@/shared-endpoints/modifyReservation";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
-import { ConfirmationModal } from "@/components/ConfirmationModal";
+
+export type RecurringData = {
+  collisions: string[];
+  request: CycleReservationRequest;
+};
 
 type CalendarReservationFormProps = {
   room: string;
@@ -17,6 +25,7 @@ type CalendarReservationFormProps = {
   classrooms: Classroom[];
   editedReservation?: Reservation | null;
   setEditedReservation: Dispatch<SetStateAction<Reservation | null>>;
+  onCollision: Dispatch<SetStateAction<RecurringData | null>>;
 };
 
 export function CalendarReservationForm({
@@ -26,11 +35,10 @@ export function CalendarReservationForm({
   classrooms,
   editedReservation,
   setEditedReservation,
+  onCollision,
 }: CalendarReservationFormProps) {
   const [participants, setParticipants] = useState(0);
   const [isRecurring, setIsRecurring] = useState(false);
-  const [isConfirmationModalOpen, openCloseConfirmationModal] = useState(false);
-  const [collisionsList, setCollisionsList] = useState<string[]>([]);
 
   const submitAction = async (formData: FormData) => {
     if (editedReservation) {
@@ -39,18 +47,19 @@ export function CalendarReservationForm({
         .then(() => toast.success("Rezerwacja zmodyfikowana pomyślnie"))
         .catch(() => toast.error("Nie udało się zmodyfikować rezerwacji"));
     } else {
-      const collisions = await addReservation(formData);
+      const responseWithCollisions = await addReservation(formData);
 
-      if (collisions) {
-        console.log("collisions", collisions);
-        setCollisionsList(collisions);
-        openCloseConfirmationModal(true);
-      } else {
-        console.log("no collisions", collisions);
+      if (responseWithCollisions) {
+        setOpen(false);
+        onCollision(
+          createRequestData(
+            formData,
+            responseWithCollisions.recurringId,
+            responseWithCollisions.collisions,
+          ),
+        );
       }
     }
-    setOpen(false);
-    setEditedReservation(null);
   };
 
   return (
@@ -223,15 +232,34 @@ export function CalendarReservationForm({
           <OrangeButton type="submit" text="Zarezerwuj" />
         </form>
       </div>
-      {isConfirmationModalOpen && (
-        <ConfirmationModal
-          isOpen={isConfirmationModalOpen}
-          onClose={() => openCloseConfirmationModal(false)}
-          onConfirm={() => {}}
-          message={`W wybranym cyklu występują już inne rezerwacje w datach: ${collisionsList}. Czy na pewno chcesz dodać cykl z pominięciem kolicji?`}
-          title="Potwierdzenie"
-        />
-      )}
     </div>
   );
+}
+
+function createRequestData(
+  formData: FormData,
+  recurringId: string,
+  collisions: string[],
+) {
+  const request = {
+    id: formData.get("id") as string,
+    title: formData.get("title") as string,
+    description: formData.get("description") as string,
+    date: formData.get("date") as string,
+    startTime: formData.get("startTime") as string,
+    endTime: formData.get("endTime") as string,
+    classroomId: formData.get("classroomId") as string,
+    type: formData.get("type") as string,
+    numberOfParticipants: Number(
+      formData.get("numberOfParticipants") as string,
+    ),
+    recurringId,
+    recurringEndDate: formData.get("recurringEndDate") as string,
+    recurringType: formData.get("recurringType") as string,
+  } satisfies CycleReservationRequest;
+
+  return {
+    request,
+    collisions,
+  };
 }

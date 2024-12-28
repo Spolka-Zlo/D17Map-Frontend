@@ -8,9 +8,14 @@ import {
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
+export type CycleResponse = {
+  collisions: string[];
+  recurringId: string;
+};
+
 export async function addReservation(
   formData: FormData,
-): Promise<string[] | null | undefined> {
+): Promise<CycleResponse | null | undefined> {
   const token = await getToken();
   if (!token) {
     console.error("Not authenticated");
@@ -70,7 +75,10 @@ export async function addReservation(
         "collisions" in data
       ) {
         console.log("Collisions detected.", data.collisions);
-        return data.collisions;
+        return {
+          collisions: data.collisions,
+          recurringId: data.recurringId,
+        };
       } else {
         revalidateTag("userReservations");
       }
