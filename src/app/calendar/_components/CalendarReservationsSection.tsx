@@ -75,6 +75,7 @@ export function CalendarReservationsSection({
         onConfirm={onConfirm}
         message={`W wybranym cyklu występują już inne rezerwacje w datach: ${recurringData?.collisions}. Czy na pewno chcesz dodać cykl z pominięciem kolicji?`}
         title="Potwierdzenie"
+        time={120}
         cancelText="Nie"
       />
 
