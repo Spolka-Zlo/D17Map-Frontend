@@ -3,18 +3,16 @@
 import { getRole } from "@/auth/getRole";
 import { getToken } from "@/auth/getToken";
 import { HOST } from "@/server-endpoints/host";
-import { redirect } from "next/navigation";
 
-export async function deleteRole(id: string) {
+export async function deleteUser(id: string) {
   const token = await getToken();
   const role = await getRole();
 
   if (!token || role !== "ADMIN") {
-    console.error("Not authenticated");
-    redirect("/login");
+    throw new Error("Not authenticated");
   }
 
-  const response = await fetch(`${HOST}/roles/${id}`, {
+  const response = await fetch(`${HOST}/users/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -22,8 +20,8 @@ export async function deleteRole(id: string) {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to delete role");
+    throw new Error("Failed to delete user");
   } else {
-    console.log("Role deleted successfully");
+    console.log("User deleted successfully");
   }
 }

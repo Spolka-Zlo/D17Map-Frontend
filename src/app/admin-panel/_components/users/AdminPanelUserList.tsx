@@ -1,22 +1,22 @@
 "use client";
 
-import { ConfirmationModal } from "@/components/ConfirmationModal";
-import { Role } from "@/schemas/roleSchema";
 import { useContext, useState } from "react";
-import { toast } from "sonner";
-import { twMerge } from "tailwind-merge";
 import { EditContext } from "../AdminPanelListItem";
 import { EditDeleteButtonsSection } from "../EditDeleteButtonsSection";
-import { deleteRole } from "../../_actions/delete-role";
+import { twMerge } from "tailwind-merge";
+import { User } from "@/schemas/usersSchema";
+import { ConfirmationModal } from "@/components/ConfirmationModal";
+import { deleteUser } from "../../_actions/delete-user";
+import { toast } from "sonner";
 
-type AdminPanelRoleListProps = {
-  roles: Role[];
+type AdminPanelUserListProps = {
+  users: User[];
 };
 
-export function AdminPanelRoleList({ roles }: AdminPanelRoleListProps) {
+export function AdminPanelUserList({ users }: AdminPanelUserListProps) {
   const { editedElement, setEditedElement } = useContext(EditContext);
   const [isConfirmationModalOpen, openCloseConfirmationModal] = useState(false);
-  const [deletedRole, setDeletedRole] = useState<Role | null>(null);
+  const [deletedUser, setDeletedUser] = useState<User | null>(null);
 
   return (
     <>
@@ -27,43 +27,43 @@ export function AdminPanelRoleList({ roles }: AdminPanelRoleListProps) {
         >
           Wyczyść
         </span>
-        {roles.map((role) => (
+        {users.map((user) => (
           <li
-            key={role.id}
+            key={user.id}
             className={twMerge(
               "flex items-center justify-between gap-2 rounded-md border-2 border-primary bg-white/0 p-2",
-              editedElement === role.name && "bg-accent/10",
+              editedElement === user.username && "bg-accent/10",
             )}
           >
-            <h3>{role.name}</h3>
+            <h3>{user.username}</h3>
             <EditDeleteButtonsSection
-              onEdit={() => setEditedElement(role.name)}
+              onEdit={() => setEditedElement(user.username)}
               onDelete={() => {
-                setDeletedRole(role);
+                setDeletedUser(user);
                 openCloseConfirmationModal(true);
               }}
             />
           </li>
         ))}
       </ul>
-      {deletedRole && (
+      {deletedUser && (
         <ConfirmationModal
           isOpen={isConfirmationModalOpen}
           onClose={() => {
             openCloseConfirmationModal(false);
           }}
           onConfirm={async () => {
-            await deleteRole(deletedRole.name)
+            await deleteUser(deletedUser.id)
               .then(() => {
-                toast.success("Rola została usunięta");
+                toast.success("User deleted successfully");
               })
               .catch(() => {
-                toast.error("Nie udało się usunąć roli");
+                toast.error("Failed to delete user");
               });
-            openCloseConfirmationModal(false);
           }}
-          message={`Czy na pewno chcesz usunąć rolę ${deletedRole.name}?`}
-          title="Usuwanie roli"
+          title="Usuń użytkownika"
+          message="Czy jesteś pewien, że chcesz usunąć użytkownika?"
+          cancelText="Anuluj"
         />
       )}
     </>
