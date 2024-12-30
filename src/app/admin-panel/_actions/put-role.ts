@@ -50,7 +50,7 @@ export async function putRole(formData: FormData) {
         };
 
   if (id) {
-    const response = await fetch(`${HOST}/roles/admin/${id}`, {
+    const response = await fetch(`${HOST}/buildings/D17/roles/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export async function putRole(formData: FormData) {
     }
     return;
   }
-  const response = await fetch(`${HOST}/roles`, {
+  const response = await fetch(`${HOST}/buildings/D17/roles`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

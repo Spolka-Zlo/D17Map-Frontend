@@ -10,7 +10,6 @@ export function AddClassroomForm({
   equipments: Equipment[];
   classroom?: Classroom;
 }) {
-  console.log("classroom", classroom);
   return (
     <form
       className="flex h-fit w-[20vw] flex-col gap-3 rounded-md bg-white/25 p-5"

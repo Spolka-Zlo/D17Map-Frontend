@@ -39,7 +39,8 @@ export default async function AdminPanel() {
     getFloorsSchema,
   );
   const equipments = await fetchGet(`${HOST}/equipments`, getEquipmentsSchema);
-  // const roles = await fetchGet(`${HOST}/roles`, getRolesSchema);
+  // const roles = await fetchGet(`${HOST}/buildings/D17/roles`, getRolesSchema);
+  // const users = await fetchGet(`${HOST}/buildings/D17/users`, getUsersSchema);
   const roles = [
     {
       id: "1",

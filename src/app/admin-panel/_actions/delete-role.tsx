@@ -14,7 +14,7 @@ export async function deleteRole(id: string) {
     redirect("/login");
   }
 
-  const response = await fetch(`${HOST}/roles/${id}`, {
+  const response = await fetch(`${HOST}/buildings/D17/roles/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,

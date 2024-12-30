@@ -12,7 +12,7 @@ export async function deleteUser(id: string) {
     throw new Error("Not authenticated");
   }
 
-  const response = await fetch(`${HOST}/users/${id}`, {
+  const response = await fetch(`${HOST}/buildings/D17/users/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,

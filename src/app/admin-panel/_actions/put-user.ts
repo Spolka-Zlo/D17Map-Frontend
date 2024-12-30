@@ -24,7 +24,7 @@ export async function putUser(formData: FormData) {
   };
 
   if (id) {
-    const response = await fetch(`${HOST}/users/admin/${id}`, {
+    const response = await fetch(`${HOST}/buildings/D17/users/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +40,7 @@ export async function putUser(formData: FormData) {
     return;
   }
 
-  const response = await fetch(`${HOST}/users`, {
+  const response = await fetch(`${HOST}/buildings/D17/users`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
