@@ -9,7 +9,7 @@ export function AddEquipmentForm({ equipment }: { equipment?: Equipment }) {
     >
       {equipment?.id && <input type="hidden" name="id" value={equipment?.id} />}
       <div className="flex flex-col gap-3">
-        <label htmlFor="name">Name</label>
+        <label htmlFor="name">Nazwa</label>
         <input
           type="text"
           id="name"
@@ -19,7 +19,7 @@ export function AddEquipmentForm({ equipment }: { equipment?: Equipment }) {
         />
       </div>
       <button type="submit" className="justify-self-end">
-        {equipment ? "Edit" : "Add"}
+        {equipment ? "Edytuj" : "Dodaj"}
       </button>
     </form>
   );

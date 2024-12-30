@@ -41,25 +41,25 @@ export default function AdminPanelList({
   return (
     <div className="flex gap-4">
       <ul className="flex w-[35vw] flex-col items-stretch justify-start gap-4">
-        <AdminPanelListItem name="Classrooms">
+        <AdminPanelListItem name="Sale">
           <AddEditClassroom classrooms={classrooms} equipments={equipments} />
           <AdminPanelClassroomList classrooms={classrooms} />
         </AdminPanelListItem>
-        <AdminPanelListItem name="Equipments">
+        <AdminPanelListItem name="Sprzęt">
           <AddEditEquipment equipments={equipments} />
           <AdminPanelEquipmentList equipments={equipments} />
         </AdminPanelListItem>
-        <AdminPanelListItem name="Extra Rooms">
+        <AdminPanelListItem name="Specjalne pomieszczenia">
           <AddEditExtraRoom extraRooms={extraRooms} />
           <AdminPanelExtraRoomList extraRooms={extraRooms} />
         </AdminPanelListItem>
-        <AdminPanelListItem name="Reservations">
+        <AdminPanelListItem name="Rezerwacje">
           <AddEditReservation reservations={reservations} />
           <AdminPanelReservationList reservations={reservations} />
         </AdminPanelListItem>
       </ul>
       <ul className="flex w-[35vw] flex-col items-stretch justify-start gap-4">
-        <AdminPanelListItem name="Roles">
+        <AdminPanelListItem name="Role">
           <AddEditRole roles={roles} floors={floors} classrooms={classrooms} />
           <AdminPanelRoleList roles={roles} />
         </AdminPanelListItem>

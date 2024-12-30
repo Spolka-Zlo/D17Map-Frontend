@@ -11,7 +11,7 @@ export function AddEditExtraRoomForm({ extraRoom }: { extraRoom?: ExtraRoom }) {
         <input type="hidden" name="modelKey" value={extraRoom?.modelKey} />
       )}
       <div className="flex flex-col gap-3">
-        <label htmlFor="name">Name</label>
+        <label htmlFor="name">Nazwa</label>
         <input
           type="text"
           id="name"
@@ -20,7 +20,7 @@ export function AddEditExtraRoomForm({ extraRoom }: { extraRoom?: ExtraRoom }) {
           required
         />
 
-        <label htmlFor="description">Description</label>
+        <label htmlFor="description">Opis</label>
         <input
           type="text"
           id="description"
@@ -28,7 +28,7 @@ export function AddEditExtraRoomForm({ extraRoom }: { extraRoom?: ExtraRoom }) {
           defaultValue={extraRoom?.description}
         />
 
-        <label htmlFor="type">Type</label>
+        <label htmlFor="type">Typ</label>
         <input
           type="text"
           id="type"
@@ -36,7 +36,7 @@ export function AddEditExtraRoomForm({ extraRoom }: { extraRoom?: ExtraRoom }) {
           defaultValue={extraRoom?.type}
           required
         />
-        <label htmlFor="modelKey">Model Key</label>
+        <label htmlFor="modelKey">Klucz w modelu</label>
         <input
           type="text"
           id="modelKey"
@@ -44,7 +44,7 @@ export function AddEditExtraRoomForm({ extraRoom }: { extraRoom?: ExtraRoom }) {
           defaultValue={extraRoom?.modelKey}
           required
         />
-        <label htmlFor="floorName">Floor Name</label>
+        <label htmlFor="floorName">Poziom</label>
         <input
           type="text"
           id="floorName"
@@ -54,7 +54,7 @@ export function AddEditExtraRoomForm({ extraRoom }: { extraRoom?: ExtraRoom }) {
         />
       </div>
       <button type="submit" className="justify-self-end">
-        {extraRoom ? "Edit" : "Add"}
+        {extraRoom ? "Edytuj" : "Dodaj"}
       </button>
     </form>
   );

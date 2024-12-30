@@ -14,38 +14,35 @@ export function AddEditUserForm({ user, roles }: AddEditUserFormProps) {
       action={putUser}
     >
       {user?.id && <input type="hidden" name="id" value={user?.id} />}
-      <label htmlFor="username">Username</label>
+      <label htmlFor="username">Nazwa użytkownika</label>
       <input
         type="text"
         id="username"
         name="username"
         defaultValue={user?.username}
       />
-      <label htmlFor="password">Password</label>
-      <input
-        type="text"
-        id="password"
-        name="password"
-        defaultValue={user?.password}
-      />
-      <label htmlFor="roles">Roles</label>
+      <label htmlFor="password">Hasło</label>
+      <input type="text" id="password" name="password" />
+      <label htmlFor="roles">Role</label>
       <ul className="flex h-28 flex-col gap-2 overflow-auto">
         {roles.map((role) => (
           <li key={role} className="flex gap-2">
             <input
               type="checkbox"
               id={role}
-              name="roleIds[]"
+              name="roleNames[]"
               value={role}
               className={twMerge(
                 "cursor-pointer",
                 user?.roles.includes(role) && "text-accent",
               )}
+              defaultChecked={user?.roles.includes(role)}
             />
             <label htmlFor={role}>{role}</label>
           </li>
         ))}
       </ul>
+      <button type="submit">{user ? "Edytuj" : "Dodaj"}</button>
     </form>
   );
 }

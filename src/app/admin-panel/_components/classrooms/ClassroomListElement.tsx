@@ -35,7 +35,7 @@ export function ClassroomListElement({
       <span className="h-1 w-1 rounded-full bg-primary" />
       <p>Floor {classroom.name[0]}</p>
       <EditDeleteButtonsSection
-        onEdit={() => setEditedElement}
+        onEdit={() => setEditedElement(classroom.name)}
         onDelete={() => {
           setDeletedClassroom(classroom);
           openCloseConfirmationModal(true);

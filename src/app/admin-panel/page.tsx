@@ -66,6 +66,24 @@ export default async function AdminPanel() {
     },
   ];
 
+  const users = [
+    {
+      id: "1",
+      username: "j.doe@gmail.ccc",
+      roles: ["ADMIN"],
+    },
+    {
+      id: "2",
+      username: "jane.doe@gmail.ccc",
+      roles: ["STUDENT"],
+    },
+    {
+      id: "3",
+      username: "john.smith@gmail.ccc",
+      roles: ["TEACHER_1"],
+    },
+  ];
+
   return (
     <main className="flex flex-row items-start justify-start gap-4">
       <AdminPanelList
@@ -75,7 +93,7 @@ export default async function AdminPanel() {
         reservations={reservations}
         roles={roles}
         floors={floors}
-        users={[]}
+        users={users}
       />
     </main>
   );
