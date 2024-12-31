@@ -3,10 +3,16 @@
 import { getToken } from "@/auth/getToken";
 import { getRole } from "@/auth/getRole";
 import { HOST } from "@/server-endpoints/host";
+import { getBuildingName } from "@/auth/getBuildingName";
 
 export async function putExtraRoom(formData: FormData) {
   const token = await getToken();
   const role = await getRole();
+  const buildingName = await getBuildingName();
+
+  if (!buildingName) {
+    throw new Error("Building name not found");
+  }
 
   if (!token || role !== "ADMIN") {
     throw new Error("Not authenticated");
@@ -29,26 +35,28 @@ export async function putExtraRoom(formData: FormData) {
   };
 
   if (id) {
-    console.log("waiting for PUT /extra-rooms/admin/:id to be implemented");
-    // await fetch(`${HOST}/buildings/D17/extra-rooms/admin/${id}`, {
-    //   method: "PUT",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    //   body: JSON.stringify(body),
-    // });
+    await fetch(`${HOST}/buildings/${buildingName}/extra-rooms/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(body),
+    });
     return;
   }
 
-  const response = await fetch(`${HOST}/buildings/D17/extra-rooms`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+  const response = await fetch(
+    `${HOST}/buildings/${buildingName}/extra-rooms`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(body),
     },
-    body: JSON.stringify(body),
-  });
+  );
 
   if (!response.ok) {
     throw new Error("Failed to create extra room");

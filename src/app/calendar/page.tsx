@@ -6,6 +6,7 @@ import { getClassroomsSchema } from "@/schemas/classroomSchemas";
 import { reservationSchema } from "@/schemas/reservationSchemas";
 import { HOST } from "@/server-endpoints/host";
 import { getRole } from "@/auth/getRole";
+import { getBuildingName } from "@/auth/getBuildingName";
 
 export default async function ReservationPage({
   searchParams,
@@ -13,6 +14,7 @@ export default async function ReservationPage({
   searchParams: { date: string };
 }) {
   const role = await getRole();
+  const buildingName = (await getBuildingName()) || "D17";
   const lastMonday = new Date(2024, 11, 23, 9, 6, 0, 0);
   lastMonday.setDate(lastMonday.getDate());
   const mondayDate = new Date(
@@ -22,7 +24,7 @@ export default async function ReservationPage({
 
   const userUpcomingReservations = (
     await fetchGet(
-      `${HOST}/buildings/D17/reservations/user/week?startDay=${queryDate}`,
+      `${HOST}/buildings/${buildingName}/reservations/user/week?startDay=${queryDate}`,
       z.array(reservationSchema),
       true,
     )
@@ -117,7 +119,7 @@ export default async function ReservationPage({
 
   const weekReservations = (
     await fetchGet(
-      `${HOST}/buildings/D17/reservations/week?startDay=${queryDate}`,
+      `${HOST}/buildings/${buildingName}/reservations/week?startDay=${queryDate}`,
       z.array(reservationSchema),
       true,
     )
@@ -128,7 +130,7 @@ export default async function ReservationPage({
   }));
 
   const classrooms = await fetchGet(
-    `${HOST}/buildings/D17/classrooms`,
+    `${HOST}/buildings/${buildingName}/classrooms`,
     getClassroomsSchema,
   );
 
@@ -136,7 +138,7 @@ export default async function ReservationPage({
 
   const events = (
     await fetchGet(
-      `${HOST}/buildings/D17/reservations/events`,
+      `${HOST}/buildings/${buildingName}/reservations/events`,
       z.array(reservationSchema),
     )
   ).map((event) => ({

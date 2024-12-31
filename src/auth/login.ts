@@ -4,7 +4,11 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { LOGIN_URL } from "./constants";
 
-export async function login(username: string, password: string) {
+export async function login(
+  username: string,
+  password: string,
+  buildingName: string,
+) {
   const response = await fetch(LOGIN_URL, {
     method: "POST",
     headers: {
@@ -36,6 +40,12 @@ export async function login(username: string, password: string) {
   });
 
   cookies().set("role", role, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 1000 * 60 * 60 * 24, // One day
+  });
+
+  cookies().set("buildingName", buildingName, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     maxAge: 1000 * 60 * 60 * 24, // One day
