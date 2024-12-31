@@ -37,7 +37,7 @@ export function CalendarReservationsSection({
   );
 
   async function onConfirm() {
-    if (!recurringData) throw new Error("No recurring data");
+    if (!recurringData) return;
     await acceptCycleReservation(recurringData)
       .then(() => toast.success("Rezerwacja dodana pomyślnie"))
       .catch(() => toast.error("Nie udało się dodać rezerwacji"));
@@ -45,7 +45,7 @@ export function CalendarReservationsSection({
   }
 
   async function onReject() {
-    if (!recurringData) throw new Error("No recurring data");
+    if (!recurringData) return;
     await rejectCycleReservation(recurringData.request.recurringId)
       .then(() => toast.success("Rezerwacja odrzucona pomyślnie"))
       .catch(() => toast.error("Nie udało się odrzucić rezerwacji"));

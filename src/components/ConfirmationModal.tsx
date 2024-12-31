@@ -26,6 +26,9 @@ export function ConfirmationModal({
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
       return () => clearTimeout(timer);
     } else {
+      if (!time) {
+        return;
+      }
       onClose();
     }
   }, [countdown, onClose]);
