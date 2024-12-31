@@ -19,7 +19,7 @@ export function AdminPanelClassroomList({
         className="cursor-pointer rounded-md border-2 border-primary bg-white/0 p-2 text-center"
         onClick={() => setEditedElement(null)}
       >
-        Clear
+        Wyczyść
       </span>
       {classrooms.map((classroom) => (
         <ClassroomListElement

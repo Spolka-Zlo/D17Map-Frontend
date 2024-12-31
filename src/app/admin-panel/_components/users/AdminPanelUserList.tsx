@@ -4,23 +4,20 @@ import { useContext, useState } from "react";
 import { EditContext } from "../AdminPanelListItem";
 import { EditDeleteButtonsSection } from "../EditDeleteButtonsSection";
 import { twMerge } from "tailwind-merge";
-import { Equipment } from "@/schemas/equipmentSchemas";
+import { User } from "@/schemas/usersSchema";
 import { ConfirmationModal } from "@/components/ConfirmationModal";
-import { deleteEquipment } from "../../_actions/delete-equipment";
+import { deleteUser } from "../../_actions/delete-user";
 import { toast } from "sonner";
 
-type AdminPanelEquipmentListProps = {
-  equipments: Equipment[];
+type AdminPanelUserListProps = {
+  users: User[];
 };
 
-export function AdminPanelEquipmentList({
-  equipments,
-}: AdminPanelEquipmentListProps) {
+export function AdminPanelUserList({ users }: AdminPanelUserListProps) {
   const { editedElement, setEditedElement } = useContext(EditContext);
   const [isConfirmationModalOpen, openCloseConfirmationModal] = useState(false);
-  const [deletedEquipment, setDeletedEquipment] = useState<Equipment | null>(
-    null,
-  );
+  const [deletedUser, setDeletedUser] = useState<User | null>(null);
+
   return (
     <>
       <ul className="flex flex-col items-stretch justify-start gap-2 p-2">
@@ -30,44 +27,43 @@ export function AdminPanelEquipmentList({
         >
           Wyczyść
         </span>
-        {equipments.map((equipment) => (
+        {users.map((user) => (
           <li
-            key={equipment.id}
+            key={user.id}
             className={twMerge(
               "flex items-center justify-between gap-2 rounded-md border-2 border-primary bg-white/0 p-2",
-              editedElement === equipment.name && "bg-accent/10",
+              editedElement === user.username && "bg-accent/10",
             )}
           >
-            <h3>{equipment.name}</h3>
-
+            <h3>{user.username}</h3>
             <EditDeleteButtonsSection
-              onEdit={() => setEditedElement(equipment.name)}
+              onEdit={() => setEditedElement(user.username)}
               onDelete={() => {
-                setDeletedEquipment(equipment);
+                setDeletedUser(user);
                 openCloseConfirmationModal(true);
               }}
             />
           </li>
         ))}
       </ul>
-      {deletedEquipment && (
+      {deletedUser && (
         <ConfirmationModal
           isOpen={isConfirmationModalOpen}
           onClose={() => {
             openCloseConfirmationModal(false);
           }}
           onConfirm={async () => {
-            await deleteEquipment(deletedEquipment.name)
+            await deleteUser(deletedUser.id)
               .then(() => {
-                toast.success("Sprzęt został usunięty");
+                toast.success("User deleted successfully");
               })
               .catch(() => {
-                toast.error("Nie udało się usunąć sprzętu");
+                toast.error("Failed to delete user");
               });
-            openCloseConfirmationModal(false);
           }}
-          message={`Czy na pewno chcesz usunąć ${deletedEquipment.name}?`}
-          title="Usuwanie sprzętu"
+          title="Usuń użytkownika"
+          message="Czy jesteś pewien, że chcesz usunąć użytkownika?"
+          cancelText="Anuluj"
         />
       )}
     </>

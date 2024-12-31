@@ -11,12 +11,22 @@ import { AdminPanelReservationList } from "./reservations/AdminPanelReservationL
 import { ExtraRoom } from "@/schemas/extraRoomSchemas";
 import { AdminPanelExtraRoomList } from "./extra-rooms/AdminPanelExtraRoomList";
 import { AddEditExtraRoom } from "./extra-rooms/AddEditExtraRoom";
+import { AddEditRole } from "./roles/AddEditRole";
+import { Role } from "@/schemas/roleSchema";
+import { AdminPanelRoleList } from "./roles/AdminPanelRoleList";
+import { Floor } from "@/schemas/floorsSchema";
+import { AddEditUser } from "./users/AddEditUser";
+import { User } from "@/schemas/usersSchema";
+import { AdminPanelUserList } from "./users/AdminPanelUserList";
 
 type AdminPanelListProps = {
   equipments: Equipment[];
   classrooms: Classroom[];
   extraRooms: ExtraRoom[];
   reservations: Reservation[];
+  roles: Role[];
+  floors: Floor[];
+  users: User[];
 };
 
 export default function AdminPanelList({
@@ -24,25 +34,40 @@ export default function AdminPanelList({
   classrooms,
   extraRooms,
   reservations,
+  roles,
+  floors,
+  users,
 }: AdminPanelListProps) {
   return (
-    <ul className="flex w-[35vw] flex-col items-stretch justify-start gap-4">
-      <AdminPanelListItem name="Classrooms">
-        <AddEditClassroom classrooms={classrooms} equipments={equipments} />
-        <AdminPanelClassroomList classrooms={classrooms} />
-      </AdminPanelListItem>
-      <AdminPanelListItem name="Equipments">
-        <AddEditEquipment equipments={equipments} />
-        <AdminPanelEquipmentList equipments={equipments} />
-      </AdminPanelListItem>
-      <AdminPanelListItem name="Extra Rooms">
-        <AddEditExtraRoom extraRooms={extraRooms} />
-        <AdminPanelExtraRoomList extraRooms={extraRooms} />
-      </AdminPanelListItem>
-      <AdminPanelListItem name="Reservations">
-        <AddEditReservation reservations={reservations} />
-        <AdminPanelReservationList reservations={reservations} />
-      </AdminPanelListItem>
-    </ul>
+    <div className="flex gap-4">
+      <ul className="flex w-[35vw] flex-col items-stretch justify-start gap-4">
+        <AdminPanelListItem name="Sale">
+          <AddEditClassroom classrooms={classrooms} equipments={equipments} />
+          <AdminPanelClassroomList classrooms={classrooms} />
+        </AdminPanelListItem>
+        <AdminPanelListItem name="Sprzęt">
+          <AddEditEquipment equipments={equipments} />
+          <AdminPanelEquipmentList equipments={equipments} />
+        </AdminPanelListItem>
+        <AdminPanelListItem name="Specjalne pomieszczenia">
+          <AddEditExtraRoom extraRooms={extraRooms} />
+          <AdminPanelExtraRoomList extraRooms={extraRooms} />
+        </AdminPanelListItem>
+        <AdminPanelListItem name="Rezerwacje">
+          <AddEditReservation reservations={reservations} />
+          <AdminPanelReservationList reservations={reservations} />
+        </AdminPanelListItem>
+      </ul>
+      <ul className="flex w-[35vw] flex-col items-stretch justify-start gap-4">
+        <AdminPanelListItem name="Role">
+          <AddEditRole roles={roles} floors={floors} classrooms={classrooms} />
+          <AdminPanelRoleList roles={roles} />
+        </AdminPanelListItem>
+        <AdminPanelListItem name="Użytkownicy">
+          <AddEditUser users={users} roles={roles.map((role) => role.name)} />
+          <AdminPanelUserList users={users} />
+        </AdminPanelListItem>
+      </ul>
+    </div>
   );
 }

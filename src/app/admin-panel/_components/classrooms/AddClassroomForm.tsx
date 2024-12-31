@@ -16,30 +16,30 @@ export function AddClassroomForm({
       action={putClassrooms}
     >
       {classroom?.id && <input type="hidden" name="id" value={classroom?.id} />}
-      <label htmlFor="name">Name</label>
+      <label htmlFor="name">Nazwa</label>
       <input type="text" id="name" name="name" defaultValue={classroom?.name} />
-      <label htmlFor="description">Description</label>
+      <label htmlFor="description">Opis</label>
       <input
         type="text"
         id="description"
         name="description"
         defaultValue={classroom?.description}
       />
-      <label htmlFor="modelKey">Model Key</label>
+      <label htmlFor="modelKey">Klucz w modelu</label>
       <input
         type="text"
         id="modelKey"
         name="modelKey"
         defaultValue={classroom?.modelKey}
       />
-      <label htmlFor="capacity">Capacity</label>
+      <label htmlFor="capacity">Pojemność</label>
       <input
         type="number"
         id="capacity"
         name="capacity"
         defaultValue={classroom?.capacity}
       />
-      <label htmlFor="floorName">Floor Name</label>
+      <label htmlFor="floorName">Poziom</label>
       <input
         type="text"
         id="floorName"
@@ -67,7 +67,7 @@ export function AddClassroomForm({
           </li>
         ))}
       </ul>
-      <button type="submit">{classroom ? "Edit" : "Add"}</button>
+      <button type="submit">{classroom ? "Edytuj" : "Dodaj"}</button>
     </form>
   );
 }

@@ -16,7 +16,7 @@ export function AddEditReservationForm({
         <input type="hidden" name="id" value={reservation?.id} />
       )}
       <div className="flex flex-col gap-3">
-        <label htmlFor="name">Name</label>
+        <label htmlFor="name">Nazwa</label>
         <input
           type="text"
           id="name"
@@ -24,14 +24,14 @@ export function AddEditReservationForm({
           defaultValue={reservation?.title}
           required
         />
-        <label htmlFor="description">Description</label>
+        <label htmlFor="description">Opis</label>
         <input
           type="text"
           id="description"
           name="description"
           defaultValue={reservation?.description}
         />
-        <label htmlFor="date">Date</label>
+        <label htmlFor="date">Data</label>
         <input
           type="date"
           id="date"
@@ -39,7 +39,7 @@ export function AddEditReservationForm({
           defaultValue={reservation?.date}
           required
         />
-        <label htmlFor="startTime">Start Time</label>
+        <label htmlFor="startTime">Początek</label>
         <input
           type="time"
           id="startTime"
@@ -47,7 +47,7 @@ export function AddEditReservationForm({
           defaultValue={reservation?.startTime}
           required
         />
-        <label htmlFor="endTime">End Time</label>
+        <label htmlFor="endTime">Koniec</label>
         <input
           type="time"
           id="endTime"
@@ -55,7 +55,7 @@ export function AddEditReservationForm({
           defaultValue={reservation?.endTime}
           required
         />
-        <label htmlFor="classroomId">Classroom</label>
+        <label htmlFor="classroomId">Sala</label>
         <input
           type="number"
           id="classroomId"
@@ -63,7 +63,7 @@ export function AddEditReservationForm({
           defaultValue={reservation?.classroom.id}
           required
         />
-        <label htmlFor="type">Type</label>
+        <label htmlFor="type">Typ</label>
         <input
           type="text"
           id="type"
@@ -71,7 +71,7 @@ export function AddEditReservationForm({
           defaultValue={reservation?.type}
           required
         />
-        <label htmlFor="numberOfParticipants">Number of Participants</label>
+        <label htmlFor="numberOfParticipants">Ilość uczestników</label>
         <input
           type="number"
           id="numberOfParticipants"
@@ -81,7 +81,7 @@ export function AddEditReservationForm({
         />
       </div>
       <button type="submit" className="justify-self-end">
-        {reservation ? "Edit" : "Add"}
+        {reservation ? "Edytuj" : "Dodaj"}
       </button>
     </form>
   );

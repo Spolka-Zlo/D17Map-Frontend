@@ -6,6 +6,7 @@ import { getReservationsSchema } from "@/schemas/reservationSchemas";
 import { toTimestamp } from "@/utils/DateUtils";
 import { getExtraRoomsSchema } from "@/schemas/extraRoomSchemas";
 import { HOST } from "@/server-endpoints/host";
+import { getFloorsSchema } from "@/schemas/floorsSchema";
 
 export default async function AdminPanel() {
   const classroomsPromise = fetchGet(
@@ -33,7 +34,56 @@ export default async function AdminPanel() {
     reservationsPromise,
   ]);
 
+  const floors = await fetchGet(
+    `${HOST}/buildings/D17/floors`,
+    getFloorsSchema,
+  );
   const equipments = await fetchGet(`${HOST}/equipments`, getEquipmentsSchema);
+  // const roles = await fetchGet(`${HOST}/buildings/D17/roles`, getRolesSchema);
+  // const users = await fetchGet(`${HOST}/buildings/D17/users`, getUsersSchema);
+  const roles = [
+    {
+      id: "1",
+      name: "ADMIN",
+      included: {
+        all: true,
+      },
+    },
+    {
+      id: "2",
+      name: "STUDENT",
+      excluded: {
+        all: true,
+      },
+    },
+    {
+      id: "3",
+      name: "TEACHER_1",
+      included: {
+        all: false,
+        floors: ["1", "2"],
+        classrooms: ["3.33", "4.31"],
+      },
+    },
+  ];
+
+  const users = [
+    {
+      id: "1",
+      username: "j.doe@gmail.ccc",
+      roles: ["ADMIN"],
+    },
+    {
+      id: "2",
+      username: "jane.doe@gmail.ccc",
+      roles: ["STUDENT"],
+    },
+    {
+      id: "3",
+      username: "john.smith@gmail.ccc",
+      roles: ["TEACHER_1"],
+    },
+  ];
 
   return (
     <main className="flex flex-row items-start justify-start gap-4">
@@ -42,6 +92,9 @@ export default async function AdminPanel() {
         classrooms={classrooms}
         extraRooms={extraRooms}
         reservations={reservations}
+        roles={roles}
+        floors={floors}
+        users={users}
       />
     </main>
   );

@@ -1,26 +1,23 @@
 "use client";
 
+import { ConfirmationModal } from "@/components/ConfirmationModal";
+import { Role } from "@/schemas/roleSchema";
 import { useContext, useState } from "react";
+import { toast } from "sonner";
+import { twMerge } from "tailwind-merge";
 import { EditContext } from "../AdminPanelListItem";
 import { EditDeleteButtonsSection } from "../EditDeleteButtonsSection";
-import { twMerge } from "tailwind-merge";
-import { Equipment } from "@/schemas/equipmentSchemas";
-import { ConfirmationModal } from "@/components/ConfirmationModal";
-import { deleteEquipment } from "../../_actions/delete-equipment";
-import { toast } from "sonner";
+import { deleteRole } from "../../_actions/delete-role";
 
-type AdminPanelEquipmentListProps = {
-  equipments: Equipment[];
+type AdminPanelRoleListProps = {
+  roles: Role[];
 };
 
-export function AdminPanelEquipmentList({
-  equipments,
-}: AdminPanelEquipmentListProps) {
+export function AdminPanelRoleList({ roles }: AdminPanelRoleListProps) {
   const { editedElement, setEditedElement } = useContext(EditContext);
   const [isConfirmationModalOpen, openCloseConfirmationModal] = useState(false);
-  const [deletedEquipment, setDeletedEquipment] = useState<Equipment | null>(
-    null,
-  );
+  const [deletedRole, setDeletedRole] = useState<Role | null>(null);
+
   return (
     <>
       <ul className="flex flex-col items-stretch justify-start gap-2 p-2">
@@ -30,44 +27,43 @@ export function AdminPanelEquipmentList({
         >
           Wyczyść
         </span>
-        {equipments.map((equipment) => (
+        {roles.map((role) => (
           <li
-            key={equipment.id}
+            key={role.id}
             className={twMerge(
               "flex items-center justify-between gap-2 rounded-md border-2 border-primary bg-white/0 p-2",
-              editedElement === equipment.name && "bg-accent/10",
+              editedElement === role.name && "bg-accent/10",
             )}
           >
-            <h3>{equipment.name}</h3>
-
+            <h3>{role.name}</h3>
             <EditDeleteButtonsSection
-              onEdit={() => setEditedElement(equipment.name)}
+              onEdit={() => setEditedElement(role.name)}
               onDelete={() => {
-                setDeletedEquipment(equipment);
+                setDeletedRole(role);
                 openCloseConfirmationModal(true);
               }}
             />
           </li>
         ))}
       </ul>
-      {deletedEquipment && (
+      {deletedRole && (
         <ConfirmationModal
           isOpen={isConfirmationModalOpen}
           onClose={() => {
             openCloseConfirmationModal(false);
           }}
           onConfirm={async () => {
-            await deleteEquipment(deletedEquipment.name)
+            await deleteRole(deletedRole.name)
               .then(() => {
-                toast.success("Sprzęt został usunięty");
+                toast.success("Rola została usunięta");
               })
               .catch(() => {
-                toast.error("Nie udało się usunąć sprzętu");
+                toast.error("Nie udało się usunąć roli");
               });
             openCloseConfirmationModal(false);
           }}
-          message={`Czy na pewno chcesz usunąć ${deletedEquipment.name}?`}
-          title="Usuwanie sprzętu"
+          message={`Czy na pewno chcesz usunąć rolę ${deletedRole.name}?`}
+          title="Usuwanie roli"
         />
       )}
     </>
