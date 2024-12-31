@@ -1,3 +1,4 @@
+import { getBuildingName } from "@/auth/getBuildingName";
 import { getToken } from "@/auth/getToken";
 import { HOST } from "@/server-endpoints/host";
 import { NextRequest, NextResponse } from "next/server";
@@ -5,8 +6,9 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   const classroomId = request.nextUrl.searchParams.get("classroomId");
   const token = await getToken();
+  const buildingName = (await getBuildingName()) || "D17";
   const photo = await fetch(
-    `${HOST}/buildings/D17/classrooms/${classroomId}/photo`,
+    `${HOST}/buildings/${buildingName}/classrooms/${classroomId}/photo`,
     {
       method: "GET",
       headers: {

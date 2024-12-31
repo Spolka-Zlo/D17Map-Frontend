@@ -9,10 +9,13 @@ export default function LoginPage() {
           "use server";
           const username = formData.get("username") as string | undefined;
           const password = formData.get("password") as string | undefined;
-          if (!username || !password) {
+          const buildingName = formData.get("buildingName") as
+            | string
+            | undefined;
+          if (!username || !password || !buildingName) {
             return;
           }
-          await login(username, password);
+          await login(username, password, buildingName);
         }}
         className="flex flex-col gap-4"
       >
@@ -20,6 +23,8 @@ export default function LoginPage() {
         <input type="text" id="username" name="username" />
         <label htmlFor="password">Hasło</label>
         <input type="password" id="password" name="password" />
+        <label htmlFor="buildingName">Nazwa budynku</label>
+        <input type="text" id="buildingName" name="buildingName" />
         <button
           type="submit"
           className="w-44 self-center rounded-md border-b-2 border-l-2 border-primary p-2 hover:bg-accent/25"

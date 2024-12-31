@@ -1,5 +1,6 @@
 "use server";
 
+import { getBuildingName } from "@/auth/getBuildingName";
 import { getRole } from "@/auth/getRole";
 import { getToken } from "@/auth/getToken";
 import { HOST } from "@/server-endpoints/host";
@@ -8,6 +9,11 @@ import { redirect } from "next/navigation";
 export async function putUser(formData: FormData) {
   const token = await getToken();
   const role = await getRole();
+  const buildingName = await getBuildingName();
+
+  if (!buildingName) {
+    throw new Error("Building name not found");
+  }
 
   if (!token || role !== "ADMIN") {
     console.error("Not authenticated");
@@ -24,14 +30,17 @@ export async function putUser(formData: FormData) {
   };
 
   if (id) {
-    const response = await fetch(`${HOST}/buildings/D17/users/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+    const response = await fetch(
+      `${HOST}/buildings/${buildingName}/users/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
       },
-      body: JSON.stringify(body),
-    });
+    );
     if (!response.ok) {
       throw new Error("Failed to update user");
     } else {
@@ -40,7 +49,7 @@ export async function putUser(formData: FormData) {
     return;
   }
 
-  const response = await fetch(`${HOST}/buildings/D17/users`, {
+  const response = await fetch(`${HOST}/buildings/${buildingName}/users`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

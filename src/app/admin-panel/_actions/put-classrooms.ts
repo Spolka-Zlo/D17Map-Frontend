@@ -3,10 +3,16 @@
 import { getToken } from "@/auth/getToken";
 import { getRole } from "@/auth/getRole";
 import { HOST } from "@/server-endpoints/host";
+import { getBuildingName } from "@/auth/getBuildingName";
 
 export async function putClassrooms(formData: FormData) {
   const token = await getToken();
   const role = await getRole();
+  const buildingName = await getBuildingName();
+
+  if (!buildingName) {
+    throw new Error("Building name not found");
+  }
 
   if (!token || role !== "ADMIN") {
     throw new Error("Not authenticated");
@@ -32,7 +38,7 @@ export async function putClassrooms(formData: FormData) {
 
   if (id) {
     const response = await fetch(
-      `${HOST}/buildings/D17/classrooms/admin/${id}`,
+      `${HOST}/buildings/${buildingName}/classrooms/admin/${id}`,
       {
         method: "PUT",
         headers: {
@@ -49,7 +55,7 @@ export async function putClassrooms(formData: FormData) {
     return;
   }
 
-  const response = await fetch(`${HOST}/buildings/D17/classrooms`, {
+  const response = await fetch(`${HOST}/buildings/${buildingName}/classrooms`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

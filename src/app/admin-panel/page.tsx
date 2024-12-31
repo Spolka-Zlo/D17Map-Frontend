@@ -7,18 +7,23 @@ import { toTimestamp } from "@/utils/DateUtils";
 import { getExtraRoomsSchema } from "@/schemas/extraRoomSchemas";
 import { HOST } from "@/server-endpoints/host";
 import { getFloorsSchema } from "@/schemas/floorsSchema";
+import { getBuildingName } from "@/auth/getBuildingName";
 
 export default async function AdminPanel() {
+  const buildingName = await getBuildingName();
+  if (!buildingName) {
+    return null;
+  }
   const classroomsPromise = fetchGet(
-    `${HOST}/buildings/D17/classrooms`,
+    `${HOST}/buildings/${buildingName}/classrooms`,
     getClassroomsSchema,
   );
   const extraRoomsPromise = fetchGet(
-    `${HOST}/buildings/D17/extra-rooms`,
+    `${HOST}/buildings/${buildingName}/extra-rooms`,
     getExtraRoomsSchema,
   );
   const reservationsPromise = fetchGet(
-    `${HOST}/buildings/D17/reservations?day=2024-07-07`,
+    `${HOST}/buildings/${buildingName}/reservations?day=2024-07-07`,
     getReservationsSchema,
     true,
   ).then((reservations) =>
@@ -35,12 +40,12 @@ export default async function AdminPanel() {
   ]);
 
   const floors = await fetchGet(
-    `${HOST}/buildings/D17/floors`,
+    `${HOST}/buildings/${buildingName}/floors`,
     getFloorsSchema,
   );
   const equipments = await fetchGet(`${HOST}/equipments`, getEquipmentsSchema);
-  // const roles = await fetchGet(`${HOST}/buildings/D17/roles`, getRolesSchema);
-  // const users = await fetchGet(`${HOST}/buildings/D17/users`, getUsersSchema);
+  // const roles = await fetchGet(`${HOST}/buildings/${buildingName}/roles`, getRolesSchema);
+  // const users = await fetchGet(`${HOST}/buildings/${buildingName}/users`, getUsersSchema);
   const roles = [
     {
       id: "1",
