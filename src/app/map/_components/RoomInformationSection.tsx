@@ -91,6 +91,7 @@ export function RoomInformationSection({
             classrooms={classrooms}
             setOpen={openCloseReservationModal}
             setEditedReservation={() => {}}
+            onCollision={() => {}}
           />
         )}
     </div>
