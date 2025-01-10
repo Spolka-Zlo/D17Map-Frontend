@@ -37,6 +37,8 @@ export default function RegisterPage() {
         />
         <label htmlFor="confirm-password">Potwierdź hasło</label>
         <input type="password" id="confirm-password" name="confirm-password" />
+        <label htmlFor="buildingName">Nazwa budynku</label>
+        <input type="text" id="buildingName" name="buildingName" />
         <button
           type="submit"
           className="w-44 self-center rounded-md border-b-2 border-l-2 border-primary p-2 hover:bg-accent/25"

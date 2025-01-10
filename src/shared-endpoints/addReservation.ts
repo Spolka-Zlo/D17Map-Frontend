@@ -52,8 +52,6 @@ export async function addReservation(
       recurringEndDate,
     };
 
-    // console.log("body", body);
-
     const response = await fetch(ADD_RECURRING_RESERVATION_URL, {
       method: "POST",
       headers: {

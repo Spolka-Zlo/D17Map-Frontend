@@ -23,7 +23,7 @@ export function CalendarSection({
   events,
   role,
 }: CalendarSectionProps) {
-  const [filters, setFilters] = useState(["CLASS"]);
+  const [filters, setFilters] = useState(["Zajęcia"]);
   const [selectedRoom, setSelectedRoom] = useState(availableRooms[0]);
   const allFilters = Object.keys(reservationTypes);
   return (

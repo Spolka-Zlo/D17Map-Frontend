@@ -60,6 +60,7 @@ export function CalendarReservationForm({
         );
       }
     }
+    setOpen(false);
   };
 
   return (
@@ -182,7 +183,6 @@ export function CalendarReservationForm({
             options={classrooms
               .filter((room) => room.capacity >= participants)
               .map((room) => ({ id: room.id, name: room.name }))}
-            className="z-20"
             htmlName="classroomId"
             defaultValue={
               editedReservation?.classroom.name ||
@@ -194,7 +194,6 @@ export function CalendarReservationForm({
               id: reservationTypes[key],
               name: key,
             }))}
-            className="z-20"
             htmlName="type"
             defaultValue={editedReservation?.type}
           />
@@ -210,6 +209,9 @@ export function CalendarReservationForm({
                 Powtarzająca się rezerwacja
               </label>
             </div>
+            <label htmlFor="recurringEndDate" hidden={!isRecurring}>
+              Data końca cyklu
+            </label>
             <input
               className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
               type="date"
@@ -224,7 +226,6 @@ export function CalendarReservationForm({
                 { id: "EVERY_TWO_WEEKS", name: "Co dwa tygodnie" },
                 { id: "MONTHLY", name: "Co miesiąc" },
               ]}
-              className="z-20"
               htmlName="recurringType"
               hidden={!isRecurring}
             />

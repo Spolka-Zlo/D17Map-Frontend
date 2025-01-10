@@ -27,14 +27,14 @@ export function RadioDropdown({
     <div className={twMerge("relative w-44", className, hidden && "hidden")}>
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="cursor-pointer rounded-md border-b-2 border-l-2 border-accent bg-primary p-2 text-secondary focus:ring-2 focus:ring-secondary focus:ring-opacity-50"
+        className="z-10 cursor-pointer rounded-md border-b-2 border-l-2 border-accent bg-primary p-2 text-secondary focus:ring-2 focus:ring-secondary focus:ring-opacity-50"
       >
         {selected}
       </div>
 
       <ul
         className={twMerge(
-          "absolute mt-2 max-h-40 w-44 overflow-auto rounded-md",
+          "absolute z-50 mt-2 max-h-40 w-44 overflow-auto rounded-md",
           !isOpen && "hidden",
         )}
       >

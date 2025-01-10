@@ -1,6 +1,7 @@
 "use client";
 import { twMerge } from "tailwind-merge";
 import { ReservationWithTimestamp } from "./timetableUtils";
+import { reverseReservationTypes } from "@/schemas/reservationSchemas";
 
 type TimeTableDayContentProps = {
   reservationTimeStamps: ReservationWithTimestamp[];
@@ -15,6 +16,7 @@ export function TimeTableDayContent({
   selectedRoom,
   role,
 }: TimeTableDayContentProps) {
+  console.log(typeFilters);
   const filteredReservations = role
     ? filterReservationsWithProperTypeAndRoom(
         reservationTimeStamps,
@@ -35,10 +37,20 @@ export function TimeTableDayContent({
           timestamp: reservation.timestamp,
         };
       }
+      console.log(
+        reverseReservationTypes[reservation.reservation?.type],
+        reservation.reservation?.type,
+        roomFilter === reservation.reservation?.classroom.name,
+        typeFilters.includes(
+          reverseReservationTypes[reservation.reservation?.type],
+        ),
+      );
       return {
         reservation:
           roomFilter === reservation.reservation?.classroom.name &&
-          typeFilters.includes(reservation.reservation?.type)
+          typeFilters.includes(
+            reverseReservationTypes[reservation.reservation?.type],
+          )
             ? reservation.reservation
             : null,
         timestamp: reservation.timestamp,
