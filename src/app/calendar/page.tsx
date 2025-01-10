@@ -147,6 +147,8 @@ export default async function ReservationPage({
     endTime: toTimestamp(event.date + "T" + event.endTime),
   }));
 
+  console.log(userUpcomingReservations);
+
   return (
     <main>
       <CalendarPageContent
