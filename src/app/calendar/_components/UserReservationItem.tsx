@@ -112,6 +112,7 @@ export function UserReservationItem({
         reservation={reservation}
         isRecurrenceInfoModalOpen={isRecurringInfoModalOpen}
         setIsRecurrenceInfoModalOpen={openCloseRecurringInfoModal}
+        allReservationsInCycle={allReservationsInCycle}
       />
     </div>
   );

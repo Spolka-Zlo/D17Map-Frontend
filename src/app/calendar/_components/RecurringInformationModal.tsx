@@ -6,12 +6,14 @@ type RecurringInformationModalProps = {
   reservation: Reservation;
   isRecurrenceInfoModalOpen: boolean;
   setIsRecurrenceInfoModalOpen: Dispatch<SetStateAction<boolean>>;
+  allReservationsInCycle: Reservation[];
 };
 
 export function RecurringInformationModal({
   reservation,
   isRecurrenceInfoModalOpen,
   setIsRecurrenceInfoModalOpen,
+  allReservationsInCycle,
 }: RecurringInformationModalProps) {
   const [showAllReservations, setShowAllReservations] = useState(false);
   const [reservationsFromCycle] = useState<Reservation[]>([]);
@@ -92,8 +94,8 @@ export function RecurringInformationModal({
             onClick={() => setShowAllReservations(!showAllReservations)}
           />
           {showAllReservations && (
-            <div className="flex flex-col gap-2">
-              {reservationsFromCycle.map((reservation) => (
+            <div className="scrollbar flex flex-col gap-2 overflow-auto">
+              {allReservationsInCycle.map((reservation) => (
                 <div key={reservation.id} className="flex justify-center gap-2">
                   <div className="flex justify-center gap-2">
                     <span>
