@@ -126,7 +126,7 @@ export function RecurringInformationModal({
             onClick={() => setShowAllReservations(!showAllReservations)}
           />
           {showAllReservations && (
-            <div className="scrollbar flex flex-col gap-2 overflow-auto">
+            <div className="scrollbar flex max-h-60 flex-col gap-2 overflow-auto">
               {allReservationsInCycle.map((reservation) => (
                 <div key={reservation.id} className="flex justify-center gap-2">
                   <div className="flex justify-center gap-2">
