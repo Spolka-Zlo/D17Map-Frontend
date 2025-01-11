@@ -2,10 +2,11 @@
 
 import { Reservation } from "@/schemas/reservationSchemas";
 import { deleteReservation } from "../../../shared-endpoints/deleteReservation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ConfirmationModal } from "@/components/ConfirmationModal";
 import { toast } from "sonner";
 import { RecurringInformationModal } from "./RecurringInformationModal";
+import { HOST } from "@/server-endpoints/host";
 
 export function UserReservationItem({
   reservation,
@@ -17,11 +18,27 @@ export function UserReservationItem({
   const [isConfirmationModalOpen, openCloseConfirmationModal] = useState(false);
   const [isRecurringInfoModalOpen, openCloseRecurringInfoModal] =
     useState(false);
+  const [allReservationsInCycle, setAllReservationsInCycle] = useState<
+    Reservation[]
+  >([]);
+
+  useEffect(() => {
+    if (!reservation.recurringId) return;
+    fetch(
+      `/${HOST}/buildings/D17/reservations/recurringReservations/${reservation.recurringId}`,
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setAllReservationsInCycle(data);
+      });
+  }, [reservation.recurringId]);
+
+  console.log(allReservationsInCycle);
 
   return (
     <div className="relative flex w-full flex-col items-center justify-between gap-3 rounded-md border-2 border-black p-2 text-center text-primary">
       <div>
-        {"recurringId" in reservation && (
+        {"recurringId" in reservation && reservation.recurringId && (
           <button
             onClick={() => openCloseRecurringInfoModal(true)}
             className="absolute left-2 top-2 z-10 flex cursor-pointer justify-between gap-1 border-primary"

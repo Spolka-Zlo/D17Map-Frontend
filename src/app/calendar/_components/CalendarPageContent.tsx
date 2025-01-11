@@ -24,6 +24,7 @@ export function CalendarPageContent({
   events,
   role,
 }: CalendarPageContentProps) {
+  const [selectedRoom, setSelectedRoom] = useState(availableRooms[0]);
   const [isReservationModalOpen, openCloseReservationModal] = useState(false);
   const [reservationStartTime, setReservationStartTime] = useState<
     number | null | undefined
@@ -45,6 +46,8 @@ export function CalendarPageContent({
         setReservationEndTime={setReservationEndTime}
         reservationStartTime={reservationStartTime}
         reservationEndTime={reservationEndTime}
+        selectedRoom={selectedRoom}
+        setSelectedRoom={setSelectedRoom}
       />
       <div className="border-l-4 border-black"></div>
       <CalendarReservationsSection
@@ -58,6 +61,7 @@ export function CalendarPageContent({
         reservationEndTime={reservationEndTime}
         setReservationStartTime={setReservationStartTime}
         setReservationEndTime={setReservationEndTime}
+        selectedRoom={selectedRoom}
       />
     </section>
   );

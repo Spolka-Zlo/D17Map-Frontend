@@ -60,7 +60,20 @@ export function RecurringInformationModal({
               }).format(reservation.endTime)}
             </div>
             <div className="flex justify-center">
-              {reservation.date} - {reservation.recurringEndDate}
+              <span>
+                {new Intl.DateTimeFormat("pl", {
+                  day: "numeric",
+                  month: "numeric",
+                  year: "numeric",
+                }).format(new Date(reservation.date))}{" "}
+                -{" "}
+                {reservation.recurringEndDate &&
+                  new Intl.DateTimeFormat("pl", {
+                    day: "numeric",
+                    month: "numeric",
+                    year: "numeric",
+                  }).format(new Date(reservation.recurringEndDate))}
+              </span>
             </div>
             <span>Sala {reservation.classroom.name}</span>
             <span>{reservation.numberOfParticipants} uczestników</span>

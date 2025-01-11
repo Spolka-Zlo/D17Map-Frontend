@@ -19,6 +19,8 @@ type CalendarSectionProps = {
   setReservationEndTime: Dispatch<SetStateAction<number | null | undefined>>;
   reservationStartTime?: number | null;
   reservationEndTime?: number | null;
+  selectedRoom: string;
+  setSelectedRoom: Dispatch<SetStateAction<string>>;
 };
 
 export function CalendarSection({
@@ -32,9 +34,10 @@ export function CalendarSection({
   setReservationEndTime,
   reservationStartTime,
   reservationEndTime,
+  selectedRoom,
+  setSelectedRoom,
 }: CalendarSectionProps) {
   const [filters, setFilters] = useState(["Zajęcia"]);
-  const [selectedRoom, setSelectedRoom] = useState(availableRooms[0]);
   const [showPicker, setShowPicker] = useState(false);
   const allFilters = Object.keys(reservationTypes);
   return (

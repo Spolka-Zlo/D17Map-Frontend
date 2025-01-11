@@ -24,6 +24,7 @@ type CalendarReservationsSectionProps = {
   reservationEndTime?: number | null | undefined;
   setReservationStartTime: Dispatch<SetStateAction<number | null | undefined>>;
   setReservationEndTime: Dispatch<SetStateAction<number | null | undefined>>;
+  selectedRoom?: string;
 };
 
 export function CalendarReservationsSection({
@@ -37,6 +38,7 @@ export function CalendarReservationsSection({
   reservationEndTime,
   setReservationStartTime,
   setReservationEndTime,
+  selectedRoom,
 }: CalendarReservationsSectionProps) {
   const [editedReservation, setEditedReservation] =
     useState<Reservation | null>(null);
@@ -78,6 +80,7 @@ export function CalendarReservationsSection({
           reservationEndTime={reservationEndTime}
           setReservationStartTime={setReservationStartTime}
           setReservationEndTime={setReservationEndTime}
+          selectedRoom={selectedRoom}
         />
       )}
       <ConfirmationModal

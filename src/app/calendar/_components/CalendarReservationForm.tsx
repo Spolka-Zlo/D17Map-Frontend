@@ -30,6 +30,7 @@ type CalendarReservationFormProps = {
   setReservationEndTime: Dispatch<SetStateAction<number | null | undefined>>;
   reservationStartTime?: number | null | undefined;
   reservationEndTime?: number | null | undefined;
+  selectedRoom?: string;
 };
 
 export function CalendarReservationForm({
@@ -44,6 +45,7 @@ export function CalendarReservationForm({
   reservationEndTime,
   setReservationStartTime,
   setReservationEndTime,
+  selectedRoom,
 }: CalendarReservationFormProps) {
   const [participants, setParticipants] = useState(0);
   const [isRecurring, setIsRecurring] = useState(false);
@@ -201,6 +203,7 @@ export function CalendarReservationForm({
             htmlName="classroomId"
             defaultValue={
               editedReservation?.classroom.name ||
+              selectedRoom ||
               classrooms.find((r) => r.name === room)?.name
             }
           />
