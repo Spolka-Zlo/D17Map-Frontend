@@ -24,3 +24,4 @@ export async function deleteReservation(id: string) {
   }
 
   revalidateTag("userReservations");
+}
