@@ -2,11 +2,10 @@
 
 import { Reservation } from "@/schemas/reservationSchemas";
 import { deleteReservation } from "../../../shared-endpoints/deleteReservation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ConfirmationModal } from "@/components/ConfirmationModal";
 import { toast } from "sonner";
 import { RecurringInformationModal } from "./RecurringInformationModal";
-import { HOST } from "@/server-endpoints/host";
 
 export function UserReservationItem({
   reservation,

@@ -2,7 +2,6 @@ import { OrangeButton } from "@/components/OrangeButton";
 import {
   getReservationsSchema,
   Reservation,
-  reservationSchema,
 } from "@/schemas/reservationSchemas";
 import { toTimestamp } from "@/utils/DateUtils";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -19,7 +18,6 @@ export function RecurringInformationModal({
   setIsRecurrenceInfoModalOpen,
 }: RecurringInformationModalProps) {
   const [showAllReservations, setShowAllReservations] = useState(false);
-  const [reservationsFromCycle] = useState<Reservation[]>([]);
   const [allReservationsInCycle, setAllReservationsInCycle] = useState<
     Reservation[]
   >([]);

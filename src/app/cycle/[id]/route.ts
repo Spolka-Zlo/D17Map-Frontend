@@ -1,7 +1,6 @@
 import { getBuildingName } from "@/auth/getBuildingName";
 import { getToken } from "@/auth/getToken";
 import { HOST } from "@/server-endpoints/host";
-import { error } from "console";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(

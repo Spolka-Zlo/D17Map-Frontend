@@ -5,7 +5,6 @@ import { Dispatch, SetStateAction, Suspense, useState } from "react";
 import { MapFloor } from "./MapFloor";
 import { ExtraRoom } from "@/schemas/extraRoomSchemas";
 import { Vector3 } from "three";
-import { event } from "node_modules/cypress/types/jquery";
 
 type MapSceneProps = {
   floor: string;
