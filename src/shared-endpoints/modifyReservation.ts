@@ -33,11 +33,8 @@ export async function modifyReservation(formData: FormData) {
   });
 
   if (!response.ok) {
-    console.log(response.status);
-    console.log("body", body);
     throw new Error("Failed to modify reservation");
   } else {
-    console.log("Reservation modified successfully");
     revalidateTag("userReservations");
   }
 }

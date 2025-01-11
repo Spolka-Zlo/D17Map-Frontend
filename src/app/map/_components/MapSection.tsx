@@ -127,11 +127,12 @@ export function MapSection({
       </div>
       <div
         className={twMerge(
-          "h-[70vh]",
+          "md:h-[70vh]",
           clickedRoom
-            ? "w-[60vw] transition-[width] duration-500"
-            : "w-[80vw] transition-[width] duration-500",
+            ? "duration-500 md:w-[60vw] md:transition-[width]"
+            : "duration-500 md:w-[80vw] md:transition-[width]",
         )}
+        onClick={(e) => e.stopPropagation()}
       >
         {showMoveFloor !== "NONE" && (
           <div className="absolute left-1/2 top-40 -translate-x-1/2 -translate-y-1/2 transform animate-pulse text-center text-3xl duration-[3000]">

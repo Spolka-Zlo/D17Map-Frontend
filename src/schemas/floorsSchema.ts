@@ -3,7 +3,6 @@ import { z } from "zod";
 export const floorSchema = z.object({
   id: z.string(),
   floorName: z.string(),
-  buildingName: z.string(),
 });
 
 export const getFloorsSchema = z.array(floorSchema);

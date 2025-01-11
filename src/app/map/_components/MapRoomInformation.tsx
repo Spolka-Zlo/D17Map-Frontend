@@ -14,7 +14,7 @@ export function MapRoomInformation({
 }: MapRoomInformationProps) {
   if (classroom)
     return (
-      <div className="absolute right-20 top-0 rounded-md bg-white/25 p-4">
+      <div className="absolute right-20 top-0 rounded-md bg-white/25 p-4 maxMD:hidden">
         <h1 className="text-2xl font-bold">
           Piętro {floor.replace("Floor ", "")}
         </h1>
@@ -23,7 +23,7 @@ export function MapRoomInformation({
     );
   else if (extraRoom)
     return (
-      <div className="absolute right-20 top-0 rounded-md bg-white/25 p-4">
+      <div className="absolute right-20 top-0 rounded-md bg-white/25 p-4 maxMD:hidden">
         <h1 className="text-2xl font-bold">
           Piętro {floor.replace("Floor ", "")}
         </h1>

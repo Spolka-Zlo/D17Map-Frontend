@@ -4,6 +4,7 @@ import { getToken } from "@/auth/getToken";
 import { getRole } from "@/auth/getRole";
 import { HOST } from "@/server-endpoints/host";
 import { getBuildingName } from "@/auth/getBuildingName";
+import { revalidateTag } from "next/cache";
 
 export async function putClassrooms(formData: FormData) {
   const token = await getToken();
@@ -51,8 +52,9 @@ export async function putClassrooms(formData: FormData) {
 
     if (!response.ok) {
       throw new Error("Failed to update classroom");
+    } else {
+      revalidateTag("adminClassrooms");
     }
-    return;
   }
 
   const response = await fetch(`${HOST}/buildings/${buildingName}/classrooms`, {
@@ -65,7 +67,8 @@ export async function putClassrooms(formData: FormData) {
   });
   if (!response.ok) {
     throw new Error("Failed to create classroom");
+  } else {
+    revalidateTag("adminClassrooms");
+    return;
   }
-
-  console.log("Classroom created successfully");
 }

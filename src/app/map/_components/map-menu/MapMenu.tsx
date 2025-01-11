@@ -9,7 +9,7 @@ type MapMenuProps = {
 export function MapMenu({ activeRooms, setActiveRooms }: MapMenuProps) {
   return (
     <div className="absolute bottom-0 left-0 right-0 p-4">
-      <div className="flex justify-center gap-5 p-2 pl-10">
+      <div className="flex justify-center gap-5 p-2 pl-10 maxMD:flex-wrap">
         <MapMenuExtraRoomFilterItem
           type="WC"
           activeRooms={activeRooms}

@@ -27,91 +27,14 @@ export default async function ReservationPage({
       `${HOST}/buildings/${buildingName}/reservations/user/week?startDay=${queryDate}`,
       z.array(reservationSchema),
       true,
+      {
+        cache: "force-cache",
+        next: {
+          tags: ["userReservations", "adminReservations"],
+        },
+      },
     )
   ).map((reservation) => ({
-    ...reservation,
-    startTime: toTimestamp(reservation.date + "T" + reservation.startTime),
-    endTime: toTimestamp(reservation.date + "T" + reservation.endTime),
-  }));
-
-  const userUpcomingReservationsMocked = [
-    {
-      id: "1",
-      title: "Zajęcia z wdi",
-      description: "Zajecia z wdi dla grupy 1",
-      date: "2024-11-25",
-      startTime: "09:00",
-      endTime: "10:00",
-      type: "Zajęcia",
-      classroom: {
-        id: "7f000101-93df-1bc5-8193-df8bd984000f",
-        name: "1.38",
-        modelKey: "138",
-        capacity: 120,
-      },
-      numberOfParticipants: 10,
-      recurringId: "1",
-      recurringStartDate: "2024-11-25",
-      recurringEndDate: "2024-12-30",
-      recurringType: "EVERY_TWO_WEEKS",
-    },
-    {
-      id: "2",
-      title: "Zajęcia z wdi",
-      description: "Zajecia z wdi dla grupy 1",
-      date: "2024-12-09",
-      startTime: "09:00",
-      endTime: "10:00",
-      type: "CLASS",
-      classroom: {
-        id: "7f000101-93df-1bc5-8193-df8bd984000f",
-        name: "1.38",
-        modelKey: "138",
-        capacity: 120,
-      },
-      numberOfParticipants: 10,
-      recurringId: "1",
-      recurringStartDate: "2024-11-25",
-      recurringEndDate: "2024-12-30",
-      recurringType: "EVERY_TWO_WEEKS",
-    },
-    {
-      id: "3",
-      title: "Zajęcia z wdi",
-      description: "Zajecia z wdi dla grupy 1",
-      date: "2024-12-23",
-      startTime: "09:00",
-      endTime: "10:00",
-      type: "CLASS",
-      classroom: {
-        id: "7f000101-93df-1bc5-8193-df8bd984000f",
-        name: "1.38",
-        modelKey: "138",
-        capacity: 120,
-      },
-      numberOfParticipants: 10,
-      recurringId: "1",
-      recurringStartDate: "2024-11-25",
-      recurringEndDate: "2024-12-30",
-      recurringType: "EVERY_TWO_WEEKS",
-    },
-    {
-      id: "4",
-      title: "Kolokwium z wdi",
-      description: "Kolokwium z wdi dla grupy 1",
-      date: "2024-12-30",
-      startTime: "09:00",
-      endTime: "10:00",
-      type: "TEST",
-      classroom: {
-        id: "7f000101-93df-1bc5-8193-df8bd984000f",
-        name: "1.38",
-        modelKey: "138",
-        capacity: 120,
-      },
-      numberOfParticipants: 10,
-    },
-  ].map((reservation) => ({
     ...reservation,
     startTime: toTimestamp(reservation.date + "T" + reservation.startTime),
     endTime: toTimestamp(reservation.date + "T" + reservation.endTime),
@@ -122,6 +45,12 @@ export default async function ReservationPage({
       `${HOST}/buildings/${buildingName}/reservations/week?startDay=${queryDate}`,
       z.array(reservationSchema),
       true,
+      {
+        cache: "force-cache",
+        next: {
+          tags: ["userReservations", "adminReservations"],
+        },
+      },
     )
   ).map((reservation) => ({
     ...reservation,
@@ -140,6 +69,13 @@ export default async function ReservationPage({
     await fetchGet(
       `${HOST}/buildings/${buildingName}/reservations/events`,
       z.array(reservationSchema),
+      false,
+      {
+        cache: "force-cache",
+        next: {
+          revalidate: 3600,
+        },
+      },
     )
   ).map((event) => ({
     ...event,
@@ -150,35 +86,11 @@ export default async function ReservationPage({
   return (
     <main>
       <CalendarPageContent
-        weekReservations={weekReservations.concat(
-          userUpcomingReservationsMocked.filter((reservation) => {
-            const mondayMidnight = new Date(mondayDate);
-            mondayMidnight.setHours(0, 0, 0, 0);
-            return (
-              role &&
-              new Date(reservation.date).getTime() >=
-                mondayMidnight.getTime() &&
-              new Date(reservation.date).getTime() <
-                mondayMidnight.getTime() + 7 * 24 * 60 * 60 * 1000
-            );
-          }),
-        )}
+        weekReservations={weekReservations}
         availableRooms={availableRooms}
         mondayDate={mondayDate}
         classrooms={classrooms}
-        userUpcomingReservations={userUpcomingReservations.concat(
-          userUpcomingReservationsMocked.filter((reservation) => {
-            const mondayMidnight = new Date(mondayDate);
-            mondayMidnight.setHours(0, 0, 0, 0);
-            return (
-              role &&
-              new Date(reservation.date).getTime() >=
-                mondayMidnight.getTime() &&
-              new Date(reservation.date).getTime() <
-                mondayMidnight.getTime() + 7 * 24 * 60 * 60 * 1000
-            );
-          }),
-        )}
+        userUpcomingReservations={userUpcomingReservations}
         events={events}
         role={role}
       />

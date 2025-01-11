@@ -23,6 +23,5 @@ export async function deleteReservation(id: string) {
     throw new Error("Failed to delete reservation");
   }
 
-  console.log("Reservation deleted successfully");
   revalidateTag("reservations");
 }

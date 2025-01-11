@@ -3,6 +3,7 @@
 import { getRole } from "@/auth/getRole";
 import { getToken } from "@/auth/getToken";
 import { HOST } from "@/server-endpoints/host";
+import { revalidateTag } from "next/cache";
 
 export async function deleteEquipment(id: string) {
   const token = await getToken();
@@ -22,6 +23,6 @@ export async function deleteEquipment(id: string) {
   if (!response.ok) {
     throw new Error("Failed to delete equipment");
   } else {
-    console.log("Equipment deleted successfully");
+    revalidateTag("adminEquipments");
   }
 }

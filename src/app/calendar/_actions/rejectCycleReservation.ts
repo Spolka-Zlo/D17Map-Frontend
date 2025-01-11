@@ -3,6 +3,7 @@
 import { getBuildingName } from "@/auth/getBuildingName";
 import { getToken } from "@/auth/getToken";
 import { HOST } from "@/server-endpoints/host";
+import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function rejectCycleReservation(
@@ -31,7 +32,7 @@ export async function rejectCycleReservation(
   );
 
   if (response.ok) {
-    console.log("Cycle reservation rejected");
+    revalidateTag("userReservations");
   } else {
     throw new Error("Failed to reject cycle reservation");
   }

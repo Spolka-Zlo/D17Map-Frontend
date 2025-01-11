@@ -19,9 +19,9 @@ export function UserReservationItem({
     useState(false);
 
   return (
-    <div className="relative flex w-full flex-col items-center justify-between gap-3 rounded-md border-2 border-black p-2 text-center text-primary">
+    <div className="relative flex w-full min-w-72 flex-col items-center justify-between gap-3 rounded-md border-2 border-black p-2 text-center text-primary">
       <div>
-        {"recurringId" in reservation && (
+        {"recurringId" in reservation && reservation.recurringId && (
           <button
             onClick={() => openCloseRecurringInfoModal(true)}
             className="absolute left-2 top-2 z-10 flex cursor-pointer justify-between gap-1 border-primary"
@@ -32,7 +32,7 @@ export function UserReservationItem({
           </button>
         )}
         <div>{reservation.title}</div>
-        <div className="absolute right-2 top-2 z-10 flex justify-between gap-1">
+        <div className="absolute right-2 top-2 flex justify-between gap-1">
           <button
             className="text-md h-6 w-6 cursor-pointer rounded-md p-0 text-accent"
             onClick={editReservation}
@@ -64,7 +64,13 @@ export function UserReservationItem({
         <span className="h-1 w-1 rounded-full bg-primary/50" />{" "}
         <div>{reservation.classroom.name}</div>
         <span className="h-1 w-1 rounded-full bg-primary/50" />{" "}
-        <div>{reservation.date}</div>
+        <div>
+          {new Intl.DateTimeFormat("pl", {
+            day: "numeric",
+            month: "numeric",
+            year: "numeric",
+          }).format(new Date(reservation.date))}
+        </div>
       </div>
       <div>{reservation.description}</div>
       <ConfirmationModal

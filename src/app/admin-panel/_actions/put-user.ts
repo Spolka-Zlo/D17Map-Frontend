@@ -4,6 +4,7 @@ import { getBuildingName } from "@/auth/getBuildingName";
 import { getRole } from "@/auth/getRole";
 import { getToken } from "@/auth/getToken";
 import { HOST } from "@/server-endpoints/host";
+import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function putUser(formData: FormData) {
@@ -44,7 +45,7 @@ export async function putUser(formData: FormData) {
     if (!response.ok) {
       throw new Error("Failed to update user");
     } else {
-      console.log("User updated successfully");
+      revalidateTag("adminUsers");
     }
     return;
   }
@@ -62,5 +63,5 @@ export async function putUser(formData: FormData) {
     throw new Error("Failed to create user");
   }
 
-  console.log("User created successfully");
+  revalidateTag("adminUsers");
 }

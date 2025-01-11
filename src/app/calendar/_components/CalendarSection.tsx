@@ -5,6 +5,8 @@ import Link from "next/link";
 import { FilterSection } from "./FilterSection";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Reservation, reservationTypes } from "@/schemas/reservationSchemas";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 type CalendarSectionProps = {
   reservations: Reservation[];
@@ -13,6 +15,12 @@ type CalendarSectionProps = {
   openCloseReservationModal: Dispatch<SetStateAction<boolean>>;
   events: Reservation[];
   role: string | null;
+  setReservationStartTime: Dispatch<SetStateAction<number | null | undefined>>;
+  setReservationEndTime: Dispatch<SetStateAction<number | null | undefined>>;
+  reservationStartTime?: number | null;
+  reservationEndTime?: number | null;
+  selectedRoom: string;
+  setSelectedRoom: Dispatch<SetStateAction<string>>;
 };
 
 export function CalendarSection({
@@ -22,9 +30,15 @@ export function CalendarSection({
   openCloseReservationModal,
   events,
   role,
+  setReservationStartTime,
+  setReservationEndTime,
+  reservationStartTime,
+  reservationEndTime,
+  selectedRoom,
+  setSelectedRoom,
 }: CalendarSectionProps) {
-  const [filters, setFilters] = useState(["CLASS"]);
-  const [selectedRoom, setSelectedRoom] = useState(availableRooms[0]);
+  const [filters, setFilters] = useState(["Zajęcia"]);
+  const [showPicker, setShowPicker] = useState(false);
   const allFilters = Object.keys(reservationTypes);
   return (
     <section className="flex w-[62vw] flex-col gap-5">
@@ -44,18 +58,61 @@ export function CalendarSection({
           <Link href={`?date=${mondayDate - 1000 * 60 * 60 * 24 * 7}`}>
             &#x2B9C;
           </Link>
-          {new Date(mondayDate).toLocaleDateString()} -{" "}
-          {new Date(mondayDate + 1000 * 60 * 60 * 24 * 6).toLocaleDateString()}
+          <div
+            className="w-56 cursor-pointer text-center"
+            onClick={() => setShowPicker(true)}
+          >
+            {new Date(mondayDate).toLocaleDateString("pl-PL", {
+              day: "numeric",
+              month: "numeric",
+              year: "numeric",
+            })}{" "}
+            -{" "}
+            {new Date(mondayDate + 1000 * 60 * 60 * 24 * 6).toLocaleDateString(
+              "pl-PL",
+              {
+                day: "numeric",
+                month: "numeric",
+                year: "numeric",
+              },
+            )}
+            <input id="calendarInput" type="date" style={{ display: "none" }} />
+          </div>
+
           <Link href={`?date=${mondayDate + 1000 * 60 * 60 * 24 * 7}`}>
             &#x2B9E;
           </Link>
         </div>
+        {showPicker && (
+          <div className={`fixed inset-0 z-50 bg-black bg-opacity-50`}>
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-md bg-white p-8">
+              <DatePicker
+                onChange={(date) => {
+                  if (!date) return;
+                  const dayOfWeek = date.getDay();
+                  const offset = (dayOfWeek + 6) % 7;
+                  const newMondayDateTimestamp =
+                    date.getTime() - offset * 1000 * 60 * 60 * 24;
+                  window.location.href = `?date=${newMondayDateTimestamp}`;
+
+                  setShowPicker(false);
+                }}
+                inline
+              />
+            </div>
+          </div>
+        )}
         <CalendarWeekSchedule
           weekReservations={reservations}
           typeFilters={filters}
           selectedRoom={selectedRoom}
           events={events}
           role={role}
+          openCloseReservationModal={openCloseReservationModal}
+          setReservationStartTime={setReservationStartTime}
+          setReservationEndTime={setReservationEndTime}
+          reservationStartTime={reservationStartTime}
+          reservationEndTime={reservationEndTime}
         />
       </div>
     </section>

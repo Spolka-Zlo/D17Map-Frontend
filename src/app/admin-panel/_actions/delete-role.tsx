@@ -4,6 +4,7 @@ import { getBuildingName } from "@/auth/getBuildingName";
 import { getRole } from "@/auth/getRole";
 import { getToken } from "@/auth/getToken";
 import { HOST } from "@/server-endpoints/host";
+import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function deleteRole(id: string) {
@@ -33,6 +34,6 @@ export async function deleteRole(id: string) {
   if (!response.ok) {
     throw new Error("Failed to delete role");
   } else {
-    console.log("Role deleted successfully");
+    revalidateTag("adminRoles");
   }
 }

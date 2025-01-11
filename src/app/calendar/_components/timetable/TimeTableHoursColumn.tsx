@@ -3,7 +3,7 @@ import React from "react";
 export function TimeTableHoursColumn() {
   const hours = Array.from({ length: 15 }, (_, i) => i);
   return (
-    <div className="border-r-4 border-black p-2">
+    <div className="col-start-1 border-r-4 border-black p-2 maxXS:hidden">
       <div className="border-b-4 border-black pb-3 text-center">Time</div>
       <div className="pt-2">
         {hours.map((hour) => (

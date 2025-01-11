@@ -8,6 +8,7 @@ import {
   CycleReservationRequest,
   Reservation,
   reservationTypes,
+  reverseReservationTypes,
 } from "@/schemas/reservationSchemas";
 import { modifyReservation } from "@/shared-endpoints/modifyReservation";
 import { toast } from "sonner";
@@ -26,6 +27,11 @@ type CalendarReservationFormProps = {
   editedReservation?: Reservation | null;
   setEditedReservation: Dispatch<SetStateAction<Reservation | null>>;
   onCollision: Dispatch<SetStateAction<RecurringData | null>>;
+  setReservationStartTime: Dispatch<SetStateAction<number | null | undefined>>;
+  setReservationEndTime: Dispatch<SetStateAction<number | null | undefined>>;
+  reservationStartTime?: number | null | undefined;
+  reservationEndTime?: number | null | undefined;
+  selectedRoom?: string;
 };
 
 export function CalendarReservationForm({
@@ -36,6 +42,11 @@ export function CalendarReservationForm({
   editedReservation,
   setEditedReservation,
   onCollision,
+  reservationStartTime,
+  reservationEndTime,
+  setReservationStartTime,
+  setReservationEndTime,
+  selectedRoom,
 }: CalendarReservationFormProps) {
   const [participants, setParticipants] = useState(0);
   const [isRecurring, setIsRecurring] = useState(false);
@@ -60,13 +71,27 @@ export function CalendarReservationForm({
         );
       }
     }
+    setReservationStartTime(null);
+    setReservationEndTime(null);
+    setOpen(false);
   };
+
+  function setDefaultTime(
+    time: number | null | undefined,
+    editedTime: number | undefined,
+  ) {
+    if (editedTime) return new Date(editedTime).toTimeString().slice(0, 5);
+    if (time) return new Date(time).toTimeString().slice(0, 5);
+    return undefined;
+  }
 
   return (
     <div className={`fixed inset-0 z-50 bg-black bg-opacity-50`}>
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-md bg-white p-8">
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-md bg-white p-14">
         <button
           onClick={() => {
+            setReservationStartTime(null);
+            setReservationEndTime(null);
             setEditedReservation(null);
             setOpen(false);
           }}
@@ -75,8 +100,8 @@ export function CalendarReservationForm({
           X
         </button>
 
-        <h3 className="pb-5 text-xl text-primary">
-          Rezerwacja sali {room} na dzień {date.toDateString()}
+        <h3 className="pb-5 text-center text-xl text-primary">
+          {editedReservation ? "Edycja rezerwacji" : "Rezerwacja sali"}
         </h3>
         <form
           action={submitAction}
@@ -122,13 +147,10 @@ export function CalendarReservationForm({
               type="time"
               list="time"
               required
-              defaultValue={
-                editedReservation
-                  ? new Date(editedReservation.startTime)
-                      .toTimeString()
-                      .slice(0, 5)
-                  : undefined
-              }
+              defaultValue={setDefaultTime(
+                reservationStartTime,
+                editedReservation?.startTime,
+              )}
               disabled={
                 editedReservation !== null && editedReservation !== undefined
               }
@@ -142,13 +164,10 @@ export function CalendarReservationForm({
               type="time"
               list="time"
               required
-              defaultValue={
-                editedReservation
-                  ? new Date(editedReservation.endTime)
-                      .toTimeString()
-                      .slice(0, 5)
-                  : undefined
-              }
+              defaultValue={setDefaultTime(
+                reservationEndTime,
+                editedReservation?.endTime,
+              )}
               disabled={
                 editedReservation !== null && editedReservation !== undefined
               }
@@ -182,10 +201,10 @@ export function CalendarReservationForm({
             options={classrooms
               .filter((room) => room.capacity >= participants)
               .map((room) => ({ id: room.id, name: room.name }))}
-            className="z-20"
             htmlName="classroomId"
             defaultValue={
               editedReservation?.classroom.name ||
+              selectedRoom ||
               classrooms.find((r) => r.name === room)?.name
             }
           />
@@ -194,9 +213,12 @@ export function CalendarReservationForm({
               id: reservationTypes[key],
               name: key,
             }))}
-            className="z-20"
             htmlName="type"
-            defaultValue={editedReservation?.type}
+            defaultValue={
+              editedReservation
+                ? reverseReservationTypes[editedReservation?.type]
+                : undefined
+            }
           />
           <div className="flex flex-col items-center gap-3">
             <div className="flex justify-center gap-3">
@@ -210,6 +232,9 @@ export function CalendarReservationForm({
                 Powtarzająca się rezerwacja
               </label>
             </div>
+            <label htmlFor="recurringEndDate" hidden={!isRecurring}>
+              Data końca cyklu
+            </label>
             <input
               className="rounded-md border-b-2 border-l-2 border-primary p-1 text-center"
               type="date"
@@ -224,12 +249,14 @@ export function CalendarReservationForm({
                 { id: "EVERY_TWO_WEEKS", name: "Co dwa tygodnie" },
                 { id: "MONTHLY", name: "Co miesiąc" },
               ]}
-              className="z-20"
               htmlName="recurringType"
               hidden={!isRecurring}
             />
           </div>
-          <OrangeButton type="submit" text="Zarezerwuj" />
+          <OrangeButton
+            type="submit"
+            text={editedReservation ? "Zatwierdź" : "Zarezerwuj"}
+          />
         </form>
       </div>
     </div>

@@ -14,10 +14,10 @@ export function MenuContent({ links, open, toggleOpen }: MenuContentProps) {
   return (
     <div
       className={twMerge(
-        "ml:hidden flex flex-col justify-center items-center content-center gap-7 absolute top-0 bottom-0 left-0 right-0 z-20 w-screen bg-primary",
+        "absolute bottom-0 left-0 right-0 top-0 flex w-screen flex-col content-center items-center justify-center gap-7 bg-primary ml:hidden",
         open
-          ? "transition-[height] duration-700 h-screen"
-          : "h-0 transition-[height] duration-1000 -mt-40"
+          ? "h-screen transition-[height] duration-700"
+          : "-mt-40 h-0 transition-[height] duration-1000",
       )}
     >
       {links.map(({ name, url }) => (

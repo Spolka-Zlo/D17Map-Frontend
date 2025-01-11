@@ -24,10 +24,21 @@ export function CalendarPageContent({
   events,
   role,
 }: CalendarPageContentProps) {
+  const [selectedRoom, setSelectedRoom] = useState(availableRooms[0]);
   const [isReservationModalOpen, openCloseReservationModal] = useState(false);
+  const [reservationStartTime, setReservationStartTime] = useState<
+    number | null | undefined
+  >(null);
+  const [reservationEndTime, setReservationEndTime] = useState<
+    number | null | undefined
+  >(null);
   const mondayDateTimestamp = mondayDate.getTime();
   return (
-    <section className="flex justify-stretch gap-10">
+    <section
+      className={
+        "flex justify-stretch gap-10 maxLG:flex-col maxLG:content-center maxLG:items-center"
+      }
+    >
       <CalendarSection
         reservations={weekReservations}
         availableRooms={availableRooms}
@@ -35,6 +46,12 @@ export function CalendarPageContent({
         openCloseReservationModal={openCloseReservationModal}
         events={events}
         role={role}
+        setReservationStartTime={setReservationStartTime}
+        setReservationEndTime={setReservationEndTime}
+        reservationStartTime={reservationStartTime}
+        reservationEndTime={reservationEndTime}
+        selectedRoom={selectedRoom}
+        setSelectedRoom={setSelectedRoom}
       />
       <div className="border-l-4 border-black"></div>
       <CalendarReservationsSection
@@ -44,6 +61,11 @@ export function CalendarPageContent({
         userUpcomingReservations={userUpcomingReservations}
         events={events}
         role={role}
+        reservationStartTime={reservationStartTime}
+        reservationEndTime={reservationEndTime}
+        setReservationStartTime={setReservationStartTime}
+        setReservationEndTime={setReservationEndTime}
+        selectedRoom={selectedRoom}
       />
     </section>
   );

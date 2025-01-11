@@ -9,7 +9,7 @@ export function AddEditReservationForm({
 }) {
   return (
     <form
-      className="flex h-fit w-[20vw] flex-col justify-between gap-3 rounded-md bg-white/25 p-5"
+      className="flex h-fit w-[20vw] flex-col justify-between gap-3 rounded-md bg-white/25 p-5 maxMD:w-full"
       action={reservation ? modifyReservation : addReservation}
     >
       {reservation?.id && (

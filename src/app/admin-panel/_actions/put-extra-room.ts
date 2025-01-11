@@ -4,6 +4,7 @@ import { getToken } from "@/auth/getToken";
 import { getRole } from "@/auth/getRole";
 import { HOST } from "@/server-endpoints/host";
 import { getBuildingName } from "@/auth/getBuildingName";
+import { revalidateTag } from "next/cache";
 
 export async function putExtraRoom(formData: FormData) {
   const token = await getToken();
@@ -35,15 +36,23 @@ export async function putExtraRoom(formData: FormData) {
   };
 
   if (id) {
-    await fetch(`${HOST}/buildings/${buildingName}/extra-rooms/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+    const response = await fetch(
+      `${HOST}/buildings/${buildingName}/extra-rooms/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
       },
-      body: JSON.stringify(body),
-    });
-    return;
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to update extra room");
+    } else {
+      revalidateTag("adminExtraRooms");
+    }
   }
 
   const response = await fetch(
@@ -61,6 +70,7 @@ export async function putExtraRoom(formData: FormData) {
   if (!response.ok) {
     throw new Error("Failed to create extra room");
   } else {
-    console.log("Extra room created successfully");
+    revalidateTag("adminExtraRooms");
+    return;
   }
 }

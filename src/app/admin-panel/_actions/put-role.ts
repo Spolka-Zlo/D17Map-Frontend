@@ -4,6 +4,7 @@ import { getBuildingName } from "@/auth/getBuildingName";
 import { getRole } from "@/auth/getRole";
 import { getToken } from "@/auth/getToken";
 import { HOST } from "@/server-endpoints/host";
+import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 function createIncludedExcluded(
@@ -70,7 +71,7 @@ export async function putRole(formData: FormData) {
     if (!response.ok) {
       throw new Error("Failed to update role");
     } else {
-      console.log("Role updated successfully");
+      revalidateTag("adminRoles");
     }
     return;
   }
@@ -87,5 +88,5 @@ export async function putRole(formData: FormData) {
     throw new Error("Failed to create role");
   }
 
-  console.log("Role created successfully");
+  revalidateTag("adminRoles");
 }

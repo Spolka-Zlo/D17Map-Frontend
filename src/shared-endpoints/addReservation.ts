@@ -35,9 +35,6 @@ export async function addReservation(
   const recurringType = formData.get("recurringType") as string;
   const recurringEndDate = formData.get("recurringEndDate") as string;
 
-  console.log("recurringType", recurringType);
-  console.log("recurringEndDate", recurringEndDate);
-
   if (recurringType && recurringEndDate) {
     const body = {
       title,
@@ -52,8 +49,6 @@ export async function addReservation(
       recurringEndDate,
     };
 
-    // console.log("body", body);
-
     const response = await fetch(ADD_RECURRING_RESERVATION_URL, {
       method: "POST",
       headers: {
@@ -64,17 +59,14 @@ export async function addReservation(
     });
 
     if (response.status > 204) {
-      console.log("Failed to add reservation", response);
       throw new Error("Failed to add reservation");
     } else {
       const data = await response.json();
-      console.log("Reservation added successfully", data);
       if (
         "message" in data &&
         data.message === "Collisions detected." &&
         "collisions" in data
       ) {
-        console.log("Collisions detected.", data.collisions);
         return {
           collisions: data.collisions,
           recurringId: data.recurringId,
@@ -83,6 +75,7 @@ export async function addReservation(
         revalidateTag("userReservations");
       }
     }
+    revalidateTag("userReservations");
     return null;
   }
 
@@ -109,7 +102,6 @@ export async function addReservation(
   if (!response.ok) {
     throw new Error("Failed to add reservation");
   } else {
-    console.log("Reservation added successfully");
     revalidateTag("userReservations");
   }
 }

@@ -4,6 +4,7 @@ import { getBuildingName } from "@/auth/getBuildingName";
 import { getRole } from "@/auth/getRole";
 import { getToken } from "@/auth/getToken";
 import { HOST } from "@/server-endpoints/host";
+import { revalidateTag } from "next/cache";
 
 export async function deleteUser(id: string) {
   const token = await getToken();
@@ -31,6 +32,6 @@ export async function deleteUser(id: string) {
   if (!response.ok) {
     throw new Error("Failed to delete user");
   } else {
-    console.log("User deleted successfully");
+    revalidateTag("adminUsers");
   }
 }

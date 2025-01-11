@@ -13,6 +13,17 @@ export const reservationTypes: { [key: string]: string } = {
   Wydarzenie: "EVENT",
 } as const;
 
+export const reverseReservationTypes: { [key: string]: string } = {
+  CLASS: "Zajęcia",
+  EXAM: "Egzamin",
+  LECTURE: "Wykład",
+  CONFERENCE: "Konferencja",
+  TEST: "Kolokwium",
+  CONSULTATIONS: "Konsultacje",
+  STUDENT_CLUB_MEETING: "Spotkanie koła naukowego",
+  EVENT: "Wydarzenie",
+} as const;
+
 export type Reservation = {
   id: string;
   title: string;
