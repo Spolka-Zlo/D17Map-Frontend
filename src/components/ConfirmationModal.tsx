@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 type ConfirmationModalProps = {
   isOpen: boolean;
@@ -42,7 +43,9 @@ export function ConfirmationModal({
         </button>
         <h2 className="text-2xl font-bold">{title}</h2>
         <p className="text-lg">{message}</p>
-        <p>Ta wiadomość zniknie za {countdown} sekund</p>
+        <p className={twMerge(!time && "hidden")}>
+          Ta wiadomość zniknie za {countdown} sekund
+        </p>
         <div className="flex justify-around gap-2 pt-4">
           <button
             onClick={onConfirm}

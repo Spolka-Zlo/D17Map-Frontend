@@ -17,15 +17,35 @@ export default async function AdminPanel() {
   const classroomsPromise = fetchGet(
     `${HOST}/buildings/${buildingName}/classrooms`,
     getClassroomsSchema,
+    false,
+    {
+      cache: "force-cache",
+      next: {
+        tags: ["adminClassrooms"],
+      },
+    },
   );
   const extraRoomsPromise = fetchGet(
     `${HOST}/buildings/${buildingName}/extra-rooms`,
     getExtraRoomsSchema,
+    false,
+    {
+      cache: "force-cache",
+      next: {
+        tags: ["adminExtraRooms"],
+      },
+    },
   );
   const reservationsPromise = fetchGet(
     `${HOST}/buildings/${buildingName}/reservations?day=2024-07-07`,
     getReservationsSchema,
     true,
+    {
+      cache: "force-cache",
+      next: {
+        tags: ["adminReservations"],
+      },
+    },
   ).then((reservations) =>
     reservations.map((reservation) => ({
       ...reservation,
@@ -42,8 +62,25 @@ export default async function AdminPanel() {
   const floors = await fetchGet(
     `${HOST}/buildings/${buildingName}/floors`,
     getFloorsSchema,
+    false,
+    {
+      cache: "force-cache",
+      next: {
+        tags: ["adminFloors"],
+      },
+    },
   );
-  const equipments = await fetchGet(`${HOST}/equipments`, getEquipmentsSchema);
+  const equipments = await fetchGet(
+    `${HOST}/equipments`,
+    getEquipmentsSchema,
+    false,
+    {
+      cache: "force-cache",
+      next: {
+        tags: ["adminEquipments"],
+      },
+    },
+  );
   // const roles = await fetchGet(`${HOST}/buildings/${buildingName}/roles`, getRolesSchema);
   // const users = await fetchGet(`${HOST}/buildings/${buildingName}/users`, getUsersSchema);
   const roles = [

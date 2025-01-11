@@ -3,6 +3,7 @@
 import { HOST } from "@/server-endpoints/host";
 import { getToken } from "@/auth/getToken";
 import { redirect } from "next/navigation";
+import { revalidateTag } from "next/cache";
 
 export async function createEquipment(formData: FormData) {
   const token = await getToken();
@@ -24,7 +25,7 @@ export async function createEquipment(formData: FormData) {
     if (!response.ok) {
       throw new Error("Failed to update equipment");
     } else {
-      console.log("Equipment updated successfully");
+      revalidateTag("adminEquipments");
     }
     return;
   }
@@ -40,5 +41,7 @@ export async function createEquipment(formData: FormData) {
 
   if (!response.ok) {
     throw new Error("Failed to create equipment");
+  } else {
+    revalidateTag("adminEquipments");
   }
 }

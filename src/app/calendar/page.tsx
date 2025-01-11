@@ -27,6 +27,12 @@ export default async function ReservationPage({
       `${HOST}/buildings/${buildingName}/reservations/user/week?startDay=${queryDate}`,
       z.array(reservationSchema),
       true,
+      {
+        cache: "force-cache",
+        next: {
+          tags: ["userReservations", "adminReservations"],
+        },
+      },
     )
   ).map((reservation) => ({
     ...reservation,
@@ -39,6 +45,12 @@ export default async function ReservationPage({
       `${HOST}/buildings/${buildingName}/reservations/week?startDay=${queryDate}`,
       z.array(reservationSchema),
       true,
+      {
+        cache: "force-cache",
+        next: {
+          tags: ["userReservations", "adminReservations"],
+        },
+      },
     )
   ).map((reservation) => ({
     ...reservation,
@@ -57,6 +69,13 @@ export default async function ReservationPage({
     await fetchGet(
       `${HOST}/buildings/${buildingName}/reservations/events`,
       z.array(reservationSchema),
+      false,
+      {
+        cache: "force-cache",
+        next: {
+          revalidate: 3600,
+        },
+      },
     )
   ).map((event) => ({
     ...event,

@@ -4,6 +4,7 @@ import { getToken } from "@/auth/getToken";
 import { getRole } from "@/auth/getRole";
 import { HOST } from "@/server-endpoints/host";
 import { getBuildingName } from "@/auth/getBuildingName";
+import { revalidateTag } from "next/cache";
 
 export async function deleteClassroom(id: string) {
   const token = await getToken();
@@ -31,6 +32,6 @@ export async function deleteClassroom(id: string) {
   if (!response.ok) {
     throw new Error("Failed to delete classroom");
   } else {
-    console.log("Classroom deleted successfully");
+    revalidateTag("adminClassrooms");
   }
 }

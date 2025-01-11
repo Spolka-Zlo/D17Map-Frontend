@@ -8,6 +8,7 @@ import {
   CycleReservationRequest,
   Reservation,
   reservationTypes,
+  reverseReservationTypes,
 } from "@/schemas/reservationSchemas";
 import { modifyReservation } from "@/shared-endpoints/modifyReservation";
 import { toast } from "sonner";
@@ -213,7 +214,11 @@ export function CalendarReservationForm({
               name: key,
             }))}
             htmlName="type"
-            defaultValue={editedReservation?.type}
+            defaultValue={
+              editedReservation
+                ? reverseReservationTypes[editedReservation?.type]
+                : undefined
+            }
           />
           <div className="flex flex-col items-center gap-3">
             <div className="flex justify-center gap-3">
