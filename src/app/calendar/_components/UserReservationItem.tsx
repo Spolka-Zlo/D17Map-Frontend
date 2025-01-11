@@ -18,22 +18,6 @@ export function UserReservationItem({
   const [isConfirmationModalOpen, openCloseConfirmationModal] = useState(false);
   const [isRecurringInfoModalOpen, openCloseRecurringInfoModal] =
     useState(false);
-  const [allReservationsInCycle, setAllReservationsInCycle] = useState<
-    Reservation[]
-  >([]);
-
-  useEffect(() => {
-    if (!reservation.recurringId) return;
-    fetch(
-      `/${HOST}/buildings/D17/reservations/recurringReservations/${reservation.recurringId}`,
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setAllReservationsInCycle(data);
-      });
-  }, [reservation.recurringId]);
-
-  console.log(allReservationsInCycle);
 
   return (
     <div className="relative flex w-full min-w-72 flex-col items-center justify-between gap-3 rounded-md border-2 border-black p-2 text-center text-primary">
@@ -112,7 +96,6 @@ export function UserReservationItem({
         reservation={reservation}
         isRecurrenceInfoModalOpen={isRecurringInfoModalOpen}
         setIsRecurrenceInfoModalOpen={openCloseRecurringInfoModal}
-        allReservationsInCycle={allReservationsInCycle}
       />
     </div>
   );

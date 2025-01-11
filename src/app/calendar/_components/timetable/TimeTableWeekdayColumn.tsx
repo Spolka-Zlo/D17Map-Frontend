@@ -83,10 +83,6 @@ export function TimeTableDayContent({
     setIsDragging(false);
     setReservationEndTime(timestamp);
     openCloseReservationModal(true);
-    console.log("Selected range:", {
-      reservationStartTime,
-      reservationEndTime: timestamp,
-    });
   }
 
   function isInSelectedRange(timestamp: number) {
@@ -95,8 +91,6 @@ export function TimeTableDayContent({
     const max = Math.max(reservationStartTime, reservationEndTime);
     return timestamp >= min && timestamp <= max;
   }
-
-  console.log(reservationStartTime, reservationEndTime, "start end");
 
   return (
     <div className="pt-2" onMouseLeave={() => setIsDragging(false)}>

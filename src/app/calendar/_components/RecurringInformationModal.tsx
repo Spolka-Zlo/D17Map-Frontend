@@ -1,22 +1,56 @@
 import { OrangeButton } from "@/components/OrangeButton";
-import { Reservation } from "@/schemas/reservationSchemas";
-import { Dispatch, SetStateAction, useState } from "react";
+import {
+  getReservationsSchema,
+  Reservation,
+  reservationSchema,
+} from "@/schemas/reservationSchemas";
+import { toTimestamp } from "@/utils/DateUtils";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 type RecurringInformationModalProps = {
   reservation: Reservation;
   isRecurrenceInfoModalOpen: boolean;
   setIsRecurrenceInfoModalOpen: Dispatch<SetStateAction<boolean>>;
-  allReservationsInCycle: Reservation[];
 };
 
 export function RecurringInformationModal({
   reservation,
   isRecurrenceInfoModalOpen,
   setIsRecurrenceInfoModalOpen,
-  allReservationsInCycle,
 }: RecurringInformationModalProps) {
   const [showAllReservations, setShowAllReservations] = useState(false);
   const [reservationsFromCycle] = useState<Reservation[]>([]);
+  const [allReservationsInCycle, setAllReservationsInCycle] = useState<
+    Reservation[]
+  >([]);
+
+  useEffect(() => {
+    if (!reservation.recurringId) return;
+    fetch(`/cycle/${reservation.recurringId}`)
+      .then((response) => {
+        if (response.ok)
+          response
+            .json()
+            .then((cycle) => {
+              return getReservationsSchema.parse(cycle);
+            })
+            .then((cycle) =>
+              setAllReservationsInCycle(
+                cycle.map((reservation) => ({
+                  ...reservation,
+                  startTime: toTimestamp(
+                    reservation.date + "T" + reservation.startTime,
+                  ),
+                  endTime: toTimestamp(
+                    reservation.date + "T" + reservation.endTime,
+                  ),
+                })),
+              ),
+            )
+            .catch(console.error);
+      })
+      .catch(console.error);
+  }, [reservation.recurringId]);
 
   const recurringTypeMap: { [key: string]: string } = {
     DAILY: "Codziennie",

@@ -30,7 +30,7 @@ export function CalendarTimeTable({
 }: CalendarTimeTableProps) {
   return (
     <div className="relative">
-      <div className="grid w-full grid-cols-8 grid-rows-1">
+      <div className="grid w-full grid-rows-1 xs:grid-cols-8 maxXS:grid-cols-7">
         <TimeTableHoursColumn />
         <TimeTableMainPart
           reservations={role ? reservations : events}

@@ -22,8 +22,8 @@ export function FilterSection({
   availableRooms,
 }: FilterSectionProps) {
   return (
-    <div className="flex w-full content-center items-center justify-between gap-5 rounded-md bg-white/25 p-5 maxLG:flex-col">
-      <div className="scrollbar flex flex-grow gap-5 overflow-auto p-2 maxLG:flex-wrap maxLG:justify-around maxLG:gap-3 maxLG:pl-4">
+    <div className="maxXL:flex-col flex w-full content-center items-center justify-between gap-5 rounded-md bg-white/25 p-5">
+      <div className="scrollbar maxXL:flex-wrap maxXL:justify-around maxXL:gap-3 flex flex-grow gap-5 overflow-auto p-2 maxLG:pl-4">
         {allFilters.map((filter) => (
           <FilterButton
             key={filter}
@@ -39,7 +39,7 @@ export function FilterSection({
           />
         ))}
       </div>
-      <div className="border-r-4 border-primary p-2 maxLG:hidden" />
+      <div className="maxXL:hidden border-r-4 border-primary p-2" />
       <div className="flex items-center justify-center gap-5 lg:pl-10">
         <Dropdown
           selected={selectedRoom}

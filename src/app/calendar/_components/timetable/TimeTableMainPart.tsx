@@ -70,9 +70,8 @@ export function TimeTableMainPart({
       {Object.entries(timestampsMap).map(([day, reservationTimeStamps], i) => (
         <div
           key={day}
-          className="p-2"
+          className={`p-2 maxXS:col-start-${i + 1} xs:col-start-${i + 2}`}
           style={{
-            gridColumn: i + 2,
             gridRow: 1,
           }}
         >
