@@ -63,7 +63,7 @@ export function CalendarReservationsSection({
   }
 
   return (
-    <div className="flex w-[25vw] flex-col items-center justify-start px-2">
+    <div className="flex flex-col items-center justify-start px-2 lg:w-[25vw]">
       <h1 className="text-center text-2xl">
         {role ? "Nadchodzące rezerwacje" : "Nadchodzące wydarzenia"}
       </h1>

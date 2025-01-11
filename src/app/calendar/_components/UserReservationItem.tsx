@@ -36,7 +36,7 @@ export function UserReservationItem({
   console.log(allReservationsInCycle);
 
   return (
-    <div className="relative flex w-full flex-col items-center justify-between gap-3 rounded-md border-2 border-black p-2 text-center text-primary">
+    <div className="relative flex w-full min-w-72 flex-col items-center justify-between gap-3 rounded-md border-2 border-black p-2 text-center text-primary">
       <div>
         {"recurringId" in reservation && reservation.recurringId && (
           <button
@@ -49,7 +49,7 @@ export function UserReservationItem({
           </button>
         )}
         <div>{reservation.title}</div>
-        <div className="absolute right-2 top-2 z-10 flex justify-between gap-1">
+        <div className="absolute right-2 top-2 -z-10 flex justify-between gap-1">
           <button
             className="text-md h-6 w-6 cursor-pointer rounded-md p-0 text-accent"
             onClick={editReservation}
@@ -58,7 +58,7 @@ export function UserReservationItem({
             &#x1F589;
           </button>
           <button
-            className="text-md h-6 w-6 cursor-pointer rounded-md p-0 text-red-500"
+            className="text-md -z-10 h-6 w-6 cursor-pointer rounded-md p-0 text-red-500"
             aria-label="Cancel reservation"
             onClick={() => openCloseConfirmationModal(true)}
           >

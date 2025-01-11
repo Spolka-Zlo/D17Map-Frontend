@@ -20,7 +20,7 @@ export function Dropdown({
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className={twMerge("relative w-44", className)}>
+    <div className={twMerge("relative z-30 w-44", className)}>
       <div
         onClick={() => setIsOpen(!isOpen)}
         className="flex cursor-pointer justify-between rounded-md border-b-2 border-l-2 border-accent bg-primary p-2 text-secondary focus:ring-2 focus:ring-secondary focus:ring-opacity-50"

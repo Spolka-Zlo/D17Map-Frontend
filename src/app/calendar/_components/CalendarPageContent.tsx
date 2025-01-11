@@ -34,7 +34,11 @@ export function CalendarPageContent({
   >(null);
   const mondayDateTimestamp = mondayDate.getTime();
   return (
-    <section className="flex justify-stretch gap-10">
+    <section
+      className={
+        "flex justify-stretch gap-10 maxLG:flex-col maxLG:content-center maxLG:items-center"
+      }
+    >
       <CalendarSection
         reservations={weekReservations}
         availableRooms={availableRooms}
