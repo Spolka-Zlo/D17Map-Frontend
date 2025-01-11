@@ -54,7 +54,6 @@ export function MapScene({
         panSpeed={0.1}
         enableDamping={true}
       />
-      {/* <primitive object={new CameraHelper(new OrthographicCamera())} /> */}
     </Canvas>
   );
 }
