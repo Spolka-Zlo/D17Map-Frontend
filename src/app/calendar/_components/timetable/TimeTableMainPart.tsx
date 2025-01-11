@@ -1,15 +1,8 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { TimeTableDayContent } from "./TimeTableWeekdayColumn";
 import { mapWeekdaysToTimestamps } from "./timetableUtils";
 import { useSearchParams } from "next/navigation";
 import { Reservation } from "@/schemas/reservationSchemas";
-
-export type TimeTableMainPartProps = {
-  reservations: Reservation[];
-  typeFilters: string[];
-  selectedRoom: string;
-  role: string | null;
-};
 
 export type weekdaysMapType = {
   Mon: Reservation[];
@@ -21,11 +14,28 @@ export type weekdaysMapType = {
   Sun: Reservation[];
 };
 
+export type TimeTableMainPartProps = {
+  reservations: Reservation[];
+  typeFilters: string[];
+  selectedRoom: string;
+  role: string | null;
+  openCloseReservationModal: Dispatch<SetStateAction<boolean>>;
+  setReservationStartTime: Dispatch<SetStateAction<number | null | undefined>>;
+  setReservationEndTime: Dispatch<SetStateAction<number | null | undefined>>;
+  reservationStartTime?: number | null;
+  reservationEndTime?: number | null;
+};
+
 export function TimeTableMainPart({
   reservations,
   typeFilters,
   selectedRoom,
   role,
+  openCloseReservationModal,
+  setReservationStartTime,
+  setReservationEndTime,
+  reservationStartTime,
+  reservationEndTime,
 }: TimeTableMainPartProps) {
   const searchParams = useSearchParams();
   const mondayDate = Number(searchParams.get("date"));
@@ -72,6 +82,11 @@ export function TimeTableMainPart({
             typeFilters={typeFilters}
             selectedRoom={selectedRoom}
             role={role}
+            openCloseReservationModal={openCloseReservationModal}
+            setReservationStartTime={setReservationStartTime}
+            setReservationEndTime={setReservationEndTime}
+            reservationStartTime={reservationStartTime}
+            reservationEndTime={reservationEndTime}
           />
         </div>
       ))}

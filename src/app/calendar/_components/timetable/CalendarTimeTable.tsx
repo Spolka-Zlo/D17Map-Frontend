@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { TimeTableHoursColumn } from "./TimeTableHoursColumn";
 import { TimeTableMainPart } from "./TimeTableMainPart";
 import { Reservation } from "@/schemas/reservationSchemas";
@@ -9,6 +9,11 @@ type CalendarTimeTableProps = {
   selectedRoom: string;
   events: Reservation[];
   role: string | null;
+  openCloseReservationModal: Dispatch<SetStateAction<boolean>>;
+  setReservationStartTime: Dispatch<SetStateAction<number | null | undefined>>;
+  setReservationEndTime: Dispatch<SetStateAction<number | null | undefined>>;
+  reservationStartTime?: number | null;
+  reservationEndTime?: number | null;
 };
 
 export function CalendarTimeTable({
@@ -17,6 +22,11 @@ export function CalendarTimeTable({
   selectedRoom,
   events,
   role,
+  openCloseReservationModal,
+  setReservationStartTime,
+  setReservationEndTime,
+  reservationStartTime,
+  reservationEndTime,
 }: CalendarTimeTableProps) {
   return (
     <div className="relative">
@@ -27,6 +37,11 @@ export function CalendarTimeTable({
           typeFilters={typeFilters}
           selectedRoom={selectedRoom}
           role={role}
+          openCloseReservationModal={openCloseReservationModal}
+          setReservationStartTime={setReservationStartTime}
+          setReservationEndTime={setReservationEndTime}
+          reservationStartTime={reservationStartTime}
+          reservationEndTime={reservationEndTime}
         />
       </div>
     </div>

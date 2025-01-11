@@ -17,7 +17,15 @@ export function EventItem({ event }: { event: Reservation }) {
             minute: "numeric",
           }).format(event.endTime)}
         </div>
-        <div className="text-center">{event.date}</div>
+        <div className="text-center">
+          <div>
+            {new Intl.DateTimeFormat("pl", {
+              day: "numeric",
+              month: "numeric",
+              year: "numeric",
+            }).format(new Date(event.date))}
+          </div>
+        </div>
       </div>
     </div>
   );

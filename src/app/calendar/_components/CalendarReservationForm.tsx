@@ -26,6 +26,10 @@ type CalendarReservationFormProps = {
   editedReservation?: Reservation | null;
   setEditedReservation: Dispatch<SetStateAction<Reservation | null>>;
   onCollision: Dispatch<SetStateAction<RecurringData | null>>;
+  setReservationStartTime: Dispatch<SetStateAction<number | null | undefined>>;
+  setReservationEndTime: Dispatch<SetStateAction<number | null | undefined>>;
+  reservationStartTime?: number | null | undefined;
+  reservationEndTime?: number | null | undefined;
 };
 
 export function CalendarReservationForm({
@@ -36,6 +40,10 @@ export function CalendarReservationForm({
   editedReservation,
   setEditedReservation,
   onCollision,
+  reservationStartTime,
+  reservationEndTime,
+  setReservationStartTime,
+  setReservationEndTime,
 }: CalendarReservationFormProps) {
   const [participants, setParticipants] = useState(0);
   const [isRecurring, setIsRecurring] = useState(false);
@@ -60,14 +68,27 @@ export function CalendarReservationForm({
         );
       }
     }
+    setReservationStartTime(null);
+    setReservationEndTime(null);
     setOpen(false);
   };
 
+  function setDefaultTime(
+    time: number | null | undefined,
+    editedTime: number | undefined,
+  ) {
+    if (editedTime) return new Date(editedTime).toTimeString().slice(0, 5);
+    if (time) return new Date(time).toTimeString().slice(0, 5);
+    return undefined;
+  }
+
   return (
     <div className={`fixed inset-0 z-50 bg-black bg-opacity-50`}>
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-md bg-white p-8">
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-md bg-white p-14">
         <button
           onClick={() => {
+            setReservationStartTime(null);
+            setReservationEndTime(null);
             setEditedReservation(null);
             setOpen(false);
           }}
@@ -76,8 +97,8 @@ export function CalendarReservationForm({
           X
         </button>
 
-        <h3 className="pb-5 text-xl text-primary">
-          Rezerwacja sali {room} na dzień {date.toDateString()}
+        <h3 className="pb-5 text-center text-xl text-primary">
+          {editedReservation ? "Edycja rezerwacji" : "Rezerwacja sali"}
         </h3>
         <form
           action={submitAction}
@@ -123,13 +144,10 @@ export function CalendarReservationForm({
               type="time"
               list="time"
               required
-              defaultValue={
-                editedReservation
-                  ? new Date(editedReservation.startTime)
-                      .toTimeString()
-                      .slice(0, 5)
-                  : undefined
-              }
+              defaultValue={setDefaultTime(
+                reservationStartTime,
+                editedReservation?.startTime,
+              )}
               disabled={
                 editedReservation !== null && editedReservation !== undefined
               }
@@ -143,13 +161,10 @@ export function CalendarReservationForm({
               type="time"
               list="time"
               required
-              defaultValue={
-                editedReservation
-                  ? new Date(editedReservation.endTime)
-                      .toTimeString()
-                      .slice(0, 5)
-                  : undefined
-              }
+              defaultValue={setDefaultTime(
+                reservationEndTime,
+                editedReservation?.endTime,
+              )}
               disabled={
                 editedReservation !== null && editedReservation !== undefined
               }
@@ -230,7 +245,10 @@ export function CalendarReservationForm({
               hidden={!isRecurring}
             />
           </div>
-          <OrangeButton type="submit" text="Zarezerwuj" />
+          <OrangeButton
+            type="submit"
+            text={editedReservation ? "Zatwierdź" : "Zarezerwuj"}
+          />
         </form>
       </div>
     </div>

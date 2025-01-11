@@ -15,6 +15,10 @@ type CalendarSectionProps = {
   openCloseReservationModal: Dispatch<SetStateAction<boolean>>;
   events: Reservation[];
   role: string | null;
+  setReservationStartTime: Dispatch<SetStateAction<number | null | undefined>>;
+  setReservationEndTime: Dispatch<SetStateAction<number | null | undefined>>;
+  reservationStartTime?: number | null;
+  reservationEndTime?: number | null;
 };
 
 export function CalendarSection({
@@ -24,6 +28,10 @@ export function CalendarSection({
   openCloseReservationModal,
   events,
   role,
+  setReservationStartTime,
+  setReservationEndTime,
+  reservationStartTime,
+  reservationEndTime,
 }: CalendarSectionProps) {
   const [filters, setFilters] = useState(["Zajęcia"]);
   const [selectedRoom, setSelectedRoom] = useState(availableRooms[0]);
@@ -51,10 +59,20 @@ export function CalendarSection({
             className="w-56 cursor-pointer text-center"
             onClick={() => setShowPicker(true)}
           >
-            {new Date(mondayDate).toLocaleDateString()} -{" "}
-            {new Date(
-              mondayDate + 1000 * 60 * 60 * 24 * 6,
-            ).toLocaleDateString()}
+            {new Date(mondayDate).toLocaleDateString("pl-PL", {
+              day: "numeric",
+              month: "numeric",
+              year: "numeric",
+            })}{" "}
+            -{" "}
+            {new Date(mondayDate + 1000 * 60 * 60 * 24 * 6).toLocaleDateString(
+              "pl-PL",
+              {
+                day: "numeric",
+                month: "numeric",
+                year: "numeric",
+              },
+            )}
             <input id="calendarInput" type="date" style={{ display: "none" }} />
           </div>
 
@@ -87,6 +105,11 @@ export function CalendarSection({
           selectedRoom={selectedRoom}
           events={events}
           role={role}
+          openCloseReservationModal={openCloseReservationModal}
+          setReservationStartTime={setReservationStartTime}
+          setReservationEndTime={setReservationEndTime}
+          reservationStartTime={reservationStartTime}
+          reservationEndTime={reservationEndTime}
         />
       </div>
     </section>

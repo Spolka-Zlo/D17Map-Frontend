@@ -64,7 +64,13 @@ export function UserReservationItem({
         <span className="h-1 w-1 rounded-full bg-primary/50" />{" "}
         <div>{reservation.classroom.name}</div>
         <span className="h-1 w-1 rounded-full bg-primary/50" />{" "}
-        <div>{reservation.date}</div>
+        <div>
+          {new Intl.DateTimeFormat("pl", {
+            day: "numeric",
+            month: "numeric",
+            year: "numeric",
+          }).format(new Date(reservation.date))}
+        </div>
       </div>
       <div>{reservation.description}</div>
       <ConfirmationModal

@@ -20,6 +20,10 @@ type CalendarReservationsSectionProps = {
   userUpcomingReservations: Reservation[];
   events: Reservation[];
   role: string | null;
+  reservationStartTime?: number | null | undefined;
+  reservationEndTime?: number | null | undefined;
+  setReservationStartTime: Dispatch<SetStateAction<number | null | undefined>>;
+  setReservationEndTime: Dispatch<SetStateAction<number | null | undefined>>;
 };
 
 export function CalendarReservationsSection({
@@ -29,6 +33,10 @@ export function CalendarReservationsSection({
   userUpcomingReservations,
   events,
   role,
+  reservationStartTime,
+  reservationEndTime,
+  setReservationStartTime,
+  setReservationEndTime,
 }: CalendarReservationsSectionProps) {
   const [editedReservation, setEditedReservation] =
     useState<Reservation | null>(null);
@@ -66,6 +74,10 @@ export function CalendarReservationsSection({
           editedReservation={editedReservation}
           setEditedReservation={setEditedReservation}
           onCollision={setRecurringData}
+          reservationStartTime={reservationStartTime}
+          reservationEndTime={reservationEndTime}
+          setReservationStartTime={setReservationStartTime}
+          setReservationEndTime={setReservationEndTime}
         />
       )}
       <ConfirmationModal
