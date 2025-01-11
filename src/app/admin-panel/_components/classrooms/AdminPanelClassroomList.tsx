@@ -14,7 +14,7 @@ export function AdminPanelClassroomList({
 }: AdminPanelClassroomListProps) {
   const { editedElement, setEditedElement } = useContext(EditContext);
   return (
-    <ul className="flex flex-col items-stretch justify-start gap-2 p-2">
+    <ul className="flex max-h-96 flex-col items-stretch justify-start gap-2 overflow-auto p-2">
       <span
         className="cursor-pointer rounded-md border-2 border-primary bg-white/0 p-2 text-center"
         onClick={() => setEditedElement(null)}

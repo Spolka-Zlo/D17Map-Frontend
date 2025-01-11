@@ -10,7 +10,7 @@ type AddEditUserFormProps = {
 export function AddEditUserForm({ user, roles }: AddEditUserFormProps) {
   return (
     <form
-      className="flex h-fit w-[20vw] flex-col gap-3 rounded-md bg-white/25 p-5"
+      className="flex h-fit w-[20vw] flex-col gap-3 rounded-md bg-white/25 p-5 maxMD:w-full"
       action={putUser}
     >
       {user?.id && <input type="hidden" name="id" value={user?.id} />}

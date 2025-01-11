@@ -41,6 +41,4 @@ export async function createEquipment(formData: FormData) {
   if (!response.ok) {
     throw new Error("Failed to create equipment");
   }
-
-  console.log("Equipment created successfully");
 }

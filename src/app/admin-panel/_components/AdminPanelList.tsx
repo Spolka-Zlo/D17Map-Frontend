@@ -39,8 +39,8 @@ export default function AdminPanelList({
   users,
 }: AdminPanelListProps) {
   return (
-    <div className="flex gap-4">
-      <ul className="flex w-[35vw] flex-col items-stretch justify-start gap-4">
+    <div className="flex gap-4 maxMD:flex-col">
+      <ul className="flex w-[35vw] flex-col items-stretch justify-start gap-4 maxMD:w-full">
         <AdminPanelListItem name="Sale">
           <AddEditClassroom classrooms={classrooms} equipments={equipments} />
           <AdminPanelClassroomList classrooms={classrooms} />
@@ -58,7 +58,7 @@ export default function AdminPanelList({
           <AdminPanelReservationList reservations={reservations} />
         </AdminPanelListItem>
       </ul>
-      <ul className="flex w-[35vw] flex-col items-stretch justify-start gap-4">
+      <ul className="flex w-[35vw] flex-col items-stretch justify-start gap-4 maxMD:w-full">
         <AdminPanelListItem name="Role">
           <AddEditRole roles={roles} floors={floors} classrooms={classrooms} />
           <AdminPanelRoleList roles={roles} />

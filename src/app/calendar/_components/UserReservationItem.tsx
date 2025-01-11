@@ -33,7 +33,7 @@ export function UserReservationItem({
           </button>
         )}
         <div>{reservation.title}</div>
-        <div className="absolute right-2 top-2 -z-10 flex justify-between gap-1">
+        <div className="absolute right-2 top-2 flex justify-between gap-1">
           <button
             className="text-md h-6 w-6 cursor-pointer rounded-md p-0 text-accent"
             onClick={editReservation}
@@ -42,7 +42,7 @@ export function UserReservationItem({
             &#x1F589;
           </button>
           <button
-            className="text-md -z-10 h-6 w-6 cursor-pointer rounded-md p-0 text-red-500"
+            className="text-md h-6 w-6 cursor-pointer rounded-md p-0 text-red-500"
             aria-label="Cancel reservation"
             onClick={() => openCloseConfirmationModal(true)}
           >

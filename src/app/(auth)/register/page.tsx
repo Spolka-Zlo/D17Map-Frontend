@@ -30,8 +30,6 @@ export default function RegisterPage() {
       .catch(() => toast.error("Nie udało się zarejestrować"));
   };
 
-  console.log(passwordValid, passwordMatch);
-
   return (
     <div className="m-auto w-[25vw] justify-center rounded-md bg-white/25 p-10">
       <form action={submitAction} className="flex flex-col gap-4">

@@ -32,7 +32,10 @@ export function MapPageContent({
     }, []);
 
   return (
-    <div className="flex h-[81vh] w-full flex-row justify-stretch">
+    <div
+      className="flex h-[81vh] w-full justify-stretch maxMD:flex-col"
+      onClick={() => setClickedRoom(null)}
+    >
       <MapSection
         clickedRoom={clickedRoom}
         setClickedRoom={setClickedRoom}
@@ -41,7 +44,7 @@ export function MapPageContent({
         extraRoomsTypes={extraRoomsTypes}
         floors={floors}
       />
-      <div className="border-l-4 border-black"></div>
+      <div className="border-l-4 border-black maxMD:hidden"></div>
 
       <RoomInformationSection
         clickedRoom={clickedRoom}

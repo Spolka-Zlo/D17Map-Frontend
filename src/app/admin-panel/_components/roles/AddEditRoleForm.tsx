@@ -24,7 +24,7 @@ export function AddEditRoleForm({ role, floors, classrooms }: RoleFormProps) {
   }
   return (
     <form
-      className="flex h-fit w-[20vw] flex-col justify-between gap-3 rounded-md bg-white/25 p-5"
+      className="flex h-fit w-[20vw] flex-col justify-between gap-3 rounded-md bg-white/25 p-5 maxMD:w-full"
       action={putRole}
     >
       {role?.id && <input type="hidden" name="id" value={role?.id} />}

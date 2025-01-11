@@ -32,7 +32,10 @@ export function AdminPanelListItem({
         {name}
       </h1>
       <div
-        className={twMerge("flex justify-between", !openedElement && "hidden")}
+        className={twMerge(
+          "flex justify-between maxMD:flex-col",
+          !openedElement && "hidden",
+        )}
       >
         <EditContext.Provider value={{ editedElement, setEditedElement }}>
           {children}

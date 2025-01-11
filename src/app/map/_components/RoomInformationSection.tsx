@@ -92,6 +92,8 @@ export function RoomInformationSection({
             setOpen={openCloseReservationModal}
             setEditedReservation={() => {}}
             onCollision={() => {}}
+            setReservationStartTime={() => {}}
+            setReservationEndTime={() => {}}
           />
         )}
     </div>

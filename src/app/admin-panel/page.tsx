@@ -91,7 +91,7 @@ export default async function AdminPanel() {
   ];
 
   return (
-    <main className="flex flex-row items-start justify-start gap-4">
+    <main className="flex flex-row items-start justify-start gap-4 maxMD:justify-center">
       <AdminPanelList
         equipments={equipments}
         classrooms={classrooms}

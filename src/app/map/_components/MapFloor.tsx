@@ -106,6 +106,9 @@ export function MapFloor({
         clickedRoomZoom[2] / 2,
       ]}
       rotation={new THREE.Euler(-Math.PI / 20, -Math.PI, -Math.PI / 20)}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
     >
       {Object.entries(nodes).map(([key, node]) => (
         <mesh
